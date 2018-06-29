@@ -1,0 +1,66 @@
+@charset "UTF-8";
+
+
+body{ background:#f5f5f5 url(../../images/htgl/bg.jpg) no-repeat top center; padding: 0; margin: 0; font-family: "Microsoft YaHei","宋体";  color: #626262;font-size: 14px;}
+ul,li,dl,dd,dt,p,h1,h2,h3,h4,h5{ list-style: none; padding: 0; margin: 0;}.fl{ float: left;} .fr{ float: right;} .clear{ clear: both;} a{ text-decoration: none;color: #333333;} img{ border: none;} .mt15{ margin-top: 15px !important;}.mt20{ margin-top: 20px !important;} .mt35{ margin-top: 35px !important;}.mt40{ margin-top: 40px !important;}.container{width: 1370px;margin:auto;}.w1210{width:1210px;margin:auto;}.padd20{padding: 20px;}.bgfff{background: #fff !important;}.main{position: relative;background: #f6f4f4;min-height:900px}
+
+/* 头部 */
+.header{background: #194461;height: 115px;}
+.topBar{color: #fff;line-height: 23px}
+.topBar a{display: inline-block;padding-left:27px;background:url(../../images/htgl/top_right_icon.png) no-repeat;color: #fff;}
+.topBar a.weixin{margin-left:13px;background-position: 0 0;}
+.topBar a.app{margin-left:3px;background-position:-65px 0;}
+
+/* 左侧导航 */
+.mainLeft{width:211px;position: absolute;top:0;left:0;}
+.sideTitle{height: 57px;line-height:57px;color: #fff;background: #024c6e;font-size: 20px;font-weight: bold;text-align: center;}
+.mainLeft h3,.mainLeft li{display: block;border-bottom: 1px solid #ecebeb;border-left:6px solid #257295;border-left-color: transparent;padding-left: 48px;}
+.mainLeft h3{position: relative;font-size: 18px;color: #024c6e;line-height: 25px;padding:20px 0 20px 48px;}
+.mainLeft h3.active,.mainLeft li.active{background: #fff;border-left-color:#257295}
+.mainLeft h3 a{color: #024c6e;}
+.mainLeft h3 i{position: absolute;top:18px;left:20px;width: 24px;text-align: center;display: table-cell; vertical-align:middle;}
+.mainLeft h3 i img{vertical-align:middle;}
+.mainLeft li{line-height: 50px;height: 50px;}
+.mainLeft li a{display: block; color: #333333;}
+
+/* 公共尾 */
+/*.footer{background: #194461;margin-top: 16px;}*/
+/*.footer .container{width:1200px;padding: 20px 0 12px 0;}*/
+/*._ideConac{width: 60px;}*/
+/*.copyright{padding-left: 16px;color: #fff;line-height: 31px;padding-top: 7px;}*/
+/*.copyright a{display: inline-block; color: #fff;margin-right:11px;}*/
+/*.erwei{font-size: 12px;color: #fff;text-align: center;}*/
+/*.erwei dl{float: left;margin-left: 30px;}*/
+.w1200{width: 1200px;margin: 0px auto;}
+.footer{ overflow: hidden;background:#194461; height: 98px;font-size: 14px;padding-top: 12px; margin-top:16px;}
+.footer .dzjg{margin-right: 5px;margin-top: 8px;}
+.footer .wzljbq{margin-top: 18px;line-height: 30px;}
+.footer .wzljbq .top a,.footer .wzljbq .top span{display: inline-block;color: #fff;padding: 0 5px;}
+.footer .wzljbq .bttom span{display: inline-block;padding: 0 5px;color: #fff;}
+.footer .fr a{display: inline-block;text-align: center;width: 68px;margin-left: 30px;}
+.footer .fr a span{display: block;text-align: center;color: #ffffff;font-size: 12px;}
+.footer_sj{display: none;}
+
+/* 其他公共 */
+.mainRight{background: #fff;margin-left: 211px;min-height:900px;padding-left:18px;}
+h2{line-height: 43px;font-size: 20px;color: #024c6e;border-bottom: 1px solid #e5e5e5;}
+h2 i{font-weight: normal;font-style: normal;}
+.input{border:1px solid #e5e5e5;line-height:22px;padding:4px 8px;}
+.inline-form .form-group{display: inline-block;margin-bottom: 0;vertical-align: middle;margin-right: 10px;font-size: 16px;}
+button, select {text-transform: none;}
+.form-control {display: inline-block; height:32px; padding: 6px 12px; color: #555; background-color: #fff; border: 1px solid #e5e5e5; }
+.form-group label{display: inline-block;}
+.btn {display: inline-block; padding: 5px 12px; margin-bottom: 0; font-weight: 400; line-height: 1.55; text-align: center; white-space: nowrap; vertical-align: middle; cursor: pointer; border: 1px solid transparent;color: #fff;}
+.btn-blue{background: #2872a0;border-color: #2872a0;}
+.btn-delete{background: #7c9aad;border-color: #7c9aad;}
+.btn-added{background: #73bf67;border-color: #73bf67;}
+.inline-form .mr0{margin-right: 0;}
+.btn1{padding: 1px 9px 1px 25px;border-radius: 4px;display: inline-block;line-height: 20px;cursor: pointer;}
+.answer{border:1px solid #6899b0;color:#257295;background:url(../../images/htgl/answer_ico.png) no-repeat 10px;}
+.stick{border:1px solid #73bf67;color:#73bf67;background:url(../../images/htgl/stick_ico.png) no-repeat 10px;}
+.texe-blue,a.texe-blue{color: #257295;}
+.text-center{text-align: center;}
+.date_picker{background:url(../../images/htgl/pick__date.png) no-repeat 90%;}
+input[type=checkbox]{
+    width: 25px;
+}

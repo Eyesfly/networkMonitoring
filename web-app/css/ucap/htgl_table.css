@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+.gtTable{border-top:2px solid #257295;width: 100%;}
+.gtTable th{background: #f7f7f7;line-height:31px;height:31px;padding:6px; color: #004564;}
+.text-muted{color: #999999;}
+.gtTable td{text-align: center;line-height:31px;height:31px;padding:6px;}
+
+/* 加滚动条的表格 */
+.table-responsive{width: 100%;overflow-y: hidden;overflow-x: auto;}
+.table-responsive table{width: 100%;max-width: 100%;} 
+.table-responsive table td, .table-responsive table th {white-space: nowrap;}
+.table-responsive table th,.table-line table th{line-height:16px;padding:6px;height:16px;border-collapse:collapse;border-bottom: 1px solid #ecebeb;border-right:1px solid #ecebeb}
+.table-line table th.bt{line-height: 2.3em;width:80px;position: relative;}
+table th small{font-weight: normal;}
+.table-line table th.bt span{position: absolute;width:100%;height:100%;top:0;left:0;background:url(../../images/htgl/table_bt_line.png) no-repeat;-webkit-background-size: 100% 100%;
+background-size: 100% 100%;}
+.table-responsive table th.h45{height:32px}
+
+
+
+/* 分页 */
+#pagination-input{ width:40px; height:24px; line-height:18px; margin:0 5px; padding:0; overflow:hidden; border:1px solid #ccc;}
+#page_div .pagination-index,#page_div .pagination-num{color: #666666;background: #efefef; padding:6px 13px;margin-right:6px;text-align:center;font-size:14px;}
+#page_div .pagination-index a, #page_div .pagination-num a{padding:0px; margin:0px;text-align:center;  color:#666666; display:block; font-size:14px;  }
+#page_div pagination-num:hover, #page_div{padding:0px; margin:0px;text-align:center; font-size:14px;}
+
+#page_div a.hover{background-color: #5280a9;color:#fff;font-size:14px;}
+#page_div a.hover a:hover{ color:#fff;}

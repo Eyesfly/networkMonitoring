@@ -1,6 +1,6 @@
 import grails.converters.JSON
 import com.eyesfly.core.*
-import com.esesfly.marshaller.BootStrapTableDomainClassMarshaller
+import com.eyesfly.marshaller.BootStrapTableDomainClassMarshaller
 
 class BootStrap {
 

@@ -1,0 +1,47 @@
+@charset "UTF-8";
+
+/* 下拉菜单 */
+.dropdown{font-size: 16px;font-weight: normal;line-height: 26px;position: relative;}
+.dropdown-toggle{display: inline-block; height:36px;line-height: 36px; width:110px;background: #f5f5f5;padding-left: 12px;position: relative;}
+.caret{position: absolute;right:12px;top:14px; width: 0; height: 0; border-top: 6px dashed #bfbfbf; border-top: 6px solid #bfbfbf\9; border-right: 6px solid transparent; border-left: 6px solid transparent; }
+.dropdown-menu{background: #fff;position: absolute;width:120px;   background-clip: padding-box; border: 1px solid #f5f5f5; -webkit-box-shadow: 0 6px 6px rgba(230,230,230,0.8); box-shadow: 0 6px 6px rgba(230,230,230,0.8);padding:3px 0 ;display: none;}
+.dropdown-menu li a{display:block;padding:2px 5px 2px 12px;}
+.dropdown-menu li a:hover{background: #f5f5f5;}
+.btn{background: #2872a0;padding:0 12px;height:36px;line-height: 36px;float: left;border:none;font-size: 16px;}
+
+/* 选项卡 */
+.tab-pane{display: none;}
+.tab-pane.active{display: block;}
+.zyn{display: block;height: 39px;background: #eeeeee;padding-left:18px;}
+.zyn li{display: inline-block;padding:2px 12px;border:1px solid #267ca4;background: #fff;color:#267ca4;cursor: pointer;margin:8px 7px 0 0;border-radius: 4px}
+.zyn li.active{background: #267ca4;color:#fff;}
+
+
+.row:after{display: table;content:""; clear:both;}
+.col-3,.col-5{float: left;min-height:1px;}
+.col-3{width:33.33333333%;}.col-5{width:50%;}
+.mt25{ margin-top: 25px !important;}
+
+/* 数据统计 */
+.tj1,.tj2{padding:0 26px;}
+.pd13{padding:0 13px;}
+.tj1 .panel{background: #f6f4f4;padding:25px 25px 15px 25px;}
+.tj1 .upper{border-bottom: 1px solid #e5e5e5;padding:11px 0 15px 0;height:25px;}
+.icon{display: inline-block;vertical-align: top;}
+.fz20{font-size: 20px;}.fz18{font-size: 18px;}.fz26{font-size: 26px;}.fz24{font-size: 24px;}
+.c5ab99e{color: #5ab99e;}.c267ca4{color: #267ca4;}
+.tj1 .lower{padding:10px 25px 0 25px;line-height: 27px}
+
+.tj2 .panel{height:78px;background:url(../../images/htgl/356904.png) no-repeat;padding-left: 115px;padding-top:8px;text-shadow: 1px 2px 3px #6b6b6b;}
+.tj2 strong{display: block;font-size: 18px;line-height:36px;color: #fff}
+.tj2 b{font-size: 20px;color: #fdd093}
+
+/* 图表 */
+.tb .panel{padding:0 18px;}
+.caption{font-weight: bold;}
+.caption .c267ca4{font-family:Arial;}
+.table{width: 100%;border: 1px solid #e5e5e5;border-bottom: none;font-size: 16px;border-radius: 4px;}
+.table th{background: #d3e9f2;height:35px;color: #267ca4}
+.table td{border-bottom:1px solid #e5e5e5;height:34px;}
+.c1{color: #e00d0d}.c2{color: #fcaf2a}.c3{color: #5cb52c}.cn{color: #3cb0e6}
+.fltj{border: 1px solid #e5e5e5;border-radius: 4px;margin-top: 23px;padding:8px 0;}

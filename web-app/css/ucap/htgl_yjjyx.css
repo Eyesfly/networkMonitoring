@@ -1,0 +1,8 @@
+@charset "UTF-8";
+
+.progress {height: 20px;width: 96px;margin:auto; overflow: hidden; background-color: #e1e1e1; border-radius:9px;position: relative; }
+.progress-bar {float: left; width: 0; height: 100%; font-size: 12px; line-height: 20px; color: #fff; text-align: center; background-color: #68a3be; }
+.progress-bar-danger {background-color: #ce4141; }
+.progress-bar-warning {background-color: #eaa92b; }
+.progress span{position: absolute;right:10px;top:0;line-height:20px;color: #fff;}
+span.c333{color: #333;}

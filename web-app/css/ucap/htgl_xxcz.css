@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+
+.edit{border:1px solid #6899b0;color:#257295;background:url(../images/htgl/edit_ico.png) no-repeat 10px;}
+.delete{border:1px solid #d18c48;color:#d18c48;background:url(../images/htgl/delete_ico.png) no-repeat 10px;}
+.butn{display: inline-block;padding:9px 25px;font-size: 18px;font-weight: normal;line-height: 26px;border-radius:7px;vertical-align: middle;}
+.butn-add{background: #2872a0;color: #fff;}
+.butn img{vertical-align: bottom}
+.butn-add{margin-top:-19px;}
+.wyzx{position: fixed;top:50%;margin-top: -48px;left:50%;margin-left:612px;}
