@@ -1,3 +1,4 @@
+import com.eyesfly.dictionary.Organization
 import grails.converters.JSON
 import com.eyesfly.core.*
 import com.eyesfly.marshaller.BootStrapTableDomainClassMarshaller
@@ -15,7 +16,16 @@ class BootStrap {
         createDefaultRoles();
         createDefaultUsers();
         createRequestMap();
+        createOrganization();
 
+    }
+    private void createOrganization(){
+        def org1 =new Organization(name: "测试单位1").save(flush: true);
+        println org1.errors;
+        def org2 =new Organization(name: "测试单位2").save(flush: true);
+        println org2.errors;
+        def org3 =new Organization(name: "测试单位3").save(flush: true);
+        println org3.errors;
     }
     private void createDefaultRoles() {
         if (!BaseRole.findByAuthority('ROLE_ADMIN')){
@@ -72,6 +82,7 @@ class BootStrap {
             new Requestmap(url: '/baseRole/**', configAttribute: 'ROLE_ADMIN').save(flush: true)
             new Requestmap(url: '/requestmap/**', configAttribute: 'ROLE_ADMIN').save(flush: true)
             new Requestmap(url: '/workspace/**', configAttribute: 'isFullyAuthenticated()').save(flush: true)
+            new Requestmap(url: '/web/**', configAttribute: 'permitAll()').save(flush: true)
 
             new Requestmap(url: '/**', configAttribute: 'isFullyAuthenticated()').save(flush: true)
         }

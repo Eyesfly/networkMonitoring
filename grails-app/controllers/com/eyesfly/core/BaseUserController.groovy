@@ -125,7 +125,7 @@ class BaseUserController{
     def saveOrUpdate() {
         params.traceLogNeedSave = true;
         def map = [:], baseUser;
-        params.username = params?.idCard;
+       /* params.username = params?.idCard;*/
         params.password = "123456";
         if(params?.id){
             params.operating ="更新用户信息";

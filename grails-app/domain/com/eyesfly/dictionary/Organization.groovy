@@ -5,8 +5,6 @@ import com.eyesfly.annotation.Title
 
 @Title(zh_CN = "单位机构")
 class Organization {
-    @Title(zh_CN = "机构id")
-    String id
     @Title(zh_CN = "单位代码")
     String code
     @Title(zh_CN = "单位名称")
@@ -34,7 +32,6 @@ class Organization {
     static belongsTo =[parent:Organization]
 
     static constraints = {
-        id(nullable: true)
         code(nullable: true)
         name(nullable: false)
         parent(nullable: true)

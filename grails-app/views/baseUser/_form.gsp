@@ -100,6 +100,18 @@
         </div>
     </div>
     <div class="row1">
+        <div class="col-2 text-right"><span class="text-red">*</span> 用户名：</div>
+        <div class="col-8">
+            <input class="input w360" type="text" name="username" required value="${baseUser?.username}"/>
+        </div>
+    </div>
+    <div class="row1">
+        <div class="col-2 text-right"><span class="text-red">*</span> 邮    箱：</div>
+        <div class="col-8">
+            <input class="input w360" type="text" name="email" required value="${baseUser?.email}"/>
+        </div>
+    </div>
+    <div class="row1">
         <div class="col-2 text-right"><span class="text-red">*</span> 姓　　名：</div>
         <div class="col-8">
             <input class="input w360" type="text" name="realName" required value="${baseUser?.realName}"/>

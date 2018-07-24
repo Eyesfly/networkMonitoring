@@ -50,8 +50,8 @@ class OrganizationController {
 
     def orgJson1() {
         def userOrg = springSecurityService.currentUser?.organization;
-        def org = springSecurityService.currentUser.getAuthorities()?.authority?.contains("ROLE_SUPERADMIN")?Organization.findByCode("100000"):(userOrg?.code?.endsWith("0000")?userOrg:(userOrg?.parent?.code?.endsWith("0000")?userOrg?.parent:userOrg?.parent?.parent));
-        def orgs = (org?.code?.endsWith("0000") && !org?.code?.equals("100000"))?[]:Organization.findAll("from Organization where parent = ? order by sort asc",[org]);
+        def org = [id:0,name:'单位'];
+        def orgs = Organization.findAll();
         def list = [];
         orgs.each{org1->
             def map = [:];

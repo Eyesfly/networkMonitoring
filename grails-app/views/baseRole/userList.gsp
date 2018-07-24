@@ -1,5 +1,3 @@
-
-<%@ page import="com.bjrxht.dictionary.ServiceCategory; com.bjrxht.core.BaseRole" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +16,6 @@
                         <td width="30%">
                             <input type="hidden" id="roleId" value="${baseRole?.id}"/>
                             当前角色:<span style="font-weight: bold;">${baseRole?.name}</span>&emsp;&emsp;
-                            <g:if test="${baseRole?.serviceCategory}">业务类别：<span style="font-weight: bold;">${baseRole?.serviceCategory?.name}</span>&emsp;&emsp;</g:if>
                             <input type="text" id="keywords" placeholder="请输入关键字" class="input">&nbsp;
                             <button type="button" class="btn btn-blue" onclick="doSearch1();">搜索</button>&nbsp;&nbsp;
                             <button class="btn btn-primary" type="button" onclick="showOrgUserModal('${baseRole?.id}')">分配用户</button>&nbsp;&nbsp;

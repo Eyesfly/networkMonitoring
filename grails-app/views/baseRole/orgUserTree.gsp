@@ -1,4 +1,4 @@
-<%@ page import="com.bjrxht.core.BaseUserBaseRole" %>
+<%@ page import="com.eyesfly.core.BaseUserBaseRole" %>
 <script type="text/javascript">
     $(function () {
         $("#orgUserTreeDiv").on('select_node.jstree', function (e, data) {

@@ -69,10 +69,6 @@ class BaseRoleController{
      */
     def userList(){
         def currentUser = springSecurityService.currentUser;
-        def roles = BaseUserBaseRole.findAllByBaseUser(currentUser).collect {it.baseRole.type}
-        if(roles.isEmpty() || !roles?.contains("5")){
-            redirect(controller: "login",action: "denied");
-        }
         return [baseRole:BaseRole.read(params?.roleId)];
     }
 
@@ -88,9 +84,9 @@ class BaseRoleController{
         if (!params.order) params.order = 'desc'
         def list = []
         if(params?.keywords){
-            list = BaseUserBaseRole.executeQuery("from BaseUserBaseRole ur, BaseRole r, BaseUser u where r = ur.baseRole and u = ur.baseUser and r.id = ? and (u.username like ? or u.realName like ?) order by ? desc", [params?.id, "%${params?.keywords?.trim()}%", "%${params?.keywords?.trim()}%", params.sort])
+            list = BaseUserBaseRole.executeQuery("from BaseUserBaseRole ur, BaseRole r, BaseUser u where r = ur.baseRole and u = ur.baseUser and r.id = ? and (u.username like ? or u.realName like ?) order by ? desc", [params?.id?.toLong(), "%${params?.keywords?.trim()}%", "%${params?.keywords?.trim()}%", params.sort])
         }else{
-            list = BaseUserBaseRole.executeQuery("from BaseUserBaseRole ur, BaseRole r where r = ur.baseRole and r.id = ?", [params?.id])
+            list = BaseUserBaseRole.executeQuery("from BaseUserBaseRole ur, BaseRole r where r = ur.baseRole and r.id = ?", [params?.id?.toLong()])
         }
         def ecList = [], rows = [];
         if(list.size()>=params.offset.toInteger()){
@@ -108,7 +104,6 @@ class BaseRoleController{
             userMap.username = user?.username;
             userMap.mobile = user?.mobile;
             userMap.organization = user?.organization?.name;
-            userMap.ascripteOrg = user?.ascripteOrg?.name;
             rows << userMap;
         }
         def map = [:];
@@ -151,34 +146,25 @@ class BaseRoleController{
         def list = []
         if(params?.id?.startsWith("org_") || params?.id?.equals("#")){
             def role = BaseRole.read(params.roleId?:-1l);
-            def org = params?.id?.equals("#")?(role?.organization?:(springSecurityService?.currentUser?.organization?:Organization.findByCode("100000"))):Organization.read(params?.id?.substring(4));
-            def orgs = params?.id?.equals("#")?(role?.organization?:(springSecurityService?.currentUser?.organization?:Organization.findByCode("100000"))):Organization?.findAll("from Organization where parent = ? order by sort asc",[org]);
+            def orgs = Organization?.findAll();
             def userList = BaseUserBaseRole.findAllByBaseRole(role)?.baseUser;
             def permissions = userList?.id;
-            orgs.each { org1 ->
-                def map = [:];
-                map.id = "org_${org1.id}";
-                map.text = org1.name;
-                map.state = [:];
-                map.state.disabled = true;
-                map.children = true;
-                map.type = "org";
-                list << map;
+            if(params?.id?.contains("#")){
+                orgs.each { org1 ->
+                    def map = [:];
+                    map.id = "org_${org1.id}";
+                    map.text = org1.name;
+                    map.state = [:];
+                    map.state.disabled = true;
+                    map.children = true;
+                    map.type = "org";
+                    list << map;
+                }
             }
             if(params?.id?.startsWith("org_")){
-                def users = []
-                if(role?.organization){
-                    users = BaseUser.findAllByOrganizationAndAscripteOrg(role?.organization, org);
-                } else {
-                    users = BaseUser.findAllByAscripteOrg(org);
-                }
-                if(role?.organization?.id?.equals(params?.id?.substring(4))){
-                    users += BaseUser.findAllByOrganizationAndAscripteOrgIsNull(role?.organization);
-                } else if(springSecurityService?.currentUser?.organization?.id?.equals(params?.id?.substring(4))){
-                    users += BaseUser.findAllByOrganizationAndAscripteOrgIsNull(springSecurityService?.currentUser?.organization);
-                } else {
-                    users += BaseUser.findAllByOrganizationAndAscripteOrgIsNull(org)
-                }
+                def orgId = params?.id?.substring(params?.id?.indexOf("_")+1);
+                def org = Organization.get(orgId?.toLong());
+                def users = BaseUser.findAllByOrganization(org);
                 users.each{user ->
                     def map2 = [:]
                     map2.id = "${user.id}"

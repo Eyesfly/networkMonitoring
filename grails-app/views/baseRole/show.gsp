@@ -1,16 +1,6 @@
 <div class="mt10">
     <div class="info">
         <div class="padd100">
-            <sec:ifAnyGranted roles="ROLE_SUPERADMIN">
-                <div class="row1">
-                    <div class="col-1"><b>机构名称：</b></div>
-                    <div class="col-9">${baseRole?.organization?.name}</div>
-                </div>
-            </sec:ifAnyGranted>
-            <div class="row1">
-                <div class="col-1"><b>业务类别：</b></div>
-                <div class="col-9">${baseRole?.serviceCategory?.name}</div>
-            </div>
             <div class="row1">
                 <div class="col-1"><b>角色名称：</b></div>
                 <div class="col-9">${baseRole?.name}</div>
