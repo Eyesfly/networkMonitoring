@@ -23,12 +23,22 @@
             var myData = [
 
                 {name: '海门', value: [121.15, 31.89, 1]},
+                {name: '北京', value: [116.3, 39.9, 1]},
                 {name: '鄂尔多斯', value: [109.781327, 39.608266, 2]},
                 {name: '招远', value: [120.38, 37.35, 3]},
+                {name: '新乡', value: [113.54, 35.18, 3]},
                 {name: '舟山', value: [122.207216, 29.985295, 2]}
-            ]
+            ];
             var mapChart = echarts.init(document.getElementById('map-wrap'));
+            mapChart.on('click', function(params){
+                if(params.componentType== "series"){
+                    console.log(params.data);
+                    console.log(params.data.value[0]);
+                    console.log(params.data.value[1]);
+                    console.log(params.data.value[2]);
+                }
 
+            });//点击事件，此事件还可以用到柱状图等其他地图
             var option = {
                 tooltip: {
                     trigger: 'item',
@@ -80,7 +90,7 @@
                         }
                     }
                 },
-                backgroundColor: 'rgb(21, 78, 144)',//404a59
+//                backgroundColor: '404a59',//404a59
                 series: [{
                     type: 'effectScatter',
                     coordinateSystem: 'geo',
@@ -117,7 +127,7 @@
     </script>
 </head>
 
-<body>
+<body style="background: rgb(21, 78, 144);">
 <div id="map-wrap" style="height: 800px;">
     <!-- 这里以后是地图 -->
 </div>
