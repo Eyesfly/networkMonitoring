@@ -20,7 +20,8 @@
                 '2': 'rgba(255, 235, 59, .7)',
                 '3': 'rgba(147, 235, 248, 1)'
             };
-            var myData = [
+
+            /*var myData = [
 
                 {name: '海门', value: [121.15, 31.89, 1]},
                 {name: '北京', value: [116.3, 39.9, 1]},
@@ -28,7 +29,8 @@
                 {name: '招远', value: [120.38, 37.35, 3]},
                 {name: '新乡', value: [113.54, 35.18, 3]},
                 {name: '舟山', value: [122.207216, 29.985295, 2]}
-            ];
+            ];*/
+            var myData = ${raw(list)};
             var mapChart = echarts.init(document.getElementById('map-wrap'));
             mapChart.on('click', function(params){
                 if(params.componentType== "series"){

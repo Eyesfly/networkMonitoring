@@ -2,6 +2,7 @@ import com.eyesfly.dictionary.Organization
 import grails.converters.JSON
 import com.eyesfly.core.*
 import com.eyesfly.marshaller.BootStrapTableDomainClassMarshaller
+import networkmonitoring.MonitoringPlace
 
 class BootStrap {
 
@@ -17,7 +18,26 @@ class BootStrap {
         createDefaultUsers();
         createRequestMap();
         createOrganization();
+        createMonitoringPlace();
 
+    }
+    private void createMonitoringPlace(){
+        /*
+        *
+        * {name: '海门', value: [121.15, 31.89, 1]},
+                {name: '北京', value: [116.3, 39.9, 1]},
+                {name: '鄂尔多斯', value: [109.781327, 39.608266, 2]},
+                {name: '招远', value: [120.38, 37.35, 3]},
+                {name: '新乡', value: [113.54, 35.18, 3]},
+                {name: '舟山', value: [122.207216, 29.985295, 2]}
+        *
+        * */
+        new MonitoringPlace(name: "海门",east: '121.15',north: '31.89').save(flush: true);
+        new MonitoringPlace(name: "北京",east: '116.3',north: '39.9').save(flush: true);
+        new MonitoringPlace(name: "鄂尔多斯",east: '109.781327',north: '39.608266').save(flush: true);
+        new MonitoringPlace(name: "招远",east: '120.38',north: '37.35').save(flush: true);
+        new MonitoringPlace(name: "新乡",east: '113.54',north: '35.18').save(flush: true);
+        new MonitoringPlace(name: "舟山",east: '122.207216',north: '29.985295').save(flush: true);
     }
     private void createOrganization(){
         def org1 =new Organization(name: "测试单位1").save(flush: true);
