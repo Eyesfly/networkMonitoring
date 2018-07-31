@@ -39,6 +39,7 @@
 <ul>
     <li onclick="loadRemotePage('${request.contextPath}/baseUser/list',{},'系统管理','用户管理');"><a href="javascript:void(0);">用户管理</a></li>
     <li onclick="loadRemotePage('${request.contextPath}/baseRole/list',{},'系统管理','角色管理');"><a href="javascript:void(0);">角色管理</a></li>
+    <li onclick="loadRemotePage('${request.contextPath}/monitoringPlace/index',{},'系统管理','采集地址');"><a href="javascript:void(0);">采集地址</a></li>
 </ul>
 %{--
 <h3><i><img src="${request.contextPath}/images/htgl/356804.png" alt=""></i>统计分析</h3>

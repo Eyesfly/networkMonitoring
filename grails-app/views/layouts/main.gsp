@@ -11,7 +11,7 @@
 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<title><g:layoutTitle default="全国检察业务咨询交流平台"/></title>
+	<title><g:layoutTitle default="网络监测"/></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<link rel="stylesheet" type="text/css" href="${request.contextPath}/js/bootstrap-3.3.7/css/bootstrap.min.css">
