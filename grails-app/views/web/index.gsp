@@ -9,12 +9,24 @@
 <html>
 <head>
     <title></title>
-    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${request.contextPath}/js/bootstrap-3.3.7/css/bootstrap.min.css">
     <script src="${request.contextPath}/js/bootstrap-3.3.7/js/jquery.min.js"></script>
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="${request.contextPath}/js/bootstrap-3.3.7/js/bootstrap.min.js"></script>
     <script src="${request.contextPath}/js/echarts/echarts.js"></script>
+    <style type="text/css">
+    .child{
+        z-index: 99;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 220px;
+        padding:15px 0px;
+        background: rgba(78, 136, 181, 0.66);
+    }
+
+    </style>
     <script type="text/javascript">
-        $.get('https://raw.githubusercontent.com/Luna829/incubator-echarts/master/map/json/china.json', function (chinaJson) {
+        $.get('${request.contextPath}/js/echarts/china.json', function (chinaJson) {
 
             echarts.registerMap('china', chinaJson); // 注册地图
             var levelColorMap = {
@@ -132,11 +144,41 @@
             mapChart.setOption(option);
         });
     </script>
+
+
 </head>
 
 <body style="background: rgb(21, 78, 144);">
-<div id="map-wrap" style="height: 800px;">
-    <!-- 这里以后是地图 -->
+<div>
+    <div id="map-wrap" style="height: 800px;">
+        <!-- 这里以后是地图 -->
+    </div>
+    <div class="child">
+        <div class="col-xs-6 col-sm-3"
+             style="border-right: 1px solid #93ebf84f;height:100%;">
+                <div>
+                    <img src="${request.contextPath}/images/logo.jpg" width="80px" height="80px">&nbsp;<span style="font-size: 24px;color: #fff;font-weight: 400;">IPPR&EVCC</span>
+                </div>
+                <div style="line-height: 80px;">
+                    <span style="font-size: 24px;color:#fff749;font-weight: 400;padding:10px 0px;">区域工业环境大数据在线监测系统</span>
+                </div>
+        </div>
+        <div class="col-xs-6 col-sm-3"
+             style="border-right: 1px solid #93ebf896;height:100%;">
+                <div style="color: #fff;font-weight: bolder;font-size: 16px;">各监控测点接入数据量</div>
+
+
+        </div>
+        <div class="col-xs-6 col-sm-3"
+             style="border-right: 1px solid #93ebf84f;height:100%;">
+            <div style="color: #fff;font-weight: bolder;font-size: 16px;">各监控点报警情况</div>
+
+        </div>
+        <div class="col-xs-6 col-sm-3"
+             style="">
+            <div style="color: #fff;font-weight: bolder;font-size: 16px;">设备分布情况</div>
+        </div>
+    </div>
 </div>
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
