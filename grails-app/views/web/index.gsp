@@ -26,7 +26,7 @@
     .left{
         z-index: 99;
         position: absolute;
-        left: 50px;
+        left: 30px;
         top:50px;
         width: 220px;
         height: 600px;
@@ -36,7 +36,7 @@
     .right{
         z-index: 99;
         position: absolute;
-        right: 20px;
+        right: 0px;
         top:50px;
         width: 280px;
         height: 600px;
@@ -327,7 +327,7 @@
                 <div>
                     <img src="${request.contextPath}/images/logo.jpg" width="80px" height="80px">&nbsp;<span style="font-size: 24px;color: #fff;font-weight: 400;">IPPR&EVCC</span>
                 </div>
-                <div style="line-height: 80px;">
+                <div style="line-height: 40px;">
                     <span style="font-size: 24px;color:#fff749;font-weight: 400;padding:10px 0px;">区域工业环境大数据在线监测系统</span>
                 </div>
         </div>
@@ -471,7 +471,7 @@
         </div><!-- /.modal-content -->
     </div><!-- /.modal -->
 </div>
-<script src="http://code.ciaoca.com/jquery/kxbdmarquee/demo/js/jquery.kxbdmarquee.min.js"></script>
+<script src="${request.contextPath}/js/jquery.kxbdmarquee.min.js"></script>
 <script type="text/javascript">
     $('#marquee4').kxbdMarquee({
         direction: 'up',
