@@ -29,4 +29,8 @@ class WebController{
         return [list:(rows as JSON).toString()]
     }
 
+    def index2(){
+
+    }
+
 }
