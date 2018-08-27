@@ -44,8 +44,8 @@
 <body style="background: rgb(21, 78, 144);">
 <div class="child">
     <div class="col-xs-6 col-sm-4">
-        <div class="col-xs-6 col-sm-12  boxBorder" style="height: 29%;margin-top: 10px;">
-            <div id="firstChart" style="height: 300px;">
+        <div class="col-xs-6 col-sm-12  boxBorder" style="height: 35%;margin-top: 10px;">
+            <div id="firstChart" style="height: 230px;">
 
             </div>
             <script type="text/javascript">
@@ -174,16 +174,16 @@
                     }],
                     grid: [{
                         top: '5%',
-                        left:'5%',
+                        left:'8%',
                         right:'0%',
                         bottom: '78%'
                     }, {
-                        left:'5%',
+                        left:'8%',
                         right:'0%',
                         top: '32%',
                         bottom: '48%'
                     }, {
-                        left:'5%',
+                        left:'8%',
                         right:'0%',
                         top: '62%',
                         bottom: '20%'
@@ -211,9 +211,9 @@
                 });
             </script>
         </div>
-        <div class="col-xs-6 col-sm-12 boxBorder" style="height: 28%;margin-top: 15px;">
+        <div class="col-xs-6 col-sm-12 boxBorder" style="height: 21%;margin-top: 15px;">
             <div class="col-xs-6 col-sm-6">
-                <div id="leftChart" style="height: 250px;">
+                <div id="leftChart" style="height: 150px;">
 
                 </div>
                 <script type="text/javascript">
@@ -282,96 +282,102 @@
             </div>
             <div class="col-xs-6 col-sm-6"></div>
         </div>
-        <div class="col-xs-6 col-sm-12 boxBorder p0" style="height: 24%;margin-top: 15px;">
+        <div class="col-xs-6 col-sm-12 boxBorder p0" style="height: 23%;margin-top: 15px;">
             <div class="col-sm-12 p0" style="line-height: 40px;">
-                <div  class="col-xs-6 col-sm-2 p1 th">设备名称</div>
+                <div  class="col-xs-6 col-sm-3 p1 th">设备名称</div>
                 <div  class="col-xs-6 col-sm-3 p0 th">IP地址</div>
-                <div  class="col-xs-6 col-sm-2 p0 th">发生时间</div>
-                <div  class="col-xs-6 col-sm-3 p0 th ">单位名称</div>
+                <div  class="col-xs-6 col-sm-3 p0 th">发生时间</div>
+                %{--<div  class="col-xs-6 col-sm-3 p0 th ">单位名称</div>--}%
                 <div  class="col-xs-6 col-sm-2 p0 th">责任人</div>
             </div>
-            <div id="marquee1" style="max-height: 150px;margin-top: 50px;">
+            <div id="marquee1" style="max-height: 105px;margin-top: 40px;">
                 <ul>
                     <li class="col-sm-12 p0">
-                        <div  class="col-xs-6 col-sm-2 p1"> 设备名称</div>
+                        <div  class="col-xs-6 col-sm-3 p1"> 设备名称</div>
                         <div  class="col-xs-6 col-sm-3 p0">192.168.1.120</div>
-                        <div  class="col-xs-6 col-sm-2 p0">08-04 17:20</div>
-                        <div  class="col-xs-6 col-sm-3 p0 ">单位名称</div>
+                        <div  class="col-xs-6 col-sm-3 p0">08-04 17:20</div>
+                        %{--<div  class="col-xs-6 col-sm-3 p0 ">单位名称</div>--}%
                         <div  class="col-xs-6 col-sm-2 p0">张***</div>
                     </li>
                     <li class="col-sm-12 p0 odd">
-                        <div  class="col-xs-6 col-sm-2 p1"> 设备名称</div>
+                        <div  class="col-xs-6 col-sm-3 p1"> 设备名称</div>
                         <div  class="col-xs-6 col-sm-3 p0">192.168.1.120</div>
-                        <div  class="col-xs-6 col-sm-2 p0">08-04</div>
-                        <div  class="col-xs-6 col-sm-3 p0 ">单位名称</div>
+                        <div  class="col-xs-6 col-sm-3 p0">08-04</div>
+                        %{--<div  class="col-xs-6 col-sm-3 p0 ">单位名称</div>--}%
                         <div  class="col-xs-6 col-sm-2 p0">张***</div>
                     </li>
                     <li class="col-sm-12 p0">
-                        <div  class="col-xs-6 col-sm-2 p1">设备名称</div>
+                        <div  class="col-xs-6 col-sm-3 p1">设备名称</div>
                         <div  class="col-xs-6 col-sm-3 p0">192.168.1.120</div>
-                        <div  class="col-xs-6 col-sm-2 p0">08-04</div>
-                        <div  class="col-xs-6 col-sm-3 p0 ">单位名称</div>
+                        <div  class="col-xs-6 col-sm-3 p0">08-04</div>
+                        %{--<div  class="col-xs-6 col-sm-3 p0 ">单位名称</div>--}%
                         <div  class="col-xs-6 col-sm-2 p0">张***</div>
                     </li>
                     <li class="col-sm-12 p0 odd">
-                        <div  class="col-xs-6 col-sm-2 p1"> 设备名称</div>
+                        <div  class="col-xs-6 col-sm-3 p1"> 设备名称</div>
                         <div  class="col-xs-6 col-sm-3 p0">192.168.1.120</div>
-                        <div  class="col-xs-6 col-sm-2 p0">08-04</div>
-                        <div  class="col-xs-6 col-sm-3 p0 ">单位名称</div>
+                        <div  class="col-xs-6 col-sm-3 p0">08-04</div>
+                        %{--<div  class="col-xs-6 col-sm-3 p0 ">单位名称</div>--}%
                         <div  class="col-xs-6 col-sm-2 p0">张***</div>
                     </li>
                     <li class="col-sm-12 p0">
-                        <div  class="col-xs-6 col-sm-2 p1"> 设备名称</div>
+                        <div  class="col-xs-6 col-sm-3 p1"> 设备名称</div>
                         <div  class="col-xs-6 col-sm-3 p0">192.168.1.120</div>
-                        <div  class="col-xs-6 col-sm-2 p0">08-04</div>
-                        <div  class="col-xs-6 col-sm-3 p0 ">单位名称</div>
+                        <div  class="col-xs-6 col-sm-3 p0">08-04</div>
+                        %{--<div  class="col-xs-6 col-sm-3 p0 ">单位名称</div>--}%
                         <div  class="col-xs-6 col-sm-2 p0">张***</div>
                     </li>
                     <li class="col-sm-12 p0 odd">
-                        <div  class="col-xs-6 col-sm-2 p1"> 设备名称</div>
+                        <div  class="col-xs-6 col-sm-3 p1"> 设备名称</div>
                         <div  class="col-xs-6 col-sm-3 p0">192.168.1.120</div>
-                        <div  class="col-xs-6 col-sm-2 p0">08-04</div>
-                        <div  class="col-xs-6 col-sm-3 p0 ">单位名称</div>
+                        <div  class="col-xs-6 col-sm-3 p0">08-04</div>
+                        %{--<div  class="col-xs-6 col-sm-3 p0 ">单位名称</div>--}%
                         <div  class="col-xs-6 col-sm-2 p0">张***</div>
                     </li>
                 </ul>
             </div>
         </div>
-        <div class="col-xs-6 col-sm-12 boxBorder" style="height: 12%;margin-top: 15px;padding: 15px 10px;">
+        <div class="col-xs-6 col-sm-12 boxBorder" style="height: 14%;margin-top: 15px;padding: 5px 10px;">
             <div style="float: left;">
                 <img src="${request.contextPath}/images/logo.jpg" width="80px" height="80px">&nbsp;
             </div>
-            <div style="line-height: 40px;float: left;">
-                <div style="font-size: 24px;color: #fff;font-weight: 800;">IPPR&EVCC</div>
-                <div style="font-size: 20px;color:#fff749;font-weight: 800;padding:0px 0px;">区域工业环境大数据在线监测系统</div>
+            <div style="line-height: 35px;float: left;">
+                <div style="font-size: 20px;color: #fff;font-weight: 800;">IPPR&EVCC</div>
+                <div style="font-size: 16px;color:#fff749;font-weight: 800;padding:0px 0px;">区域工业环境大数据在线监测系统</div>
             </div>
             <div style="clear: both;"></div>
         </div>
     </div>
     <div class="col-xs-6 col-sm-4">
-        <div class="col-xs-6 col-sm-12" style="height: 49%;">
-
+        <div class="col-xs-6 col-sm-12" style="height: 48%;margin-top: 10px;">
+           <img src="${request.contextPath}/images/tl.jpg" style="width: 100%;height: 100%;">
         </div>
-        <div class="col-xs-6 col-sm-12" style="height: 24%;">
-            <div class="col-xs-6 col-sm-4">
-                <div id="centerChart1" style="height: 220px;"></div>
+        <div class="col-xs-6 col-sm-12" style="height: 24%;margin-top: 15px;">
+            <div class="col-xs-6 col-sm-12">
+                <div style="width:80px;border-radius: 5px;color: #fff;border: 1px solid #93ebf84f;box-shadow: 0 0 10px #93ebf84f;margin: 5px 0px;padding: 5px;">预警信息</div>
             </div>
             <div class="col-xs-6 col-sm-4">
-                <div id="centerChart2" style="height: 220px;"></div>
+                <div id="centerChart1" style="height: 130px;"></div>
             </div>
             <div class="col-xs-6 col-sm-4">
-                <div id="centerChart3" style="height: 220px;"></div>
+                <div id="centerChart2" style="height: 130px;"></div>
+            </div>
+            <div class="col-xs-6 col-sm-4">
+                <div id="centerChart3" style="height: 130px;"></div>
             </div>
         </div>
-        <div class="col-xs-6 col-sm-12 boxBorder" style="height: 24%;margin-top: 15px;">
-            <div class="col-xs-6 col-sm-4">
-                <div id="centerChart4" style="height: 220px;"></div>
+        <div class="col-xs-6 col-sm-12 boxBorder" style="height: 24%;margin-top: 10px;">
+            <div class="col-xs-6 col-sm-12">
+                <div style="width:80px;border-radius: 5px;color: #fff;border: 1px solid #93ebf84f;box-shadow: 0 0 10px #93ebf84f;margin: 5px 0px;padding: 5px;">预警信息</div>
             </div>
             <div class="col-xs-6 col-sm-4">
-                <div id="centerChart5" style="height: 220px;"></div>
+                <div id="centerChart4" style="height: 130px;"></div>
             </div>
             <div class="col-xs-6 col-sm-4">
-                <div id="centerChart6" style="height: 220px;"></div>
+                <div id="centerChart5" style="height: 130px;"></div>
+            </div>
+            <div class="col-xs-6 col-sm-4">
+                <div id="centerChart6" style="height: 130px;"></div>
             </div>
         </div>
         <script type="text/javascript">
@@ -400,7 +406,7 @@
                 series: [{
                     name: ' ',
                     type: 'pie',
-                    radius: ['50%', '95%'],
+                    radius: ['40%', '95%'],
                     startAngle: 225,
                     color: [new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
                         offset: 0,
@@ -435,7 +441,7 @@
                 }, {
                     name: '',
                     type: 'pie',
-                    radius: ['50%', '95%'],
+                    radius: ['40%', '95%'],
                     startAngle: 225,
                     color: ["#c2f5e1", "transparent"],
                     labelLine: {
@@ -469,9 +475,9 @@
     </div>
     <div class="col-xs-6 col-sm-4">
         <div class="col-xs-6 col-sm-12 boxBorder" style="height: 39%;margin-top: 15px;">
-            <div id="rightChart1" style="height: 120px;"></div>
-            <div id="rightChart2" style="height: 120px;"></div>
-            <div id="rightChart3" style="height: 120px;"></div>
+            <div id="rightChart1" style="height: 80px;"></div>
+            <div id="rightChart2" style="height: 80px;"></div>
+            <div id="rightChart3" style="height: 80px;"></div>
             <script type="text/javascript">
                 var rightChart1 = echarts.init(document.getElementById('rightChart1'));
                 var rightChart2 = echarts.init(document.getElementById('rightChart2'));
@@ -487,7 +493,7 @@
                         }
                     },
                     grid: {
-                        left: '5%',
+                        left: '8%',
                         right: '0%',
                         top: '10%',
                         bottom:'20%'
@@ -568,13 +574,13 @@
             </script>
         </div>
         <div class="col-xs-6 col-sm-12 boxBorder" style="height: 18%;margin-top: 10px;">
-            <div id="rightChart4" style="height: 150px;"></div>
+            <div id="rightChart4" style="height: 110px;"></div>
         </div>
         <div class="col-xs-6 col-sm-12 boxBorder" style="height: 18%;margin-top: 15px;">
-            <div id="rightChart5" style="height: 150px;"></div>
+            <div id="rightChart5" style="height: 110px;"></div>
         </div>
         <div class="col-xs-6 col-sm-12 boxBorder" style="height: 18%;margin-top: 15px;margin-bottom: 10px;">
-            <div id="rightChart6" style="height: 150px;"></div>
+            <div id="rightChart6" style="height: 110px;"></div>
         </div>
 
         <script type="text/javascript">
@@ -582,7 +588,7 @@
             var rightChart5 = echarts.init(document.getElementById('rightChart5'));
             var rightChart6 = echarts.init(document.getElementById('rightChart6'));
             var xData = ['1月','2月','3月','4月','5月'];
-            var yData = [80,87,51,81,23,45,33];
+            var yData = [80,87,51,81,23];
             var option = {
 //                backgroundColor: "#111c4e",
                 color: ['#3398DB'],
