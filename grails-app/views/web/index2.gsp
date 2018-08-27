@@ -12,11 +12,31 @@
     <link rel="stylesheet" href="${request.contextPath}/js/bootstrap-3.3.7/css/bootstrap.min.css">
     <script src="${request.contextPath}/js/bootstrap-3.3.7/js/jquery.min.js"></script>
     <script src="${request.contextPath}/js/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-    <script src="${request.contextPath}/js/echarts/echarts.js"></script>
+    <script src="${request.contextPath}/js/echarts/echarts3.min.js"></script>
     <style type="text/css">
         .child{
             width: 100%;
             padding:0px;
+        }
+        .col-sm-12 {border-radius: 5px;}
+        .boxBorder {border: 2px solid #93ebf84f;box-shadow: 0 0 10px #93ebf84f;background: rgba(78, 136, 181, 0.66)}
+        ul{list-style:none;padding: 0px;}
+        #marquee1{overflow:hidden;color: #91e9f8;}
+        #marquee1 ul li{line-height: 30px;font-size: 14px;}
+        .p0{
+            padding:0px;
+        }
+        .p1{
+            padding-left: 5px;
+        }
+        .odd{
+            background: #08cff9a6;
+            color: #FFF;
+        }
+        .th{
+            color: #fff749;
+            font-weight: 600;
+            font-size: 16px;
         }
     </style>
 </head>
@@ -24,13 +44,13 @@
 <body style="background: rgb(21, 78, 144);">
 <div class="child">
     <div class="col-xs-6 col-sm-4">
-        <div class="col-xs-6 col-sm-12" style="height: 30%;">
+        <div class="col-xs-6 col-sm-12  boxBorder" style="height: 29%;margin-top: 10px;">
             <div id="firstChart" style="height: 300px;">
 
             </div>
             <script type="text/javascript">
                 var data = [
-                    ["0",116],["1",129],["27",135],["3",86],["4",73],["5",85],["6",73],["7",68],["8",92],["9",130],["10",245],["11",139],["12",115],["13",111],["14",309],["15",206],["16",137],["17",128],["18",85],["19",94],["20",71],["21",106],["22",84],["23",93],["24",85],["25",73],["26",83],["27",125],["28",107],["29",82],["2000-07-05",44],["2000-07-06",72],["2000-07-07",106],["2000-07-08",107],["2000-07-09",66],["2000-07-10",91],["2000-07-11",92],["2000-07-12",113],["2000-07-13",107],["2000-07-14",131],["2000-07-15",111],["2000-07-16",64],["2000-07-17",69],["2000-07-18",88],["2000-07-19",77],["2000-07-20",83],["2000-07-21",111],["2000-07-22",57],["2000-07-23",55],["2000-07-24",60]];
+                    ["0",116],["1",129],["2",135],["3",86],["4",73],["5",85],["6",73],["7",68],["8",92],["9",130],["10",245],["11",139],["12",115],["13",111],["14",209],["15",206],["16",137],["17",128],["18",85],["19",94],["20",71],["21",106],["22",84],["23",93],["24",85],["25",73],["26",83],["27",125],["28",107],["29",82],["30",44],["31",72],["32",106],["33",107],["34",66],["35",91],["36",92],["37",113],["38",107],["39",131],["40",111],["41",64],["42",69],["43",88],["44",77],["45",83],["46",111],["47",57],["48",55],["49",60]];
 
                 var dateList = data.map(function (item) {
                     return item[0];
@@ -54,12 +74,23 @@
                         dimension: 0,
                         min: 0,
                         max: dateList.length - 1
+                    }, {
+                        show: false,
+                        type: 'continuous',
+                        seriesIndex: 2,
+                        dimension: 0,
+                        min: 0,
+                        max: dateList.length - 1
                     }],
                     title: [{
                         left: 'center',
                         text: ''
                     }, {
-                        top: '55%',
+                        top: '35%',
+                        left: 'center',
+                        text: ''
+                    }, {
+                        top: '70%',
                         left: 'center',
                         text: ''
                     }],
@@ -69,55 +100,375 @@
                     xAxis: [{
                         type: 'category',
                         boundaryGap: false,
+                        axisLine:{
+                            lineStyle:{
+                                color:'#91e9f8'
+                            }
+                        },
+                        axisLabel:{
+                            color:'#fff'
+                        },
                         data: dateList
                     }, {
                         type: 'category',
                         boundaryGap: false,
+                        axisLine:{
+                            lineStyle:{
+                                color:'#91e9f8'
+                            }
+                        },
+                        axisLabel:{
+                            color:'#fff'
+                        },
                         data: dateList,
                         gridIndex: 1
+                    }, {
+                        type: 'category',
+                        boundaryGap: false,
+                        axisLine:{
+                            lineStyle:{
+                                color:'#91e9f8'
+                            }
+                        },
+                        axisLabel:{
+                            color:'#fff'
+                        },
+                        data: dateList,
+                        gridIndex: 2
                     }],
                     yAxis: [{
                         type: 'value',
+                        axisLine:{
+                            lineStyle:{
+                                color:'#91e9f8'
+                            }
+                        },
+                        axisLabel:{
+                            color:'#fff'
+                        },
                         splitLine: {show: false}
                     }, {
                         type: 'value',
+                        axisLine:{
+                            lineStyle:{
+                                color:'#91e9f8'
+                            }
+                        },
+                        axisLabel:{
+                            color:'#fff'
+                        },
                         splitLine: {show: false},
                         gridIndex: 1
+                    }, {
+                        type: 'value',
+                        axisLine:{
+                            lineStyle:{
+                                color:'#91e9f8'
+                            }
+                        },
+                        axisLabel:{
+                            color:'#fff'
+                        },
+                        splitLine: {show: false},
+                        gridIndex: 2
                     }],
                     grid: [{
                         top: '5%',
-                        bottom: '65%'
+                        left:'5%',
+                        right:'0%',
+                        bottom: '78%'
                     }, {
-                        top: '50%',
+                        left:'5%',
+                        right:'0%',
+                        top: '32%',
+                        bottom: '48%'
+                    }, {
+                        left:'5%',
+                        right:'0%',
+                        top: '62%',
                         bottom: '20%'
                     }],
                     series: [{
                         type: 'line',
                         showSymbol: false,
-                        areaStyle: {},
+                        areaStyle: {normal: {}},
                         data: valueList
                     }, {
                         type: 'line',
                         showSymbol: false,
-                        areaStyle: {},
+                        areaStyle: {normal: {}},
                         data: valueList,
                         xAxisIndex: 1,
                         yAxisIndex: 1
+                    }, {
+                        type: 'line',
+                        showSymbol: false,
+                        areaStyle: {normal: {}},
+                        data: valueList,
+                        xAxisIndex: 2,
+                        yAxisIndex: 2
                     }]
                 });
             </script>
         </div>
-        <div class="col-xs-6 col-sm-12" style="height: 30%;">1</div>
-        <div class="col-xs-6 col-sm-12" style="height: 30%;">1</div>
-        <div class="col-xs-6 col-sm-12" style="height: 10%;">1</div>
+        <div class="col-xs-6 col-sm-12 boxBorder" style="height: 28%;margin-top: 15px;">
+            <div class="col-xs-6 col-sm-6">
+                <div id="leftChart" style="height: 250px;">
+
+                </div>
+                <script type="text/javascript">
+                    var leftChart = echarts.init(document.getElementById('leftChart'));
+                    var leftOption = {
+                        color:['#ACACAC','#fec178','#72f1da','#4cd1fd','#3faefc','#8b76f9'],
+                        title:{
+                            text:'',
+                            textStyle:{
+                                color:'red',
+                                fontSize:20
+                            }
+                        },
+                        tooltip: {
+                            trigger: 'item',
+                            formatter: "{a} <br/>{b}: {c} ({d}%)"
+                        },
+                        legend: {
+                            show:false,
+                            orient: 'horizontal',
+                            x: 'center',
+                            y:'bottom',
+                            data:['访问','邮件','联盟','视频','搜索']
+                        },
+                        series: [
+                            {
+                                name:'访问来源',
+                                type:'pie',
+                                radius: ['20%', '50%'],
+                                avoidLabelOverlap: false,
+                                labelLine:{
+                                    normal:{
+                                        length2:95
+                                    }
+                                },
+                                label: {
+                                    normal: {
+                                        formatter: "{b}{c}\n\n",
+                                        padding:[0,-95],
+                                        rich: {
+                                            a: {
+                                                color: 'red',
+                                                fontSize: 14,
+                                                height:30
+                                            },
+                                            b: {
+                                                color:"blue",
+                                                fontSize: 16,
+                                            }
+                                        }
+                                    }
+                                },
+                                data:[
+                                    {value:335, name:'访问'},
+                                    {value:310, name:'邮件'},
+                                    {value:234, name:'联盟'},
+                                    {value:135, name:'视频'},
+                                    {value:548, name:'搜索'}
+                                ]
+                            }
+                        ]
+                    };
+
+                    leftChart.setOption(leftOption);
+                </script>
+            </div>
+            <div class="col-xs-6 col-sm-6"></div>
+        </div>
+        <div class="col-xs-6 col-sm-12 boxBorder p0" style="height: 24%;margin-top: 15px;">
+            <div class="col-sm-12 p0" style="line-height: 40px;">
+                <div  class="col-xs-6 col-sm-2 p1 th">设备名称</div>
+                <div  class="col-xs-6 col-sm-3 p0 th">IP地址</div>
+                <div  class="col-xs-6 col-sm-2 p0 th">发生时间</div>
+                <div  class="col-xs-6 col-sm-3 p0 th ">单位名称</div>
+                <div  class="col-xs-6 col-sm-2 p0 th">责任人</div>
+            </div>
+            <div id="marquee1" style="max-height: 150px;margin-top: 50px;">
+                <ul>
+                    <li class="col-sm-12 p0">
+                        <div  class="col-xs-6 col-sm-2 p1"> 设备名称</div>
+                        <div  class="col-xs-6 col-sm-3 p0">192.168.1.120</div>
+                        <div  class="col-xs-6 col-sm-2 p0">08-04 17:20</div>
+                        <div  class="col-xs-6 col-sm-3 p0 ">单位名称</div>
+                        <div  class="col-xs-6 col-sm-2 p0">张***</div>
+                    </li>
+                    <li class="col-sm-12 p0 odd">
+                        <div  class="col-xs-6 col-sm-2 p1"> 设备名称</div>
+                        <div  class="col-xs-6 col-sm-3 p0">192.168.1.120</div>
+                        <div  class="col-xs-6 col-sm-2 p0">08-04</div>
+                        <div  class="col-xs-6 col-sm-3 p0 ">单位名称</div>
+                        <div  class="col-xs-6 col-sm-2 p0">张***</div>
+                    </li>
+                    <li class="col-sm-12 p0">
+                        <div  class="col-xs-6 col-sm-2 p1">设备名称</div>
+                        <div  class="col-xs-6 col-sm-3 p0">192.168.1.120</div>
+                        <div  class="col-xs-6 col-sm-2 p0">08-04</div>
+                        <div  class="col-xs-6 col-sm-3 p0 ">单位名称</div>
+                        <div  class="col-xs-6 col-sm-2 p0">张***</div>
+                    </li>
+                    <li class="col-sm-12 p0 odd">
+                        <div  class="col-xs-6 col-sm-2 p1"> 设备名称</div>
+                        <div  class="col-xs-6 col-sm-3 p0">192.168.1.120</div>
+                        <div  class="col-xs-6 col-sm-2 p0">08-04</div>
+                        <div  class="col-xs-6 col-sm-3 p0 ">单位名称</div>
+                        <div  class="col-xs-6 col-sm-2 p0">张***</div>
+                    </li>
+                    <li class="col-sm-12 p0">
+                        <div  class="col-xs-6 col-sm-2 p1"> 设备名称</div>
+                        <div  class="col-xs-6 col-sm-3 p0">192.168.1.120</div>
+                        <div  class="col-xs-6 col-sm-2 p0">08-04</div>
+                        <div  class="col-xs-6 col-sm-3 p0 ">单位名称</div>
+                        <div  class="col-xs-6 col-sm-2 p0">张***</div>
+                    </li>
+                    <li class="col-sm-12 p0 odd">
+                        <div  class="col-xs-6 col-sm-2 p1"> 设备名称</div>
+                        <div  class="col-xs-6 col-sm-3 p0">192.168.1.120</div>
+                        <div  class="col-xs-6 col-sm-2 p0">08-04</div>
+                        <div  class="col-xs-6 col-sm-3 p0 ">单位名称</div>
+                        <div  class="col-xs-6 col-sm-2 p0">张***</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-12 boxBorder" style="height: 12%;margin-top: 15px;padding: 15px 10px;">
+            <div style="float: left;">
+                <img src="${request.contextPath}/images/logo.jpg" width="80px" height="80px">&nbsp;
+            </div>
+            <div style="line-height: 40px;float: left;">
+                <div style="font-size: 24px;color: #fff;font-weight: 800;">IPPR&EVCC</div>
+                <div style="font-size: 20px;color:#fff749;font-weight: 800;padding:0px 0px;">区域工业环境大数据在线监测系统</div>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
     </div>
     <div class="col-xs-6 col-sm-4">
-        <div class="col-xs-6 col-sm-12" style="height: 50%;">1</div>
-        <div class="col-xs-6 col-sm-12" style="height: 25%;">1</div>
-        <div class="col-xs-6 col-sm-12" style="height: 25%;">1</div>
+        <div class="col-xs-6 col-sm-12" style="height: 49%;">
+
+        </div>
+        <div class="col-xs-6 col-sm-12" style="height: 24%;">
+            <div class="col-xs-6 col-sm-4">
+                <div id="centerChart1" style="height: 220px;"></div>
+            </div>
+            <div class="col-xs-6 col-sm-4">
+                <div id="centerChart2" style="height: 220px;"></div>
+            </div>
+            <div class="col-xs-6 col-sm-4">
+                <div id="centerChart3" style="height: 220px;"></div>
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-12 boxBorder" style="height: 24%;margin-top: 15px;">
+            <div class="col-xs-6 col-sm-4">
+                <div id="centerChart4" style="height: 220px;"></div>
+            </div>
+            <div class="col-xs-6 col-sm-4">
+                <div id="centerChart5" style="height: 220px;"></div>
+            </div>
+            <div class="col-xs-6 col-sm-4">
+                <div id="centerChart6" style="height: 220px;"></div>
+            </div>
+        </div>
+        <script type="text/javascript">
+            var centerChart1 = echarts.init(document.getElementById('centerChart1'));
+            var centerChart2 = echarts.init(document.getElementById('centerChart2'));
+            var centerChart3 = echarts.init(document.getElementById('centerChart3'));
+            var centerChart4 = echarts.init(document.getElementById('centerChart4'));
+            var centerChart5 = echarts.init(document.getElementById('centerChart5'));
+            var centerChart6 = echarts.init(document.getElementById('centerChart6'));
+            var centerOption = {
+                title: {
+                    text: '',
+                    x: '50%',
+                    y: '45%',
+                    textAlign: "center",
+                    textStyle: {
+                        fontWeight: 'normal',
+                        fontSize: 14
+                    },
+                    subtextStyle: {
+                        fontWeight: 'bold',
+                        fontSize: 14,
+                        color: '#3ea1ff'
+                    }
+                },
+                series: [{
+                    name: ' ',
+                    type: 'pie',
+                    radius: ['50%', '95%'],
+                    startAngle: 225,
+                    color: [new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                        offset: 0,
+                        color: '#00a2ff'
+                    }, {
+                        offset: 1,
+                        color: '#70ffac'
+                    }]), "transparent"],
+                    hoverAnimation: false,
+                    legendHoverLink: false,
+                    itemStyle: {
+                        normal: {
+                            borderColor: "transparent",
+                            borderWidth: "60"
+                        },
+                        emphasis: {
+                            borderColor: "transparent",
+                            borderWidth: "60"
+                        }
+                    },
+                    z: 10,
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data: [{
+                        value: 75
+                    }, {
+                        value: 25
+                    }]
+                }, {
+                    name: '',
+                    type: 'pie',
+                    radius: ['50%', '95%'],
+                    startAngle: 225,
+                    color: ["#c2f5e1", "transparent"],
+                    labelLine: {
+                        normal: {
+                            show: false
+                        }
+                    },
+                    data: [{
+                        value: 75
+                    }, {
+                        value: 25
+                    }]
+                }
+                ]
+            };
+
+            setPercent(40);
+            function setPercent(value) {
+                var  value_ = 75 * value / 100;
+                centerOption.title.subtext = value + "%";
+                centerOption.series[0].data[0].value = value_;
+                centerOption.series[0].data[1].value = 100 - value_;
+                centerChart1.setOption(centerOption, true);
+                centerChart2.setOption(centerOption, true);
+                centerChart3.setOption(centerOption, true);
+                centerChart4.setOption(centerOption, true);
+                centerChart5.setOption(centerOption, true);
+                centerChart6.setOption(centerOption, true);
+            }
+        </script>
     </div>
     <div class="col-xs-6 col-sm-4">
-        <div class="col-xs-6 col-sm-12" style="height: 40%;">
+        <div class="col-xs-6 col-sm-12 boxBorder" style="height: 39%;margin-top: 15px;">
             <div id="rightChart1" style="height: 120px;"></div>
             <div id="rightChart2" style="height: 120px;"></div>
             <div id="rightChart3" style="height: 120px;"></div>
@@ -158,11 +509,32 @@
                             axisTick: {
                                 alignWithLabel: true
                             },
+                            axisLine:{
+                                lineStyle:{
+                                    color:'#91e9f8'
+                                }
+                            },
+                            axisLabel:{
+                                color:'#fff'
+                            },
                             data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
                         }
                     ],
                     yAxis: [
                         {
+                            axisLine:{
+                                lineStyle:{
+                                    color:'#91e9f8'
+                                }
+                            },
+                            axisLabel:{
+                                color:'#fff'
+                            },
+                            splitLine: {
+                                lineStyle: {
+                                    color:'#91e9f838'
+                                }
+                            },
                             type: 'value'
                         }
                     ],
@@ -195,14 +567,14 @@
                 rightChart3.setOption(option);
             </script>
         </div>
-        <div class="col-xs-6 col-sm-12" style="height: 20%;">
-            <div id="rightChart4" style="height: 140px;"></div>
+        <div class="col-xs-6 col-sm-12 boxBorder" style="height: 18%;margin-top: 10px;">
+            <div id="rightChart4" style="height: 150px;"></div>
         </div>
-        <div class="col-xs-6 col-sm-12" style="height: 20%;">
-            <div id="rightChart5" style="height: 140px;"></div>
+        <div class="col-xs-6 col-sm-12 boxBorder" style="height: 18%;margin-top: 15px;">
+            <div id="rightChart5" style="height: 150px;"></div>
         </div>
-        <div class="col-xs-6 col-sm-12" style="height: 20%;">
-            <div id="rightChart6" style="height: 140px;"></div>
+        <div class="col-xs-6 col-sm-12 boxBorder" style="height: 18%;margin-top: 15px;margin-bottom: 10px;">
+            <div id="rightChart6" style="height: 150px;"></div>
         </div>
 
         <script type="text/javascript">
@@ -229,9 +601,9 @@
                 grid: {
                     left: '5%',
                     right: '0%',
-                    bottom: '0%',
-                    top: '8%',
-                    height: '90%',
+                    bottom: '10%',
+                    top: '15%',
+                    height: '85%',
                     containLabel: true,
                     z: 22
                 },
@@ -244,12 +616,12 @@
                     },
                     axisLine: {
                         lineStyle: {
-                            color: '#0c3b71'
+                            color: '#91e9f8'
                         }
                     },
                     axisLabel: {
                         show: true,
-                        color: 'rgb(170,170,170)',
+                        color: '#fff',
                         fontSize: 16
                     }
                 }],
@@ -264,11 +636,11 @@
                     },
                     axisLine: {
                         lineStyle: {
-                            color: '#0c3b71'
+                            color: '#91e9f8'
                         }
                     },
                     axisLabel: {
-                        color: 'rgb(170,170,170)',
+                        color: '#fff',
                         formatter: '{value}'
                     }
                 },
@@ -359,5 +731,13 @@
         </script>
     </div>
 </div>
+
+<script src="${request.contextPath}/js/jquery.kxbdmarquee.min.js"></script>
+<script type="text/javascript">
+    $('#marquee1').kxbdMarquee({
+        direction: 'up',
+        isEqual: false
+    });
+</script>
 </body>
 </html>
