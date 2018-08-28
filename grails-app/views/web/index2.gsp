@@ -338,14 +338,15 @@
             </div>
         </div>
         <div class="col-xs-6 col-sm-12 boxBorder" style="height: 14%;margin-top: 15px;padding: 5px 10px;">
-            <div style="float: left;">
-                <img src="${request.contextPath}/images/logo.jpg" width="80px" height="80px">&nbsp;
+            <img src="${request.contextPath}/images/logo1.png" style="width: 100%;height: 80%;">
+            %{--<div style="float: left;">
+                <img src="${request.contextPath}/images/logo.png" width="80px" height="80px">&nbsp;
             </div>
             <div style="line-height: 35px;float: left;">
                 <div style="font-size: 20px;color: #fff;font-weight: 800;">IPPR&EVCC</div>
                 <div style="font-size: 16px;color:#fff749;font-weight: 800;padding:0px 0px;">区域工业环境大数据在线监测系统</div>
             </div>
-            <div style="clear: both;"></div>
+            <div style="clear: both;"></div>--}%
         </div>
     </div>
     <div class="col-xs-6 col-sm-4">
