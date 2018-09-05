@@ -32,5 +32,11 @@ class WebController{
     def index2(){
 
     }
+    def index3(){
+
+    }
+    def demo(){
+
+    }
 
 }
