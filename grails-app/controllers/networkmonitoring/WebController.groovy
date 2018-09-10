@@ -21,8 +21,8 @@ class WebController{
             def map = [:];
             map.name = entry.name;
             map.value = [];
-            map.value << entry.east;
-            map.value << entry.north;
+            map.value << entry.lng;
+            map.value << entry.lat;
             map.value << i+1;
             rows << map;
         }

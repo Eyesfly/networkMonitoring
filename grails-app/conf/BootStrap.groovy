@@ -32,12 +32,12 @@ class BootStrap {
                 {name: '舟山', value: [122.207216, 29.985295, 2]}
         *
         * */
-        new MonitoringPlace(name: "海门",east: '121.15',north: '31.89').save(flush: true);
-        new MonitoringPlace(name: "北京",east: '116.3',north: '39.9').save(flush: true);
-        new MonitoringPlace(name: "鄂尔多斯",east: '109.781327',north: '39.608266').save(flush: true);
-        new MonitoringPlace(name: "招远",east: '120.38',north: '37.35').save(flush: true);
-        new MonitoringPlace(name: "新乡",east: '113.54',north: '35.18').save(flush: true);
-        new MonitoringPlace(name: "舟山",east: '122.207216',north: '29.985295').save(flush: true);
+        new MonitoringPlace(name: "海门",lng: 121.15f,lat: 31.89f).save(flush: true);
+        new MonitoringPlace(name: "北京",lng: 116.3f,lat: 39.9f).save(flush: true);
+        new MonitoringPlace(name: "鄂尔多斯",lng: 109.781327f,lat: 39.608266f).save(flush: true);
+        new MonitoringPlace(name: "招远",lng: 120.38f,lat: 37.35f).save(flush: true);
+        new MonitoringPlace(name: "新乡",lng: 113.54f,lat: 35.18f).save(flush: true);
+        new MonitoringPlace(name: "舟山",lng: 122.207216f,lat: 29.985295f).save(flush: true);
     }
     private void createOrganization(){
         def org1 =new Organization(name: "测试单位1").save(flush: true);

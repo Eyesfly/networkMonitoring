@@ -437,7 +437,7 @@
                 <ul>
                     <g:each in="${networkmonitoring.MonitoringPlace.list()}" var="obj">
                         <li class="col-sm-12">
-                            <div  class="col-xs-6 col-sm-8">${obj.east}    ${obj.north}</div>
+                            <div  class="col-xs-6 col-sm-8">${obj.lng}    ${obj.lat}</div>
                             <div  class="col-xs-6 col-sm-4">${obj.name}</div>
                         </li>
                     </g:each>

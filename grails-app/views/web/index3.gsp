@@ -23,10 +23,12 @@
 
 <body style="background: rgb(21, 78, 144);">
 <div class="child">
-    <div class="col-xs-6 col-sm-2"></div>
+    <div class="col-xs-6 col-sm-2" style="height:100%;overflow-y: scroll; ">
+
+    </div>
     <div class="col-xs-6 col-sm-10">
         <div class="col-xs-6 col-sm-12" style="height: 400px;">
-            ddd
+            <g:render template="3d"></g:render>
         </div>
         <div class="col-xs-6 col-sm-12">
             <div class="col-xs-6 col-sm-6">
