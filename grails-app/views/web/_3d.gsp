@@ -98,7 +98,7 @@
                 }
             } );*/
 
-            object.position.y = - 55;
+            object.position.y = - 35;
             scene.add( object );
 
         }, onProgress, onError );
