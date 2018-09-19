@@ -43,9 +43,10 @@
     </div>
     <div class="col-xs-6 col-sm-10">
         <div class="col-xs-6 col-sm-12" style="height: 400px;">
-            <g:render template="3d"></g:render>
+            %{--<g:render template="3d"></g:render>--}%
+            %{--<g:render template="carousel"></g:render>--}%
         </div>
-        <div class="col-xs-6 col-sm-12" style="border-top: 2px solid rgba(255, 255, 255, 0.65);padding:5px 0px;">
+        <div class="col-xs-6 col-sm-12" %{--style="border-top: 2px solid rgba(255, 255, 255, 0.65);padding:5px 0px;"--}%>
             <div class="col-xs-6 col-sm-6">
                 <div id="rightChart1" style="height: 300px;width: 100%;"></div>
                 <script type="text/javascript">
