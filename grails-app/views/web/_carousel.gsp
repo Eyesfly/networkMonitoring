@@ -18,8 +18,8 @@ h2 {
 
 .carousel {
     padding: 20px;
-    -webkit-perspective: 500px;
-    perspective: 500px;
+    -webkit-perspective: 800px;
+    perspective: 800px;
     overflow: hidden;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -48,7 +48,7 @@ h2 {
     transition: transform 0.5s, -webkit-transform 0.5s;
 }
 .carousel figure img {
-    width: 100%;
+    width: 120%;
     box-sizing: border-box;
     padding: 0 0px;
 }
@@ -85,7 +85,7 @@ h2 {
 
 <div class="htmleaf-container">
 
-    <h1>3D Rotating Carousel Examples</h1>
+   %{-- <h1>3D Rotating Carousel Examples</h1>
     <h2>Three images</h2>
     <div class="carousel">
         <figure>
@@ -168,21 +168,21 @@ h2 {
     </div>
 
     <h2>Hidden backfaces</h2>
-
-    <div class="carousel" data-gap="20" data-bfc>
+--}%
+    <div class="carousel" data-gap="10" data-bfc>
         <figure>
-            <img src="${request.contextPath}/images/tl.jpg" alt="" style="height: 400px;height: 350px;">
-            <img src="${request.contextPath}/images/tl.jpg" alt="" style="height: 400px;height: 350px;">
-            <img src="${request.contextPath}/images/tl.jpg" alt="" style="height: 400px;height: 350px;">
-            <img src="${request.contextPath}/images/tl.jpg" alt="" style="height: 400px;height: 350px;">
-            <img src="${request.contextPath}/images/tl.jpg" alt="" style="height: 400px;height: 350px;">
-            <img src="${request.contextPath}/images/tl.jpg" alt="" style="height: 400px;height: 350px;">
-            <img src="${request.contextPath}/images/tl.jpg" alt="" style="height: 400px;height: 350px;">
-            <img src="${request.contextPath}/images/tl.jpg" alt="" style="height: 400px;height: 350px;">
-            <img src="${request.contextPath}/images/tl.jpg" alt="" style="height: 400px;height: 350px;">
-            <img src="${request.contextPath}/images/tl.jpg" alt="" style="height: 400px;height: 350px;">
-            <img src="${request.contextPath}/images/tl.jpg" alt="" style="height: 400px;height: 350px;">
-            <img src="${request.contextPath}/images/tl.jpg" alt="" style="height: 400px;height: 350px;">
+            <img src="${request.contextPath}/images/tl.jpg" alt="" style="height: 350px;">
+            <img src="${request.contextPath}/images/tl.jpg" alt="" style="height: 350px;">
+            <img src="${request.contextPath}/images/tl.jpg" alt="" style="height: 350px;">
+            <img src="${request.contextPath}/images/tl.jpg" alt="" style="height: 350px;">
+            <img src="${request.contextPath}/images/tl.jpg" alt="" style="height: 350px;">
+            <img src="${request.contextPath}/images/tl.jpg" alt="" style="height: 350px;">
+            <img src="${request.contextPath}/images/tl.jpg" alt="" style="height: 350px;">
+            <img src="${request.contextPath}/images/tl.jpg" alt="" style="height: 350px;">
+            <img src="${request.contextPath}/images/tl.jpg" alt="" style="height: 350px;">
+            <img src="${request.contextPath}/images/tl.jpg" alt="" style="height: 350px;">
+            <img src="${request.contextPath}/images/tl.jpg" alt="" style="height: 350px;">
+            <img src="${request.contextPath}/images/tl.jpg" alt="" style="height: 350px;">
         </figure>
         <nav>
             <button class="nav prev"><<</button>
