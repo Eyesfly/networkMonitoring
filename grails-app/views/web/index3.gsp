@@ -17,6 +17,7 @@
         .child{
             width: 100%;
             padding:0px;
+            margin:0px;
         }
     </style>
 </head>
@@ -24,15 +25,29 @@
 <body style="background: rgb(21, 78, 144);">
 <div class="child">
     <div class="col-xs-6 col-sm-2" style="height:100%;overflow-y: scroll; ">
-
+        <div class="col-xs-6 col-sm-12" style="margin:10px 0px;">
+            <img src="${request.contextPath}/images/ctl.jpg" style="width: 100%;height: 150px;border: 5px solid rgba(255, 255, 255, 0.53);border-radius: 5px;box-shadow: 0 0 10px #93ebf84f;">
+        </div>
+        <div class="col-xs-6 col-sm-12" style="margin:10px 0px;">
+            <img src="${request.contextPath}/images/ctl.jpg" style="width: 100%;height: 150px;border: 5px solid rgba(255, 255, 255, 0.53);border-radius: 5px;box-shadow: 0 0 10px #93ebf84f;">
+        </div>
+        <div class="col-xs-6 col-sm-12" style="margin:10px 0px;">
+            <img src="${request.contextPath}/images/ctl.jpg" style="width: 100%;height: 150px;border: 5px solid rgba(255, 255, 255, 0.53);border-radius: 5px;box-shadow: 0 0 10px #93ebf84f;">
+        </div>
+        <div class="col-xs-6 col-sm-12" style="margin:10px 0px;">
+            <img src="${request.contextPath}/images/ctl.jpg" style="width: 100%;height: 150px;border: 5px solid rgba(255, 255, 255, 0.53);border-radius: 5px;box-shadow: 0 0 10px #93ebf84f;">
+        </div>
+        <div class="col-xs-6 col-sm-12" style="margin:10px 0px;">
+            <img src="${request.contextPath}/images/ctl.jpg" style="width: 100%;height: 150px;border: 5px solid rgba(255, 255, 255, 0.53);border-radius: 5px;box-shadow: 0 0 10px #93ebf84f;">
+        </div>
     </div>
     <div class="col-xs-6 col-sm-10">
         <div class="col-xs-6 col-sm-12" style="height: 400px;">
             <g:render template="3d"></g:render>
         </div>
-        <div class="col-xs-6 col-sm-12">
+        <div class="col-xs-6 col-sm-12" style="border-top: 2px solid rgba(255, 255, 255, 0.65);padding:5px 0px;">
             <div class="col-xs-6 col-sm-6">
-                <div id="rightChart1" style="height: 420px;width: 100%;"></div>
+                <div id="rightChart1" style="height: 300px;width: 100%;"></div>
                 <script type="text/javascript">
                     var jsondata = {
                         name: "***监测点",
@@ -91,7 +106,17 @@
                                         fontSize: 14
                                     }
                                 },
-                                symbolSize: 15,
+                                leaves: {
+                                    label: {
+                                        normal: {
+//                                            position: 'right',
+//                                            verticalAlign: 'middle',
+                                            align: 'right',
+                                            offset:[40,10]
+                                        }
+                                    }
+                                },
+                                symbolSize: 5,
                                 initialTreeDepth: 3,
                                 animationDurationUpdate: 750
 
@@ -101,7 +126,7 @@
                 </script>
             </div>
             <div class="col-xs-6 col-sm-6">
-                <div id="rightChart2" style="height: 420px;width: 100%;"></div>
+                <div id="rightChart2" style="height: 300px;width: 100%;"></div>
                 <script type="text/javascript">
                     var data0 = splitData([
                         ['2013/1/24', 2320.26,2320.26,2287.3,2362.94],
@@ -286,7 +311,7 @@
                                 end: 100
                             },
                             {
-                                show: true,
+                                show: false,
                                 type: 'slider',
                                 y: '90%',
                                 start: 50,
