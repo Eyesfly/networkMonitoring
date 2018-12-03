@@ -64,11 +64,11 @@ class News {
         stickyDate(nullable:true)
     }
     static mapping = {
-        projectOverview 'text'
-        result1 'text'
-        result2 'text'
-        result3 'text'
-        result4 'text'
-        result5 'text'
+        projectOverview type: 'text'
+        result1 type: 'text'
+        result2 type: 'text'
+        result3 type: 'text'
+        result4 type: 'text'
+        result5 type: 'text'
     }
 }
