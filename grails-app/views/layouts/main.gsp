@@ -31,7 +31,7 @@
 	<script src="${request.contextPath}/js/bootstrap-table-1.11.0/locale/bootstrap-table-zh-CN.min.js"></script>
 	<script type="text/javascript" src="${request.contextPath}/js/jquery-validation/jquery.validate.js"></script>
 	<script type="text/javascript" src="${request.contextPath}/js/jquery-validation/localization/messages_zh.js"></script>
-	%{--<script type='text/javascript' src='${request.contextPath}/js/jquery-easyui-1.5.1/jquery.easyui.min.js'></script>--}%
+	<script type='text/javascript' src='${request.contextPath}/js/jquery-easyui-1.5.1/jquery.easyui.min.js'></script>
 	<script type='text/javascript' src='${request.contextPath}/js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js'></script>
 	<script type='text/javascript' src='${request.contextPath}/js/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js'></script>
 	<link rel="stylesheet" type="text/css" href="${request.contextPath}/js/jstree-3.2.1/dist/themes/default/style.min.css"/>
