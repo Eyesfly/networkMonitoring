@@ -39,13 +39,16 @@
             font-size: 16px;
         }
     </style>
+    <script type="text/javascript">
+        var height = $(window).height();
+    </script>
 </head>
 
 <body style="background: rgb(21, 78, 144);">
 <div class="child">
     <div class="col-xs-6 col-sm-4">
         <div class="col-xs-6 col-sm-12  boxBorder" style="height: 35%;margin-top: 10px;">
-            <div id="firstChart" style="height: 230px;">
+            <div id="firstChart">
 
             </div>
             <script type="text/javascript">
@@ -58,6 +61,7 @@
                 var valueList = data.map(function (item) {
                     return item[1];
                 });
+                $("#firstChart").css("height",(0.35*height)+"px");
                 var myChart1 = echarts.init(document.getElementById('firstChart'));
                 myChart1.setOption({
                     // Make gradient line here
@@ -213,10 +217,11 @@
         </div>
         <div class="col-xs-6 col-sm-12 boxBorder" style="height: 21%;margin-top: 15px;">
             <div class="col-xs-6 col-sm-6">
-                <div id="leftChart" style="height: 150px;">
+                <div id="leftChart" >
 
                 </div>
                 <script type="text/javascript">
+                    $("#leftChart").css("height",0.21*height+"px");
                     var leftChart = echarts.init(document.getElementById('leftChart'));
                     var leftOption = {
                         color:['#ACACAC','#fec178','#72f1da','#4cd1fd','#3faefc','#8b76f9'],
@@ -290,7 +295,7 @@
                 %{--<div  class="col-xs-6 col-sm-3 p0 th ">单位名称</div>--}%
                 <div  class="col-xs-6 col-sm-2 p0 th">责任人</div>
             </div>
-            <div id="marquee1" style="max-height: 105px;margin-top: 40px;">
+            <div id="marquee1" style="max-height: 80px;margin-top: 40px;">
                 <ul>
                     <li class="col-sm-12 p0">
                         <div  class="col-xs-6 col-sm-3 p1"> 设备名称</div>
@@ -741,6 +746,7 @@
 
 <script src="${request.contextPath}/js/jquery.kxbdmarquee.min.js"></script>
 <script type="text/javascript">
+
     $('#marquee1').kxbdMarquee({
         direction: 'up',
         isEqual: false

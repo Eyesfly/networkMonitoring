@@ -1,5 +1,6 @@
 package networkmonitoring
 
+import com.eyesfly.dictionary.News
 import grails.converters.JSON
 import org.springframework.messaging.handler.annotation.MessageMapping
 import org.springframework.messaging.handler.annotation.SendTo
@@ -38,5 +39,12 @@ class WebController{
     def demo(){
 
     }
-
+    def index4(){
+        def list = News.list();
+        return [list:list]
+    }
+    def showProject(){
+        def news = News.get(params.id?.toLong()?:-1l);
+        return [news:news]
+    }
 }

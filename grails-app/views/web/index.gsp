@@ -328,7 +328,7 @@
                     <img src="${request.contextPath}/images/logo.jpg" width="80px" height="80px">&nbsp;<span style="font-size: 24px;color: #fff;font-weight: 800;">IPPR&EVCC</span>
                 </div>
                 <div style="line-height: 80px;">
-                    <span style="font-size: 20px;color:#fff749;font-weight: 800;padding:0px 0px;">区域工业环境大数据在线监测系统</span>
+                    <span style="font-size: 18px;color:#fff749;font-weight: 800;padding:0px 0px;">区域工业环境大数据在线监测系统</span>
                 </div>
         </div>
         <div class="col-xs-6 col-sm-3"

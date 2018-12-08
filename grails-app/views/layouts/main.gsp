@@ -222,10 +222,11 @@
 %{--<div class="body_fiximg"></div>--}%
 <div class="header">
 	<div class="w1210">
-%{--
-		<div class="head_icon fl" style="margin-top: 0;margin-bottom: -73px;"><img src="${request.contextPath}/images/htgl/top_icon.png" alt=""></div>
-		<div class="logo fl mt15"  style="margin-top: 0;padding: 20px 0px;margin-left: 15px;"><img src="${request.contextPath}/images/htgl/logo1.png" alt=""></div>
---}%
+
+
+		<img src="${request.contextPath}/images/logo1.png" style="width: 500px;height: 70px;margin-top: 20px;">
+
+
 		<div class="topBar fr mt40">
 			您好，${currentUser}
 			<sec:ifNotGranted roles="ROLE_000000_0_yonghudaorujiaose">
