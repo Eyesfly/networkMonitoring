@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title></title>
+    <title>区域工业环境大数据在线监测系统</title>
     <link rel="stylesheet" href="${request.contextPath}/js/bootstrap-3.3.7/css/bootstrap.min.css">
     <script src="${request.contextPath}/js/bootstrap-3.3.7/js/jquery.min.js"></script>
     <script src="${request.contextPath}/js/bootstrap-3.3.7/js/bootstrap.min.js"></script>
@@ -73,6 +73,10 @@
         function showProject(id){
             $.post("${request.contextPath}/web/showProject",{id:id},function (data,status) {
                     $("#content").html(data);
+                    var index = $(".nav-tabs").find("li").size();
+                    if(index>0){
+                        $('.nav-tabs li:eq(0) a').tab('show');
+                    }
             },'html');
         }
     </script>

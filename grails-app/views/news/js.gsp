@@ -39,11 +39,11 @@
     }
 
     function newNews() {
-        loadRemotePage('${request.contextPath}/news/create',{categoryId:$('#categoryId').val()},'内容管理','${category?.name}',"新增${category?.name}");
+        loadRemotePage('${request.contextPath}/news/create',{categoryId:$('#categoryId').val()},'项目管理','',"新增");
     }
 
     function editNews(id) {
-        loadRemotePage('${request.contextPath}/news/edit',{id:id,categoryId:$('#categoryId').val()},'内容管理','${category?.name}',"编辑${category?.name}");
+        loadRemotePage('${request.contextPath}/news/edit',{id:id,categoryId:$('#categoryId').val()},'项目管理','',"编辑");
     }
 
     function delNews(id) {
@@ -81,13 +81,16 @@
 
     function saveOrUpdate(categoryId) {
         if($("#newsForm").valid()){
-            var projectOverview = CKEDITOR.instances['projectOverview'].getData();
-            if(!projectOverview){
-                $('#content2').html('<span style="color: red;font-weight: 700;">必须填写</span>');
-                return;
-            }else {
-                $('#content2').html('');
+            var length = $(".nav-tabs").find("li").size();
+            for(var i=0;i<length;i++){
+                var projectOverview = CKEDITOR.instances['content'+i].getData();
+                if(!projectOverview){
+                    alert("【"+$(".nav-tabs").find("li").eq(i).text()+"】的值不能为空！");
+                    $('.nav-tabs li:eq("'+i+'") a').tab('show');
+                    return;
+                }
             }
+
             $("#newsForm").form('submit', {
                 url: "${request.contextPath}/news/saveOrUpdate",
                 success: function (data) {
@@ -95,7 +98,7 @@
                     $("#messageModalBody").html(data.message);
                     $("#messageModal").modal('show');
                     if (data.result) {
-                        loadRemotePage('${request.contextPath}/news/list',{},'内容管理',"内容管理");
+                        loadRemotePage('${request.contextPath}/news/list',{},'项目管理',"");
                     }
                 }
             },"json");
@@ -103,7 +106,7 @@
     }
 
     function showNews(id) {
-        loadRemotePage('${request.contextPath}/news/show',{newsId:id},'内容管理','${category?.name}',"查看${category?.name}");
+        loadRemotePage('${request.contextPath}/news/show',{newsId:id},'项目管理','${category?.name}',"查看${category?.name}");
     }
 
     function changeNews(id,status) {
@@ -111,7 +114,7 @@
             $("#messageModalBody").html(data.message);
             $("#messageModal").modal('show');
             if (data.result) {
-                loadRemotePage('${request.contextPath}/news/list?categoryId=${category?.id}',{},'内容管理','${category?.name}');
+                loadRemotePage('${request.contextPath}/news/list?categoryId=${category?.id}',{},'项目管理','${category?.name}');
             }
         }, "json");
     }
@@ -164,6 +167,6 @@
         },'json');
     }
     function backManager(){                          //返回
-        loadRemotePage('${request.contextPath}/news/list',backParams,'系统管理','法律政策');
+        loadRemotePage('${request.contextPath}/news/list',backParams,'项目管理','');
     }
 </script>

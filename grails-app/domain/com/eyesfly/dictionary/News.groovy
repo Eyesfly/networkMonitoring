@@ -9,18 +9,6 @@ class News {
 
     @Title(zh_CN='标题')
     String name
-    @Title(zh_CN='项目概况')
-    String projectOverview
-    @Title(zh_CN='第一次场地测试结果')
-    String result1;
-    @Title(zh_CN='第二次场地测试结果')
-    String result2;
-    @Title(zh_CN='第三次场地测试结果')
-    String result3;
-    @Title(zh_CN='第四次场地测试结果')
-    String result4;
-    @Title(zh_CN='施工后测试')
-    String result5;
     @Title(zh_CN='创建人')
     BaseUser creater
     @Title(zh_CN='修改人')
@@ -47,12 +35,6 @@ class News {
     Date lastUpdated
     static constraints = {
         name(nullable: false)
-        projectOverview(nullable: false,size: 0..2000)
-        result1(nullable: false,size: 0..2000)
-        result2(nullable: false,size: 0..2000)
-        result3(nullable: true,size: 0..2000)
-        result4(nullable: true,size: 0..2000)
-        result5(nullable: true,size: 0..2000)
         creater(nullable:false)
         updater(nullable:false)
         publisher(nullable:true)
@@ -62,13 +44,5 @@ class News {
         sq(nullable:true)
         isSticky(nullable:true)
         stickyDate(nullable:true)
-    }
-    static mapping = {
-        projectOverview type: 'text'
-        result1 type: 'text'
-        result2 type: 'text'
-        result3 type: 'text'
-        result4 type: 'text'
-        result5 type: 'text'
     }
 }

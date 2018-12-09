@@ -1,6 +1,7 @@
 package networkmonitoring
 
 import com.eyesfly.dictionary.News
+import com.eyesfly.dictionary.NewsContent
 import grails.converters.JSON
 import org.springframework.messaging.handler.annotation.MessageMapping
 import org.springframework.messaging.handler.annotation.SendTo
@@ -40,11 +41,17 @@ class WebController{
 
     }
     def index4(){
-        def list = News.list();
+        def list = News.findAllByStatus("发布");
         return [list:list]
     }
     def showProject(){
         def news = News.get(params.id?.toLong()?:-1l);
+        def newsContentList = [];
+        if(news){
+            newsContentList = NewsContent.findAllByNews(news);
+        }
+
+        return [news:news,newsContentList:newsContentList]
         return [news:news]
     }
 }

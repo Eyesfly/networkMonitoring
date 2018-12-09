@@ -2,6 +2,7 @@ package com.eyesfly.web
 
 import com.eyesfly.core.BaseUserBaseRole
 import com.eyesfly.dictionary.News
+import com.eyesfly.dictionary.NewsContent
 import grails.converters.JSON
 import grails.transaction.Transactional
 import org.hibernate.criterion.CriteriaSpecification
@@ -87,8 +88,13 @@ class NewsController {
      * @return
      */
     def edit() {
-        def news = News.get(params?.id);
-        return [news:news]
+        def news = News.get(params.id?.toLong()?:-1l);
+        def newsContentList = [];
+        if(news){
+            newsContentList = NewsContent.findAllByNews(news);
+        }
+
+        return [news:news,newsContentList:newsContentList]
     }
 
     /**
@@ -97,6 +103,7 @@ class NewsController {
      */
     @Transactional
     def saveOrUpdate() {
+        println params;
         def map = [:], news
         if(params?.id){
             news = News.read(params?.id)
@@ -107,8 +114,45 @@ class NewsController {
             news.creater = springSecurityService.currentUser;
             news.updater = springSecurityService.currentUser;
         }
+
         news.publishDate = params?.publishDate?Date.parse("yyyy-MM-dd", params?.publishDate?.trim()):new Date();
         if(news.save(flush: true)){
+            if(params.content&&params.content.class.name == 'java.lang.String'){
+                def obj = NewsContent.get(params.projectId?.toLong()?:-1l);
+                def projectName = params.projectName;
+                if(obj){
+                    obj.content =params.content;
+                    obj.name =projectName;
+                }else{
+                    obj = new NewsContent(news: news,content: params.content,sort:0,name: projectName);
+                }
+                if(obj){
+                    obj.save(flush: true);
+                }
+            }else{
+                params.content?.eachWithIndex{def content,def i->
+
+                    def projectId =null
+                    try{
+                        projectId = params.projectId?.getAt(i);
+                    }catch (ArrayIndexOutOfBoundsException e){
+
+                    }
+                    def obj = NewsContent.get(projectId?.toLong()?:-1l);
+                    def projectName = params.projectName[i];
+                    if(obj){
+                        obj.content =content;
+                        obj.name =projectName;
+                    }else{
+                        obj = new NewsContent(news: news,content: content,sort:i,name: projectName);
+                    }
+                    if(obj){
+                        obj.save(flush: true);
+                    }
+                }
+            }
+
+
             map.result = true
             map.message = "保存成功"
         }else{
@@ -214,5 +258,9 @@ class NewsController {
             }
         }
         return false;
+    }
+
+    def ck(){
+
     }
 }

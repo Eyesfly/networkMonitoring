@@ -12,6 +12,6 @@
 </ul>
 <h3><i><img src="${request.contextPath}/images/htgl/356803.png" alt=""></i>内容管理</h3>
 <ul>
-    <li onclick="loadRemotePage('${request.contextPath}/news/list',{},'内容管理','内容管理');"><a href="javascript:void(0);">内容管理</a></li>
+    <li onclick="loadRemotePage('${request.contextPath}/news/list',{},'项目管理','');"><a href="javascript:void(0);">项目管理</a></li>
 </ul>
 

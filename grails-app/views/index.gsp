@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta name="layout" content="main"/>
-		<title>Welcome to Grails</title>
+		<title>区域工业环境大数据在线监测系统</title>
 		<style type="text/css" media="screen">
 
 
