@@ -41,7 +41,7 @@ class WebController{
 
     }
     def index4(){
-        def list = News.findAllByStatus("发布");
+        def list = News.findAllByStatus("发布",[sort:'publishDate',order:'desc']);
         return [list:list]
     }
     def showProject(){

@@ -19,7 +19,11 @@
             padding:0px;
         }
         .col-sm-12 {border-radius: 5px;}
-        .boxBorder {border: 2px solid #93ebf84f;box-shadow: 0 0 10px #93ebf84f;background: rgba(78, 136, 181, 0.66)}
+        .boxBorder {
+            border: 2px solid #93ebf84f;
+            box-shadow: 0 0 10px #93ebf84f;
+            /*background: rgba(78, 136, 181, 0.66)*/
+        }
         ul{list-style:none;padding: 0px;}
         #marquee1{overflow:hidden;color: #91e9f8;}
         #marquee1 ul li{line-height: 30px;font-size: 14px;}
@@ -40,14 +44,15 @@
         }
     </style>
     <script type="text/javascript">
+      //  background: rgb(21, 78, 144);
         var height = $(window).height();
     </script>
 </head>
 
-<body style="background: rgb(21, 78, 144);">
+<body style="background: rgb(0, 10, 21)">
 <div class="child">
     <div class="col-xs-6 col-sm-4">
-        <div class="col-xs-6 col-sm-12  boxBorder" style="height: 35%;margin-top: 10px;">
+        <div class="col-xs-6 col-sm-12  boxBorder" style="height: 30%;margin-top: 10px;padding: 0px 10px;">
             <div id="firstChart">
 
             </div>
@@ -61,31 +66,11 @@
                 var valueList = data.map(function (item) {
                     return item[1];
                 });
-                $("#firstChart").css("height",(0.35*height)+"px");
+                $("#firstChart").css("height",(0.30*height)+"px");
                 var myChart1 = echarts.init(document.getElementById('firstChart'));
                 myChart1.setOption({
                     // Make gradient line here
-                    visualMap: [{
-                        show: false,
-                        type: 'continuous',
-                        seriesIndex: 0,
-                        min: 0,
-                        max: 400
-                    }, {
-                        show: false,
-                        type: 'continuous',
-                        seriesIndex: 1,
-                        dimension: 0,
-                        min: 0,
-                        max: dateList.length - 1
-                    }, {
-                        show: false,
-                        type: 'continuous',
-                        seriesIndex: 2,
-                        dimension: 0,
-                        min: 0,
-                        max: dateList.length - 1
-                    }],
+                    color:['#fec178','#72f1da','#4cd1fd','#3faefc','#8b76f9'],
                     title: [{
                         left: 'center',
                         text: ''
@@ -94,7 +79,7 @@
                         left: 'center',
                         text: ''
                     }, {
-                        top: '70%',
+                        top: '72%',
                         left: 'center',
                         text: ''
                     }],
@@ -177,20 +162,20 @@
                         gridIndex: 2
                     }],
                     grid: [{
-                        top: '5%',
+                        top: '3%',
                         left:'8%',
                         right:'0%',
                         bottom: '78%'
                     }, {
                         left:'8%',
                         right:'0%',
-                        top: '32%',
-                        bottom: '48%'
+                        top: '29%',
+                        bottom: '45%'
                     }, {
                         left:'8%',
                         right:'0%',
-                        top: '62%',
-                        bottom: '20%'
+                        top: '59%',
+                        bottom: '14%'
                     }],
                     series: [{
                         type: 'line',
@@ -215,13 +200,13 @@
                 });
             </script>
         </div>
-        <div class="col-xs-6 col-sm-12 boxBorder" style="height: 21%;margin-top: 15px;">
-            <div class="col-xs-6 col-sm-6">
-                <div id="leftChart" >
+        <div class="col-xs-6 col-sm-12 boxBorder" style="height: 27%;margin-top: 15px;">
+            <div class="col-xs-5 col-sm-5" style="padding: 0px;">
+                <div id="leftChart">
 
                 </div>
                 <script type="text/javascript">
-                    $("#leftChart").css("height",0.21*height+"px");
+                    $("#leftChart").css("height",0.27*height+"px");
                     var leftChart = echarts.init(document.getElementById('leftChart'));
                     var leftOption = {
                         color:['#ACACAC','#fec178','#72f1da','#4cd1fd','#3faefc','#8b76f9'],
@@ -256,7 +241,7 @@
                                 },
                                 label: {
                                     normal: {
-                                        formatter: "{b}{c}\n\n",
+                                        formatter: "{c}\n\n",
                                         padding:[0,-95],
                                         rich: {
                                             a: {
@@ -285,9 +270,261 @@
                     leftChart.setOption(leftOption);
                 </script>
             </div>
-            <div class="col-xs-6 col-sm-6"></div>
+            <div class="col-xs-7 col-sm-7" style="padding: 0px;">
+                <div id="rightChart" >
+
+                </div>
+            </div>
+            <script type="text/javascript">
+                $("#rightChart").css("height",0.27*height+"px");
+                var yAxisMonth = [
+                    "0-2时",
+                    "3-5时",
+                    "6-8时",
+                    "9-11时",
+                    "12-14时",
+                    "15-17时",
+                    "18-20时",
+                    "21-23时"
+                ];
+                var barData = [
+                    43,
+                    94,
+                    84,
+                    84,
+                    94,
+                    84,
+                    84,
+                    64
+                ];
+                var barDataTwo = [];
+                var coordData2 = [];
+                var coordData = [];
+                for (let i = 0; i < barData.length; i++) {
+                    barDataTwo.push(Math.max.apply(Math, barData) + 5000);
+                    coordData.push({
+                        "coord": [Number(barData[i]) - 1, i]
+                    });
+                    coordData2.push({
+                        "coord": [Math.max.apply(Math, barData) + 5000, i]
+                    })
+                }
+                var rightChart = echarts.init(document.getElementById('rightChart'));
+                var rightOption = {
+                    title: {
+                        text: ''
+                    },
+                    legend: null,
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'none'
+                        },
+                        formatter: function(params) {
+                            return params[0].name + "<br/>" + '参训人次: ' + params[0].value;
+                        }
+                    },
+                    grid: {
+                        containLabel: true,
+                        top:"-5%",
+                        bottom:"-5%",
+                        left:"8%",
+                        right:"-25%"
+
+                    },
+                    yAxis: [{
+                        data: yAxisMonth,
+                        inverse: true,
+                        axisLine: {
+                            show: false
+                        },
+                        axisTick: {
+                            show: false
+                        },
+                        axisLabel: {
+                            margin:5,
+                            textStyle: {
+                                fontSize: 10,
+                                color: '#42a5c2',
+                            },
+                            formatter: function(value) {
+                                return '{Sunny|' + value + '}';
+                            },
+                            rich: {
+                                value: {
+                                    lineHeight: 20,
+                                },
+                                Sunny: {
+                                    width: 50,
+                                    height: 16,
+                                    padding: [0, 0, 0, 0],
+                                    align: 'center',
+                                    backgroundColor: {
+                                        image: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFEAAAAjCAYAAADsZeb8AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjIxNzQ2ODFCQkVFNjExRTc4OEU3QzFEMjE5RjExOEZBIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjIxNzQ2ODFDQkVFNjExRTc4OEU3QzFEMjE5RjExOEZBIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MjE3NDY4MTlCRUU2MTFFNzg4RTdDMUQyMTlGMTE4RkEiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MjE3NDY4MUFCRUU2MTFFNzg4RTdDMUQyMTlGMTE4RkEiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7fNMa8AAABg0lEQVR42uzaMUvDQBgG4O+7pJS0ghVBOkknK06dAh38E126uji4iogtzlFBcNTi4urin3CoOHWytpM41aJYxTa2Te4sWgpWA2lufV8I4ULuOB747m44VkrRdIydXoa8bpGZC8Qxm5Sk74fG76D2+Bv/+UdF6BNuDA47N1K/+wTMI7itiAPnPoVobL87JMwSfzxWRadeE+2bJn8+9wj5Pywq5gRv10uR7FdJDpJm/aws3hovEAqXCSLJYZV7rddYzTkBy2wRP2ug65DfT44AL0ASAdHYowwZ8ZLZOD8FR9Ry9twiu0+jTeQea2DkcmZREJ27Gih0EI24LVrXTVBobizstnEO1EVEgAhEICJABCIQgYgAEYhABCICRCACEYhIWERlLSVAoYPo929len0FFDqISl7J1FoOFDqIpnWp5pbzMrW6CI6IiP4hPYxK+sDLbm6BQ2Nj8Y+tMhnx7jBX3gCJzhFHxPIqkV4Y2Ef7cj6L0p4huJ+oLSgqjJuy+jdlvwQYAN1TdkgsoTftAAAAAElFTkSuQmCC'
+                                    }
+
+
+                                }
+                            }
+                        }
+                    },
+                        {
+                            data: yAxisMonth,
+                            inverse: true,
+                            axisLine: {
+                                show: false
+                            },
+                            axisTick: {
+                                show: false
+                            },
+                            axisLabel: {
+                                show: false
+                            },
+                        },
+                    ],
+                    xAxis: [{
+                        type: "value",
+                        splitLine: {
+                            show: false
+                        },
+                        axisLabel: {
+                            show: false
+                        },
+                        axisTick: {
+                            show: false
+                        },
+                        axisLine: {
+                            show: false
+                        }
+                    }, {
+                        type: "value",
+                        splitLine: {
+                            show: false
+                        },
+                        axisLabel: {
+                            show: false
+                        },
+                        axisTick: {
+                            show: false
+                        },
+                        axisLine: {
+                            show: false
+                        }
+                    }],
+                    series: [{
+                        z: 10,
+                        xAxisIndex: 0,
+                        yAxisIndex: 0,
+                        name: 'XXX',
+                        type: 'pictorialBar',
+                        data: barData,
+                        // barCategoryGap: '80%',
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'inside',
+                                textStyle: {
+                                    fontSize: 10,
+                                    color: '#00ffff'
+                                }
+                            }
+                        },
+                        symbolRepeat: false,
+                        symbolSize: ['100%', 15],
+                        symbolOffset: [-8.5, 0],
+                        itemStyle: {
+                            normal: {
+                                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                    offset: 0,
+                                    color: '#083e6d',
+                                },
+                                    {
+                                        offset: 0.5,
+                                        color: '#0272f2',
+                                        opacity: 0.7
+                                    }, {
+                                        offset: 1,
+                                        color: '#083e6d',
+                                        opacity: 0.5
+                                    }
+                                ], false),
+                            }
+                        },
+                        symbolClip: true,
+                        symbolPosition: 'end',
+                        symbol: 'rect',
+                        // symbol: 'path://M0 0 L0 60 L225 60 L300 0 Z',
+                        markPoint: {
+                            data: coordData,
+                            symbolSize: [15, 15],
+                            symbolOffset: [-0.5, 0],
+                            z: 3,
+                            label: {
+                                normal: {
+                                    show: false
+                                }
+                            },
+                            symbolClip: true,
+                            symbol: 'path://M 300 100 L 100 100 L 100 300 z',
+
+                        }
+                    },
+                        {
+                            z: 6,
+                            xAxisIndex: 1,
+                            yAxisIndex: 1,
+                            animation: false,
+                            name: 'XX',
+                            type: 'pictorialBar',
+                            data: barDataTwo,
+                            barCategoryGap: '80%',
+                            label: {
+                                normal: {
+                                    show: false,
+                                    position: 'inside',
+                                    textStyle: {
+                                        fontSize: 10,
+                                        color: '#00ffff'
+                                    }
+                                }
+                            },
+                            symbolRepeat: false,
+                            symbolSize: ['100%', 15],
+                            symbolOffset: [-8.5, 0],
+                            itemStyle: {
+                                normal: {
+                                    color: '#00abc5',
+                                    opacity: 0.085
+                                }
+                            },
+                            symbolClip: true,
+                            symbol: 'rect',
+                            markPoint: {
+                                data: coordData2,
+                                symbolSize: [15, 15],
+                                symbolOffset: [-0.5, 0],
+                                label: {
+                                    normal: {
+                                        show: false
+                                    }
+                                },
+                                itemStyle: {
+                                    normal: {
+                                        color: '#00abc5',
+                                        opacity: 0.085
+                                    }
+                                },
+                                symbolClip: true,
+                                symbol: 'path://M 300 100 L 100 100 L 100 300 z',
+
+                            }
+                        },
+                    ]
+                };
+                rightChart.setOption(rightOption);
+            </script>
         </div>
-        <div class="col-xs-6 col-sm-12 boxBorder p0" style="height: 23%;margin-top: 15px;">
+        <div class="col-xs-6 col-sm-12 boxBorder p0" style="height: 22%;margin-top: 15px;">
             <div class="col-sm-12 p0" style="line-height: 40px;">
                 <div  class="col-xs-6 col-sm-3 p1 th">设备名称</div>
                 <div  class="col-xs-6 col-sm-3 p0 th">IP地址</div>
@@ -415,10 +652,10 @@
                     radius: ['40%', '95%'],
                     startAngle: 225,
                     color: [new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-                        offset: 0,
-                        color: '#00a2ff'
+                        offset: 0,//#0a3fff   #00a2ff
+                        color: '#0a3fff'
                     }, {
-                        offset: 1,
+                        offset: 1,//#70ffac
                         color: '#70ffac'
                     }]), "transparent"],
                     hoverAnimation: false,
@@ -449,7 +686,7 @@
                     type: 'pie',
                     radius: ['40%', '95%'],
                     startAngle: 225,
-                    color: ["#c2f5e1", "transparent"],
+                    color: ["#5df0f5", "transparent"],
                     labelLine: {
                         normal: {
                             show: false
@@ -464,7 +701,7 @@
                 ]
             };
 
-            setPercent(40);
+            setPercent(60);
             function setPercent(value) {
                 var  value_ = 75 * value / 100;
                 centerOption.title.subtext = value + "%";
@@ -749,7 +986,8 @@
 
     $('#marquee1').kxbdMarquee({
         direction: 'up',
-        isEqual: false
+        isEqual: false,
+        scrollDelay:120
     });
 </script>
 </body>

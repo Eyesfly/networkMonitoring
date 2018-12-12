@@ -118,7 +118,10 @@ class NewsController {
         news.publishDate = params?.publishDate?Date.parse("yyyy-MM-dd", params?.publishDate?.trim()):new Date();
         if(news.save(flush: true)){
             if(params.content&&params.content.class.name == 'java.lang.String'){
-                def obj = NewsContent.get(params.projectId?.toLong()?:-1l);
+                def obj = null;
+                if(params.projectId){
+                    obj= NewsContent.get(params.projectId?.toLong()?:-1l);
+                }
                 def projectName = params.projectName;
                 if(obj){
                     obj.content =params.content;
@@ -138,7 +141,11 @@ class NewsController {
                     }catch (ArrayIndexOutOfBoundsException e){
 
                     }
-                    def obj = NewsContent.get(projectId?.toLong()?:-1l);
+                    def obj = null;
+                    if(projectId){
+                        obj = NewsContent.get(projectId?.toLong()?:-1l);
+                    }
+
                     def projectName = params.projectName[i];
                     if(obj){
                         obj.content =content;

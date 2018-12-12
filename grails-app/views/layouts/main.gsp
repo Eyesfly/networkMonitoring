@@ -229,16 +229,16 @@
 
 		<div class="topBar fr mt40">
 			您好，${currentUser}
-			<sec:ifNotGranted roles="ROLE_000000_0_yonghudaorujiaose">
-				<a href="${request.contextPath}/baseUser/info" style="background: none;padding-left: 10px;">个人中心</a>
-			</sec:ifNotGranted>
-			<a href="${request.contextPath}/web/index" style="background: none;padding-left: 10px;">返回首页</a>
+			%{--<sec:ifNotGranted roles="ROLE_000000_0_yonghudaorujiaose">--}%
+				%{--<a href="${request.contextPath}/baseUser/info" style="background: none;padding-left: 10px;">个人中心</a>--}%
+			%{--</sec:ifNotGranted>--}%
+			%{--<a href="${request.contextPath}/web/index" style="background: none;padding-left: 10px;">返回首页</a>--}%
 			<a href="${request.contextPath}/logout" style="background: none;"><span class="glyphicon glyphicon-log-out" style="font-size: 16px;"></span>&nbsp;注销</a>
 			%{--<a href="${request.contextPath}/web/wechat" target="_blank" class="weixin">微信</a> <a href="${request.contextPath}/web/app" target="_blank" class="app">APP</a>--}%
 		</div>
 	</div>
 </div>
-<div class="container mt35 bgfff">
+<div class="container mt35 bgfff" style="width: auto;">
 	<div class="padd20">
 		<div class="main" style="min-height:auto;">
 			<div class="mainLeft">

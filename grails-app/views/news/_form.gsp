@@ -61,7 +61,7 @@
 <form id="newsForm" method="post" style="font-size: 14px;" enctype="multipart/form-data">
     <input name="id" id="id" type="hidden" value="${news?.id}"/>
     <div class="row1">
-        <div class="col-1 text-right"><span class="text-red">*</span> <b>标　　题：</b></div>
+        <div class="col-1 text-right"><span class="text-red">*</span> <b>标题：</b></div>
         <div class="col-9">
             <input type="text" class="input w95"  name="name" value="${news?.name}"/>
         </div>
