@@ -17,4 +17,9 @@ class MonitoringPlaceController {
         map.message = '请填写敏感词';
         render map as JSON;
     }
+    def create(){}
+    def edit(){
+        def obj = MonitoringPlace.get(params.id?.toLong()?:-1l)
+        return [obj:obj]
+    }
 }

@@ -16,7 +16,7 @@
         function operateFormatter(value, row, index) {
             var str = [];
             str.push('<a class="btn btn-primary" href="javascript:delCa(\''+row.id+'\')">删除</a>&nbsp;&nbsp;');
-            str.push('<a class="btn btn-primary" href="javascript:editCa(\''+row.id+'\',\''+row.name+'\',\''+row.east+'\',\''+row.north+'\')">编辑</a>&nbsp;&nbsp;');
+            str.push('<a class="btn btn-primary" href="javascript:editCa(\''+row.id+'\')">编辑</a>&nbsp;&nbsp;');
             return str.join('');
         }
         function delCa(value){
@@ -30,19 +30,16 @@
             },'json');
         }
         function createWord(){
-            $("#id").val("");
-            $("#name").val("");
-            $("#east").val("");
-            $("#north").val("");
-            $('#feedbackModal').modal('show');
+            $.post("${request.contextPath}/monitoringPlace/create",{},function(data,status){
+                $("#monContent").html(data);
+                $('#feedbackModal').modal('show');
+            },"html");
         }
-        function editCa(id,name,east,north){
-            $("#id").val(id);
-            $("#name").val(name);
-            $("#east").val(east);
-            $("#north").val(north);
-
-            $('#feedbackModal').modal('show');
+        function editCa(id){
+           $.post("${request.contextPath}/monitoringPlace/edit",{id:id},function(data,status){
+               $("#monContent").html(data);
+               $('#feedbackModal').modal('show');
+           },"html");
         }
         function saveWord(){
             var obj = new Object();
@@ -82,13 +79,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="feedbackModalHead">地址坐标</h4>
+                <h4 class="modal-title" id="feedbackModalHead">监测站信息</h4>
             </div>
-            <div class="modal-body">
-                <input id="id" type="hidden" class="form-control" />
-                地址：<input id="name" class="form-control" />
-                东经：<input id="east" class="form-control" />
-                北纬：<input id="north" class="form-control" />
+            <div class="modal-body" id="monContent">
+
             </div>
 
             <div class="modal-footer">
