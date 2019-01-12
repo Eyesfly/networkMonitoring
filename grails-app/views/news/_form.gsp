@@ -25,15 +25,31 @@
             }
         }
     });
+    function removeTab(dom,id) {
+        var id = $("#"+id).attr("data-id");
+        confirm("确认要删除项目信息吗？",function(){
+            if(typeof(id)!="undefined"){
+                $.post("${request.contextPath}/news/deleteDetail",{id:id},function (data,status) {
+                    if(data.result){
+                        $(dom).parent().remove();
+                        $("#div"+id).remove();
+                    }
+                },"json");
+            }else{
+                $(dom).parent().remove();
+                $("#div"+id).remove();
+            }
+        });
+    }
     function addTabs(val) {
 
         var liDom = $(".nav-tabs").find("li");
         var divDom = $(".tab-content").find("div.tab-pane");
         var index = liDom.size();
         if(index==0){
-            $(".nav-tabs").append("<li><a href='#div"+index+"' data-toggle='tab'>"+val+"</a></li>");
+            $(".nav-tabs").append("<li><a href='#div"+index+"' data-toggle='tab'>"+val+"</a><span style=\"display: block;position: absolute;top:-4px;right: 5px;width: 15px;height: 15px;cursor: pointer;font-size: 18px;\" onclick=\"removeTab(this,'div"+index+"');\">×</span></li>");
         }else{
-            liDom.last().after("<li><a href='#div"+index+"' data-toggle='tab'>"+val+"</a></li>");
+            liDom.last().after("<li><a href='#div"+index+"' data-toggle='tab'>"+val+"</a><span style='display: block;position: absolute;top:-4px;right: 5px;width: 15px;height: 15px;cursor: pointer;font-size: 18px;'  onclick=\"removeTab(this,'div"+index+"');\">×</span></li>");
         }
         $.post("${request.contextPath}/news/ck",{id:index,name:val},function (data,status) {
             if(index==0){
@@ -80,11 +96,12 @@
             %{--</a>--}%
         %{--</li>--}%
         <g:each in="${newsContentList}" var="obj">
-            <li ondblclick="renameTab('div${obj.sort}');">
-                <a href="#div${obj.sort}" data-toggle="tab">${obj.name}</a>
+            <li ondblclick="renameTab('div${obj.id}');">
+                <a href="#div${obj.id}" data-toggle="tab">${obj.name}</a>
+                <span onclick="removeTab(this,'div${obj.id}');" style='display: block;position: absolute;top:-4px;right: 5px;width: 15px;height: 15px;cursor: pointer;font-size: 18px;'>×</span>
             </li>
         </g:each>
-        <span style="cursor: pointer;padding-left:10px;line-height: 40px;" onclick="$('#nameText').val('');$('#tabModal').modal('show');" ><span class="glyphicon glyphicon-plus"></span>添加</span>
+        <span style="cursor: pointer;padding-left:10px;line-height: 40px;" onclick="$('#nameText').val('');$('#tabName').val('');$('#tabModal').modal('show');" ><span class="glyphicon glyphicon-plus"></span>添加</span>
 
     </ul>
     <div class="tab-content vertical-tab-content">
@@ -94,11 +111,11 @@
             %{--</div>--}%
         %{--</div>--}%
         <g:each in="${newsContentList}" var="obj">
-            <div class="tab-pane fade in" id="div${obj.sort}">
+            <div class="tab-pane fade in" id="div${obj.id}" data-id="${obj.id}">
                 <div style="margin:20px 0px;">
                     <input type="hidden" name="projectId" value="${obj.id}">
                     <input type="hidden" name="projectName" value="${obj.name}">
-                    <ckeditor:editor userSpace="${com.eyesfly.core.BaseUser.findByUsername(sec.username())?.id}" name="content" id="content${obj.sort}" toolbar="Mytoolbar" height="300px" width="95%" fileBrowser="default">${obj.content}</ckeditor:editor>
+                    <ckeditor:editor userSpace="${com.eyesfly.core.BaseUser.findByUsername(sec.username())?.id}" name="content" id="content${obj.id}" toolbar="Mytoolbar" height="300px" width="95%" fileBrowser="default">${obj.content}</ckeditor:editor>
                 </div>
             </div>
         </g:each>

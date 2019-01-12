@@ -4,7 +4,7 @@
         [ 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl']
     ]
 </ckeditor:config>
-<div class="tab-pane fade in" id="div${params.id}">
+<div class="tab-pane fade in" id="div${params.id}" data-id="${params.id}">
     <div style="margin:20px 0px;">
         <input type="hidden" name="projectId" value="${params.projectId}">
         <input type="hidden" name="projectName" value="${params.name}">

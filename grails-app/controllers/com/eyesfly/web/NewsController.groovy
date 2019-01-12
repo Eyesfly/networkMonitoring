@@ -169,6 +169,16 @@ class NewsController {
         }
         render "${map as JSON}"
     }
+    @Transactional
+    def deleteDetail(){
+        def obj = NewsContent.get(params.id?.toLong()?:-1l);
+        if(obj){
+            obj.delete(flush: true);
+        }
+        def map = [:];
+        map.result = true;
+        render map as JSON;
+    }
 
     /**
      * 删除

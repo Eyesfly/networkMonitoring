@@ -94,6 +94,28 @@
 			var img_height = $(window).height();
 			$(".body_fiximg").height(img_height);
 		});
+		$(function(){
+			$('#passwordForm').validate({
+				rules: {
+					confirmPass :{
+						equalTo: "#newPass"
+					}
+				},messages: {
+					confirmPass :{
+						equalTo: "确认密码与新密码不一致"
+					}
+				},submitHandler:function(){
+					$.post("${request.contextPath}/baseUser/passwordChange",$('#passwordForm').serialize(),function(data){
+						if(data.result){
+							$('#passwordModal').modal('hide');
+							alert("密码修改成功！");
+						}else{
+							$("#error").html(data.message);
+						}
+					},"json");
+				}
+			});
+		});
 	</script>
 	<style type="text/css">
 		/**{
@@ -201,7 +223,7 @@
 			height: 34px;
 			display: block;
 			text-align: center;
-			background-color: #fff;
+			background-color: #f5f5f5;
 			margin: 0 auto;
 			line-height: 34px;
 			margin-top: 15px;
@@ -212,7 +234,7 @@
 		.zzbg{background:rgba(15, 14, 14,0.5);width: 100%;height: 100%;position: fixed;left: 0;top: 0;display:block;}
 		.tck{background: #fff;width: 960px;height: 490px;position: fixed;z-index: 999;display: block;border-radius: 15px;}
 		.tck .tsxx{width: 90%;text-align: center;margin: 20px auto;}
-		.tck .tsxx span{display: inline-block;width: 100%;}
+		.tck .tsxx span{display: inline-block;}
 		.tck .tsxx span.title{font-size: 24px;text-align: center;color: #034766;margin-bottom: 25px;}
 		.body_fiximg{ width: 100%; position: fixed; top:0; left: 0; background: url(${request.contextPath}/images/htgl/bjt.png) no-repeat left top; background-size: 100%; z-index: -99;}
 	</style>
@@ -233,8 +255,8 @@
 				%{--<a href="${request.contextPath}/baseUser/info" style="background: none;padding-left: 10px;">个人中心</a>--}%
 			%{--</sec:ifNotGranted>--}%
 			%{--<a href="${request.contextPath}/web/index" style="background: none;padding-left: 10px;">返回首页</a>--}%
+			<span data-toggle="modal" style="cursor: pointer;" data-target="#passwordModal">修改密码</span>
 			<a href="${request.contextPath}/logout" style="background: none;"><span class="glyphicon glyphicon-log-out" style="font-size: 16px;"></span>&nbsp;注销</a>
-			%{--<a href="${request.contextPath}/web/wechat" target="_blank" class="weixin">微信</a> <a href="${request.contextPath}/web/app" target="_blank" class="app">APP</a>--}%
 		</div>
 	</div>
 </div>
@@ -294,5 +316,43 @@
 			</div>
 		</div>
 	</div>
+    <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel" id="passwordModal">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content mt150">
+			<div class="tck" style="left:30%;width:600px;height: auto; ">
+				<div class="tsxx">
+					<span class="title">修改密码</span>
+					<form id="passwordForm" style="border-top: 1px solid #dcdcdc;" method="post">
+						<div style="color: red;" id="error"></div>
+						<div style="height: 62px;line-height: 62px;">
+							<span class="tx" style="display: inline;width: 80px;margin-left: 60px; float: left;line-height: 80px;">原密码：</span>
+							<span class="dx" style=" float: left;">
+								<input style="display: inline;width: 221px;height: 44px;background-color: #f5f5f5;border-radius: 4px;border: solid 1px #dcdcdc;" type="password" id="oldPass" name="oldPass" required/>
+							</span>
+						</div>
+						<div style="height: 62px;line-height: 62px;clear: both;">
+							<span class="tx" style="display: inline;width: 80px;margin-left: 60px; float: left;line-height: 80px;">新密码：</span>
+							<span class="dx" style=" float: left;">
+								<input style="display: inline;width: 221px;height: 44px;background-color: #f5f5f5;border-radius: 4px;border: solid 1px #dcdcdc;" type="password" id="newPass" name="newPass" required />
+							</span>
+						</div>
+						<div style="height: 62px;line-height: 62px;clear: both;">
+							<span class="tx" style="display: inline;width: 80px;margin-left: 60px; float: left;line-height: 80px;">密码确认：</span>
+							<span class="dx" style=" float: left;">
+								<input style="display: inline;width: 221px;height: 44px;background-color: #f5f5f5;border-radius: 4px;border: solid 1px #dcdcdc;" type="password" id="confirmPass" name="confirmPass" required/>
+							</span>
+						</div>
+
+						<div class="zx" style="margin-top:10px;">
+							<a style="margin-top:10px;" href="javascript:void(0);" onclick="$('#passwordForm').submit();" >修改</a>
+						</div>
+					</form>
+				</div>
+				<span class="gbbtn" data-dismiss="modal"></span>
+			</div>
+		</div>
+	</div>
+</div>
+
 </body>
 </html>

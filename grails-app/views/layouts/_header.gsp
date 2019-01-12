@@ -41,12 +41,6 @@
                 <a href="${request.contextPath}/web/index">返回首页</a>
             </span>
             <a class="zx" href="${request.contextPath}/logout" style="color: #fff;padding: 5px 10px;border-top: none;"><span class="glyphicon glyphicon-log-out" style="font-size: 16px;"></span>&nbsp;注销</a>
-            %{--<span>
-                <img src="${request.contextPath}/images/grzx/wx.png"/><a href="${request.contextPath}/web/wechat" target="_blank">微信</a>
-            </span>
-            <span>
-                <img src="${request.contextPath}/images/grzx/sj.png"/><a href="${request.contextPath}/web/app" target="_blank">手机</a>
-            </span>--}%
         </div>
     </div>
 </div>
