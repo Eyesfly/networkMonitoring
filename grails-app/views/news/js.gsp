@@ -30,6 +30,7 @@
             str.push('<a class="btn btn-primary" href="javascript:confirm(\'确认要执行此操作吗\', function() {changeNews('+row.id+',1)})">发布</a>&nbsp;&nbsp;');
         }
         str.push('<a class="btn btn-primary" href="javascript:editNews('+row.id+')">修改</a>&nbsp;&nbsp;');
+        str.push('<a class="btn btn-primary" target="_blank" href="${request.contextPath}/news/index/'+row.id+'">预览</a>&nbsp;&nbsp;');
         str.push('<a class="btn btn-primary" href="javascript:confirm(\'确认要删除吗？\', function(){delNews('+row.id+');})">删除</a>&nbsp;&nbsp;');
         return str.join('');
     }
@@ -82,14 +83,14 @@
     function saveOrUpdate(categoryId) {
         if($("#newsForm").valid()){
             var length = $(".nav-tabs").find("li").size();
-            for(var i=0;i<length;i++){
+           /* for(var i=0;i<length;i++){
                 var projectOverview = CKEDITOR.instances['content'+i].getData();
                 if(!projectOverview){
                     alert("【"+$(".nav-tabs").find("li").eq(i).text()+"】的值不能为空！");
                     $('.nav-tabs li:eq("'+i+'") a').tab('show');
                     return;
                 }
-            }
+            }*/
 
             $("#newsForm").form('submit', {
                 url: "${request.contextPath}/news/saveOrUpdate",

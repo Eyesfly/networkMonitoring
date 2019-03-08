@@ -33,8 +33,8 @@
                             <th data-field="id" data-formatter="indexFormatter">序号</th>
                             <th data-field="username">账号</th>
                             <th data-field="realName">姓名</th>
-                            <th data-field="ascripteOrg">归属机构</th>
-                            <th data-field="organization">管理机构</th>
+                            %{--<th data-field="ascripteOrg">归属机构</th>--}%
+                            <th data-field="organization">所属单位</th>
                             <th data-field="mobile">联系方式</th>
                             <th data-field="id" data-formatter="userOperateFormatter">操作</th>
                         </tr>

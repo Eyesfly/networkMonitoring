@@ -32,8 +32,8 @@
 				%{--<th data-field="id" data-formatter="indexFormatter">序号</th>--}%
 				<th data-field="name">角色名称</th>
 				<th data-field="description">角色描述</th>
-				<th data-field="organization.title">机构名称</th>
-				<th data-field="serviceCategory.title">板块名称</th>
+				%{--<th data-field="organization.title">机构名称</th>
+				<th data-field="serviceCategory.title">板块名称</th>--}%
 				<th data-field="id" data-formatter="operateFormatter">操作</th>
 			</tr>
 			</thead>

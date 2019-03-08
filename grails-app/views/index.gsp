@@ -9,7 +9,6 @@
 			.ie6 #status {
 				display: inline; /* float double margin fix http://www.positioniseverything.net/explorer/doubled-margin.html */
 			}
-
 			#status ul {
 				font-size: 0.9em;
 				list-style-type: none;

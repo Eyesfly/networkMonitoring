@@ -42,7 +42,9 @@
 
     function userOperateFormatter(value, row, index){
         var str = [];
-        str.push('<a class="btn btn-primary" href="javascript:confirm(\'确认要移除该用户吗？\', function(){removeUser(\''+row.id+'\')})">移除</a>&nbsp;&nbsp;');
+        if(row.username!=='superadmin'){
+            str.push('<a class="btn btn-primary" href="javascript:confirm(\'确认要移除该用户吗？\', function(){removeUser(\''+row.id+'\')})">移除</a>&nbsp;&nbsp;');
+        }
         return str.join('');
     }
 

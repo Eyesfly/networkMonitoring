@@ -1,14 +1,14 @@
 <%@ page import="com.eyesfly.core.BaseUser;" %>
 <ckeditor:config var="toolbar_Mytoolbar">
     [
-        [ 'RemoveFormat', 'Styles','Format','Font','FontSize', '-', 'TextColor', 'BGColor', 'Bold', 'Italic', '-', 'Paste', 'PasteText', '-', 'Link', 'Unlink', '-','Image','Flash','-'],
+        [ 'RemoveFormat', 'Styles','Format','Font','FontSize','lineheight', '-', 'TextColor', 'BGColor', 'Bold', 'Italic', '-', 'Paste', 'PasteText', '-', 'Link', 'Unlink', '-','Image','Flash','-'],
         [ 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl']
     ]
 </ckeditor:config>
 <ckeditor:resources/>
 <script>
     $(function() {
-        $( ".form_date" ).datetimepicker({minView: "month",language: 'zh-CN',autoclose: true,format: 'yyyy-mm-dd',todayBtn:true,endDate: new Date() });
+        $( ".form_date" ).datetimepicker({minView: "month",language: 'zh-CN',autoclose: true,format: 'yyyy-mm-dd',todayBtn:true });
         var index = $(".nav-tabs").find("li").size();
         if(index>0){
             $('.nav-tabs li:eq(0) a').tab('show');

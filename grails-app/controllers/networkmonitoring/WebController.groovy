@@ -1,5 +1,6 @@
 package networkmonitoring
 
+import com.eyesfly.core.BaseUser
 import com.eyesfly.dictionary.News
 import com.eyesfly.dictionary.NewsContent
 import grails.converters.JSON
@@ -8,6 +9,7 @@ import org.springframework.messaging.handler.annotation.SendTo
 
 
 class WebController{
+    def springSecurityService;
     def chat(){}
     @MessageMapping("/hello")
     @SendTo("/topic/hello")
@@ -52,6 +54,25 @@ class WebController{
         }
 
         return [news:news,newsContentList:newsContentList]
-        return [news:news]
+    }
+
+    def passwordChange(){
+        def map = [:]
+        def currentUser = BaseUser.get(springSecurityService.currentUser?.id)
+        if (springSecurityService.passwordEncoder.isPasswordValid(currentUser.password, params?.oldPass, null)) {
+            if (params.newPass == params.confirmPass) {
+                currentUser.password = params.newPass
+                currentUser.save(flush: true)
+                map.message = "修改成功"
+                map.result = true
+            } else {
+                map.message = "确认密码与新密码不一致"
+                map.result = false
+            }
+        } else {
+            map.message = "旧密码不正确"
+            map.result = false
+        }
+        render "${map as JSON}";
     }
 }

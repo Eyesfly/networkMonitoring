@@ -10,7 +10,15 @@ import org.hibernate.criterion.CriteriaSpecification
 import javax.servlet.http.HttpServletRequest
 
 class NewsController {
+    def index(){
+        def obj = News.get(params.id?.toLong()?:-1l);
+        def newsContentList = [];
+        if(obj){
+            newsContentList = NewsContent.findAllByNews(obj);
+        }
 
+        return [obj:obj,newsContentList:newsContentList]
+    }
     def springSecurityService;
     def moveList={
     }
@@ -103,7 +111,6 @@ class NewsController {
      */
     @Transactional
     def saveOrUpdate() {
-        println params;
         def map = [:], news
         if(params?.id){
             news = News.read(params?.id)
@@ -193,7 +200,7 @@ class NewsController {
             map.result = true
             map.message = "删除成功"
         }catch (e){
-            println e
+            log.error("异常：${e.message}")
             map.result = false
             map.message = "删除失败"
         }

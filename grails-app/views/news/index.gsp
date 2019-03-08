@@ -68,14 +68,8 @@
     </style>
     <script type="text/javascript">
         $(function () {
-            $('.li').click(function(){
-                $.each($('.li'),function (k,v) {
-                    $(v).removeClass("active");
-                });
-                $(this).addClass("active");
-            });
-            $('.li').get(0).click();
-        })
+            showProject("${params.id}");
+        });
 
         function showProject(id){
             $.post("${request.contextPath}/web/showProject",{id:id},function (data,status) {
@@ -134,15 +128,32 @@
         <div style="background: #f6f4f4;height: 100%;margin:0px 30px 0px 0px;min-width: 220px;float: left;width: 20%;">
             <div style="border-top: 6px solid rgb(21, 78, 144);margin-top: 5px;height: 10px;">&nbsp;</div>
             <div>
-                <g:each in="${list}" var="obj">
-                    <div class="li" onclick="showProject('${obj.id}');">
-                        <a href="javascript:void(0);">${obj.name}</a>
-                    </div>
-                </g:each>
+                <div class="li" onclick="showProject('${obj.id}');">
+                    <a href="javascript:void(0);">${obj.name}</a>
+                </div>
             </div>
         </div>
 
-        <div style="float: left;width: 75%;" id="content"></div>
+        <div style="float: left;width: 75%;" id="content">
+            <div style="margin-top:10px;">
+                <ul class="nav nav-tabs  vertical-tab">
+                    <g:each in="${newsContentList}" var="obj">
+                        <li>
+                            <a href="#div${obj.sort}" data-toggle="tab">
+                                ${obj.name}
+                            </a>
+                        </li>
+                    </g:each>
+                </ul>
+                <div class="tab-content vertical-tab-content">
+                    <g:each in="${newsContentList}" var="obj">
+                        <div class="tab-pane fade in active" id="div${obj.sort}">
+                            ${raw(obj?.content)}
+                        </div>
+                    </g:each>
+                </div>
+            </div>
+        </div>
         <div style="clear: both;"></div>
     </div>
 </div>

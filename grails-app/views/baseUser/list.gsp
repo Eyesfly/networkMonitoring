@@ -16,8 +16,8 @@
 				<input type="text" id="keywords" placeholder="请输入关键字" class="input">
 			</div>
 			<button type="button" class="btn btn-blue" onclick="doSearch();">搜索</button>
-			<button type="button" class="btn btn-blue" onclick="showImportModal();">导入</button>
-			<button type="button" class="btn btn-blue" onclick="exportUser();">导出</button>
+			%{--<button type="button" class="btn btn-blue" onclick="showImportModal();">导入</button>
+			<button type="button" class="btn btn-blue" onclick="exportUser();">导出</button>--}%
 		</form>
 		<div class="fr">
 			<div class="btn btn-added" onclick="newUser();">新增用户</div>　
@@ -36,8 +36,8 @@
 				%{--<th data-field="id" data-formatter="indexFormatter">序号</th>--}%
 				<th data-field="username">账号</th>
 				<th data-field="realName">姓名</th>
-				<th data-field="ascripteOrg">归属机构</th>
-				<th data-field="organization">管理机构</th>
+				%{--<th data-field="ascripteOrg">归属机构</th>--}%
+				<th data-field="organization">所属单位</th>
 				<th data-field="dateCreated">创建时间</th>
 				<th data-field="mobile">联系方式</th>
 				<th data-field="id" data-formatter="operateFormatter">操作</th>

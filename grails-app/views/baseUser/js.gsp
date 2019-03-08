@@ -15,14 +15,15 @@
 
     function operateFormatter(value, row, index) {
         var str = [];
-        str.push('<a class="btn btn-primary" href="javascript:showUser(\''+row.id+'\')">查看</a>&nbsp;&nbsp;');
-        if(row.enabled){
-            str.push('<a class="btn btn-primary" href="javascript:enabledUser(\''+row.id+'\',0)">停用</a>&nbsp;&nbsp;');
-        }else{
-            str.push('<a class="btn btn-danger" href="javascript:enabledUser(\''+row.id+'\',1)">启用</a>&nbsp;&nbsp;');
+        if(row.username!=="superadmin"){
+            str.push('<a class="btn btn-primary" href="javascript:showUser(\''+row.id+'\')">查看</a>&nbsp;&nbsp;');
+            if(row.enabled){
+                str.push('<a class="btn btn-primary" href="javascript:enabledUser(\''+row.id+'\',0)">停用</a>&nbsp;&nbsp;');
+            }else{
+                str.push('<a class="btn btn-danger" href="javascript:enabledUser(\''+row.id+'\',1)">启用</a>&nbsp;&nbsp;');
+            }
+            str.push('<a class="btn btn-primary" href="javascript:editUser(\''+row.id+'\')">编辑</a>&nbsp;&nbsp;');
         }
-        str.push('<a class="btn btn-primary" href="javascript:editUser(\''+row.id+'\')">编辑</a>&nbsp;&nbsp;');
-//        str.push('<a class="btn btn-primary" href="javascript:confirm(\'确认要删除该用户吗？\', function(){delUser('+row.id+');})">删除</a>&nbsp;&nbsp;');
         return str.join('');
     }
 

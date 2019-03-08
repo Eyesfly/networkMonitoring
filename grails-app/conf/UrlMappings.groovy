@@ -7,7 +7,8 @@ class UrlMappings {
             }
         }
 
-        "/"(view:"/index")
+        "/"(controller: "workspace",action: "index")
+//        "/"(view:"/index")
         "500"(view:'/error')
 	}
 }
