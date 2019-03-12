@@ -196,6 +196,10 @@ class NewsController {
         def map = [:]
         def news = News.read(params?.newsId)
         try {
+            def subs = NewsContent.findAllByNews(news);
+            subs.each {
+                it.delete(flush: true);
+            }
             news.delete(flush: true)
             map.result = true
             map.message = "删除成功"

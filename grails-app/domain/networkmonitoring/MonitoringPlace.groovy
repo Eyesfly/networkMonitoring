@@ -28,6 +28,8 @@ class MonitoringPlace {
     byte[] picture;
     @Title(zh_CN = "数据服务器")
     DataServers dataServers;
+    Date dateCreated
+    Date lastUpdated
     static constraints = {
         remark(nullable: true)
         address(nullable: true)

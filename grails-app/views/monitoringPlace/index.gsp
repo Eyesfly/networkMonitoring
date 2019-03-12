@@ -21,8 +21,8 @@
         }
         function delCa(value){
             var obj = new Object()
-            obj.name = value
-            $.post("${request.contextPath}/menu/delCategory",obj,function(data,textStatus){
+            obj.id = value;
+            $.post("${request.contextPath}/monitoringPlace/delete",obj,function(data,textStatus){
                 if(data.res){
                     alert("删除成功");
                     $("#sensitiveWordTable").bootstrapTable("refresh",[]);
@@ -56,6 +56,23 @@
                 }
             },"json");
         }
+        function saveOrUpdate(){
+            if($("#infoForm").valid()){
+                $("#infoForm").form('submit', {
+                    url: "${request.contextPath}/monitoringPlace/saveOrUpdate",
+                    success: function (data) {
+                        var data = eval('(' + data + ')');
+                        $("#messageModalBody").html(data.message);
+                        $("#messageModal").modal('show');
+                        if (data.result) {
+                            $("#sensitiveWordTable").bootstrapTable("refresh",[]);
+                        }
+                        $('#feedbackModal').modal('hide');
+                    }
+                },"json");
+            }
+        }
+
     </script>
 </head>
 <div id="toolbar">
@@ -86,7 +103,7 @@
             </div>
 
             <div class="modal-footer">
-                <button class="btn btn-default margin" onclick="saveWord()" type="button">
+                <button class="btn btn-default margin" onclick="saveOrUpdate()" type="button">
                     <span class="glyphicon glyphicon-check"></span>
                     确定
                 </button>
