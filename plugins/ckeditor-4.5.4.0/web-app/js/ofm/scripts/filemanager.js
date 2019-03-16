@@ -12,9 +12,13 @@
  *  WARNING: THIS VERSION IS CUSTOMIZED TO WORK WITH THE GRAILS CKEDITOR PLUGIN
  *
  */
-
+function remove(array,i){
+    var index = array.indexOf(i);
+    if (index > -1) {
+        array.splice(index, 1);
+    }
+}
 (function($) {
-
 // function to retrieve GET params
 $.urlParam = function(name){
 	var results = new RegExp('[\\?&]' + name + '=([^&#]*)').exec(window.location.href);
@@ -55,11 +59,13 @@ var loadConfigFile = function (type) {
 // var configd = loadConfigFile('default');
 // loading user configuration file
 var config = loadConfigFile();
-
+imgUrl = config.options.relPath;
 // we merge default config and user config file
 // var config = $.extend({}, configd, config);
 var config = $.extend({}, config);
-
+if($.urlParam("multiimg")){
+    config.options.defaultViewMode = "list";
+}
 var ofmBase = config.custom.ofmBase;
 var fileConnector = config.custom.fileConnector;
 var space = config.custom.space;
@@ -106,7 +112,6 @@ var capabilities = config.options.capabilities || new Array('select', 'download'
 // Get localized messages from file
 // through culture var or from URL
 if($.urlParam('langCode') != 0 && file_exists (ofmBase + '/scripts/languages/'  + $.urlParam('langCode') + '.js')) config.options.culture = $.urlParam('langCode');
-
 var lg = [];
 $.ajax({
   url: ofmBase + '/scripts/languages/'  + config.options.culture + '.js',
@@ -1343,7 +1348,20 @@ var getFolderInfo = function(path) {
 		} else {
 			$('#fileinfo tbody tr').click(function(){
 				var path = $('td:first-child', this).attr('data-path');
-				getDetailView(path);
+				if($.urlParam("multiimg")){
+                    if($(this).css("background-color")=='rgb(237, 237, 237)'){
+                        $(this).css('background-color',"#FFF");
+                        remove(imgs,path);
+                    }else{
+                        $(this).css('background-color',"rgb(237, 237, 237)");
+                        imgs.push(path);
+                    }
+				}else{
+                    getDetailView(path);
+				}
+				// getDetailView(path);
+
+
 			}).each(function() {
 				$(this).contextMenu(
 					{ menu: getContextMenuOptions($(this)) },

@@ -31,7 +31,7 @@
         }
         str.push('<a class="btn btn-primary" href="javascript:editNews('+row.id+')">修改</a>&nbsp;&nbsp;');
         str.push('<a class="btn btn-primary" target="_blank" href="${request.contextPath}/news/index/'+row.id+'">预览</a>&nbsp;&nbsp;');
-        str.push('<a class="btn btn-primary" href="javascript:confirm(\'确认要删除吗？\', function(){delNews('+row.id+');})">删除</a>&nbsp;&nbsp;');
+        str.push('<a class="btn btn-primary" href="javascript:delNews('+row.id+');">删除</a>&nbsp;&nbsp;');
         return str.join('');
     }
 
@@ -48,20 +48,23 @@
     }
 
     function delNews(id) {
-        $.post("${request.contextPath}/news/delNews",{newsId:id},function(data){
-            $("#messageModalBody").html(data.message);
-            $("#messageModal").modal('show');
-            if(data.result){
-                $("#newsTable").bootstrapTable('refresh',[]);
-            }
-        },"json");
+        if(confirm('确认要删除吗？')){
+            $.post("${request.contextPath}/news/delNews",{newsId:id},function(data){
+                $("#messageModalBody").html(data.message);
+                $("#messageModal").modal('show');
+                if(data.result){
+                    $("#newsTable").bootstrapTable('refresh',[]);
+                }
+            },"json");
+        }
+
     }
     function ajaxDeletes(){
         var deleteRows = $('#newsTable').bootstrapTable('getSelections');
         if (deleteRows.length <= 0) {
             alert("请勾选要删除的${category?.name}");
         }else {
-            confirm('确定删除选中的${category?.name}吗？', function() {
+            if( confirm('确定删除选中的${category?.name}吗？')){
                 var obj=new Object();
                 var ids='';
                 for (var i = 0; i < deleteRows.length; i++) {
@@ -76,7 +79,7 @@
                         $("#newsTable").bootstrapTable('refresh',[]);
                     }
                 }, "json");
-            });
+            }
         }
     }
 

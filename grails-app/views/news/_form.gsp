@@ -1,7 +1,7 @@
 <%@ page import="com.eyesfly.core.BaseUser;" %>
 <ckeditor:config var="toolbar_Mytoolbar">
     [
-        [ 'RemoveFormat', 'Styles','Format','Font','FontSize','lineheight', '-', 'TextColor', 'BGColor', 'Bold', 'Italic', '-', 'Paste', 'PasteText', '-', 'Link', 'Unlink', '-','Image','Flash','-'],
+        [ 'RemoveFormat', 'Styles','Format','Font','FontSize','lineheight','multiimg', '-', 'TextColor', 'BGColor', 'Bold', 'Italic', '-', 'Paste', 'PasteText', '-', 'Link', 'Unlink', '-','Image','Flash','-'],
         [ 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl']
     ]
 </ckeditor:config>
@@ -27,7 +27,7 @@
     });
     function removeTab(dom,id) {
         var id = $("#"+id).attr("data-id");
-        confirm("确认要删除项目信息吗？",function(){
+        if(confirm("确认要删除项目信息吗？")){
             if(typeof(id)!="undefined"){
                 $.post("${request.contextPath}/news/deleteDetail",{id:id},function (data,status) {
                     if(data.result){
@@ -39,7 +39,7 @@
                 $(dom).parent().remove();
                 $("#div"+id).remove();
             }
-        });
+        }
     }
     function addTabs(val) {
 

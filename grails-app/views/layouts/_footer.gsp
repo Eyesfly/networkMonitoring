@@ -31,7 +31,7 @@
     </div>
 </div>
 <script type="text/javascript">
-    function alert(content,callback){
+   /* function alert(content,callback){
         $("#alertContent").html(content);
         $("#alertModal").modal("show");
         $("#yesButton").css('float','');
@@ -44,8 +44,8 @@
             });
         }
 
-    }
-    function confirm(content,callback){
+    }*/
+   /* function confirm(content,callback){
         $("#alertContent").html(content);
         $("#alertModal").modal("show");
         $("#yesButton").css('float','left');
@@ -57,5 +57,5 @@
             });
         }
         $("#noButton").show();
-    }
+    }*/
 </script>

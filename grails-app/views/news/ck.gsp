@@ -1,6 +1,6 @@
 <ckeditor:config var="toolbar_Mytoolbar">
     [
-        [ 'RemoveFormat', 'Styles','Format','Font','FontSize','lineheight', '-', 'TextColor', 'BGColor', 'Bold', 'Italic', '-', 'Paste', 'PasteText', '-', 'Link', 'Unlink', '-','Image','Flash','-'],
+        [ 'RemoveFormat', 'Styles','Format','Font','FontSize','lineheight','multiimg', '-', 'TextColor', 'BGColor', 'Bold', 'Italic', '-', 'Paste', 'PasteText', '-', 'Link', 'Unlink', '-','Image','Flash','-'],
         [ 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl']
     ]
 </ckeditor:config>

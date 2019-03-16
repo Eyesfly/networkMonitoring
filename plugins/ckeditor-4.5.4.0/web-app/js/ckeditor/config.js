@@ -9,4 +9,5 @@ CKEDITOR.editorConfig = function( config ) {
 	// config.uiColor = '#AADC6E';
 
     config.extraPlugins += (config.extraPlugins ? ',lineheight' : 'lineheight');
+    config.extraPlugins += (config.extraPlugins ? ',multiimg' : 'multiimg');
 };

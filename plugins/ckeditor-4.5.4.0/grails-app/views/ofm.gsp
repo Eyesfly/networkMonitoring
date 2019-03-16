@@ -19,6 +19,9 @@
         <script type="text/javascript">
             // Base config
             var configUrl = "<%= configUrl %>";
+            var content = "${params.CKEditor}";
+            var imgs = [];
+            var imgUrl="${request.contextPath}";
         </script>
     </head>
 
@@ -28,7 +31,6 @@
                 <button id="home" name="home" type="button" value="Home">&nbsp;</button>
 
                 <h1></h1>
-
                 <div id="uploadresponse"></div>
                 <input id="mode" name="mode" type="hidden" value="add"/>
                 <input id="currentpath" name="currentpath" type="hidden"/>
@@ -41,8 +43,14 @@
                 </div>
                 <button id="upload" name="upload" type="submit" value="Upload"></button>
                 <button id="newfolder" name="newfolder" type="button" value="New Folder"></button>
-                <button id="grid" class="ON" type="button">&nbsp;</button>
-                <button id="list" type="button">&nbsp;</button>
+                <g:if test="${params.multiimg}">
+                    <button id="list" class="ON" type="button">&nbsp;</button>
+                </g:if>
+                <g:else>
+                    <button id="grid" class="ON" type="button">&nbsp;</button>
+                    <button id="list" type="button">&nbsp;</button>
+                </g:else>
+
             </form>
 
             <div id="splitter">
@@ -77,7 +85,8 @@
             <script type="text/javascript" src="${resource(dir: 'js/ofm/scripts/jquery.contextmenu', file: 'jquery.contextMenu-1.01.js', plugin: 'ckeditor')}"></script>
             <script type="text/javascript" src="${resource(dir: 'js/ofm/scripts', file: 'jquery.impromptu-3.2.min.js', plugin: 'ckeditor')}"></script>
             <script type="text/javascript" src="${resource(dir: 'js/ofm/scripts', file: 'jquery.tablesorter-2.7.2.min.js', plugin: 'ckeditor')}"></script>
-            <script type="text/javascript" src="${resource(dir: 'js/ofm/scripts', file: 'filemanager.min.js', plugin: 'ckeditor')}"></script>
+            <script type="text/javascript" src="${resource(dir: 'js/ofm/scripts', file: 'filemanager.js', plugin: 'ckeditor')}"></script>
+            %{--<script type="text/javascript" src="${resource(dir: 'js/ofm/scripts', file: 'filemanager.min.js', plugin: 'ckeditor')}"></script>--}%
         </div>
     </body>
 </html>
