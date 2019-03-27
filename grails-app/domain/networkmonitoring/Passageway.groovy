@@ -19,8 +19,8 @@ class Passageway {
     String type;
     @Title(zh_CN = "单位")
     String unit;
-    @Title(zh_CN = "表示")
-    String falg;
+    @Title(zh_CN = "启用标识")
+    boolean flag = true;
     Date dateCreated
     Date lastUpdated
     static constraints = {
