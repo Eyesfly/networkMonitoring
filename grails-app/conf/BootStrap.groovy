@@ -13,12 +13,12 @@ class BootStrap {
         }
         //解决
         JSON.registerObjectMarshaller(new BootStrapTableDomainClassMarshaller(true,grailsApplication));
-
+/*
         createDefaultRoles();
         createDefaultUsers();
         createRequestMap();
         createOrganization();
-        createMonitoringPlace();
+        createMonitoringPlace();*/
 
     }
     private void createMonitoringPlace(){
@@ -102,7 +102,7 @@ class BootStrap {
             new Requestmap(url: '/baseRole/**', configAttribute: 'ROLE_ADMIN').save(flush: true)
             new Requestmap(url: '/requestmap/**', configAttribute: 'ROLE_ADMIN').save(flush: true)
             new Requestmap(url: '/workspace/**', configAttribute: 'isFullyAuthenticated()').save(flush: true)
-            new Requestmap(url: '/web/**', configAttribute: 'permitAll()').save(flush: true)
+//            new Requestmap(url: '/web/**', configAttribute: 'permitAll()').save(flush: true)
 
             new Requestmap(url: '/**', configAttribute: 'isFullyAuthenticated()').save(flush: true)
         }

@@ -7,6 +7,8 @@ import grails.converters.JSON
 import org.springframework.messaging.handler.annotation.MessageMapping
 import org.springframework.messaging.handler.annotation.SendTo
 
+import java.sql.Timestamp
+
 
 class WebController{
     def springSecurityService;
@@ -28,6 +30,7 @@ class WebController{
             map.value << entry.lng;
             map.value << entry.lat;
             map.value << i+1;
+            map.value << entry.id;
             rows << map;
         }
         return [list:(rows as JSON).toString()]
@@ -77,5 +80,20 @@ class WebController{
             map.result = false
         }
         render "${map as JSON}";
+    }
+
+    def realTimeDataJson(){
+        def dateStr = params.date;
+        println params;
+        if(!dateStr){
+            dateStr = "2019-04-01 20:27:42.000183731"
+        }
+        println Timestamp.valueOf(dateStr.replace(".000","."))
+        def obj = SamplingData.findBySamplingTimeGreaterThan(Timestamp.valueOf(dateStr.replace(".000",".")));
+        def map = [:];
+        map.time = obj.samplingTime.toString();
+        map.data = JSON.parse(obj.data)
+        println map as JSON;
+       render map as JSON;
     }
 }

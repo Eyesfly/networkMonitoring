@@ -4982,7 +4982,7 @@
                                     "nameTextStyle": {
                                         "fontSize": 14
                                     },
-                                    "nameGap": 25,
+                                    "nameGap": 5,
                                     "inverse": false,
                                     "splitArea": {
                                         "show": true
@@ -5152,21 +5152,21 @@
                                     "nameTextStyle": {
                                         "fontSize": 14
                                     },
-                                    "nameGap": 25,
+                                    "nameGap": 80,
                                     "inverse": false,
                                     "data": ydata
                                 }
                             ],
                             "dataZoom": [
                                 {
-                                    "start": 80,
+                                    "start": 0,
                                     "end": 100,
                                     "type": "slider",
                                     "orient": "horizontal",
                                     "show": true
                                 },
                                 {
-                                    "start": 80,
+                                    "start": 0,
                                     "show": true,
                                     "end": 100,
                                     "orient": "horizontal",
@@ -5210,18 +5210,29 @@
                     var rightChart2 = echarts.init(document.getElementById('rightChart2'));
                     rightChart2.setOption( option);
 
+
+                    var date = null;
                     setInterval(function() {
-                       var num = Math.floor(Math.random()*20+1);
-                        rightChart2.setOption({
-                            series: [{
-                                data: data.splice(num,200)
-                            }],
-                            xAxis:[{
-                                data:ydata.splice(num,200)
-                            }
-                            ]
-                        });
-                    }, 5000);
+                        $.post("${request.contextPath}/web/realTimeDataJson",{date:date},function(data){
+                            var data_ = data.data;
+                            var xx = new Array();
+                            var yy = new Array();
+                            date = data.time;
+                            $.each(data_,function(k,v){
+                                xx.push(v.time);
+                                yy.push([v.time,v.data]);
+                            });
+                            rightChart2.setOption({
+                                series: [{
+                                    data: yy
+                                }],
+                                xAxis:[{
+                                    data:xx
+                                }
+                                ]
+                            });
+                        },"json");
+                    }, 2000);
                 </script>
             </div>
         </div>

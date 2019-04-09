@@ -76,9 +76,11 @@
                     console.log(params.data.value[0]);
                     console.log(params.data.value[1]);
                     console.log(params.data.value[2]);
+                    console.log(params.data.value[3]);
                     $("#myModalLabel").html(params.data.name);
                     $("#content").html(params.data.name);
                     $("#myModal").modal("show");
+                    window.open("${request.contextPath}/web/index2/"+params.data.value[3])
                 }
 
             });//点击事件，此事件还可以用到柱状图等其他地图
@@ -192,11 +194,11 @@
     </div>
     <div class="left">
         <div style="line-height: 50px;">
-            <span style="font-size: 28px;color:#fff749;font-weight: 800;padding:10px 0px;">4,534,221,544</span>
+            <span style="font-size: 28px;color:#fff749;font-weight: 800;padding:10px 0px;">${networkmonitoring.Passageway.count()}</span>
         </div>
         <div><span style="font-size: 16px;color:#91e9f8;font-weight: bold;padding:10px 0px;">监测通道数</span></div>
         <div style="line-height: 50px;">
-            <span style="font-size: 28px;color:#fff749;font-weight: 800;padding:10px 0px;">1,343,455</span>
+            <span style="font-size: 28px;color:#fff749;font-weight: 800;padding:10px 0px;">${networkmonitoring.MonitoringPlace.count()}</span>
         </div>
         <div><span style="font-size: 16px;color:#91e9f8;font-weight: bold;padding:10px 0px;">监测点数</span></div>
         <div style="line-height: 50px;">
