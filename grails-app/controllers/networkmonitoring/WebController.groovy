@@ -4,6 +4,7 @@ import com.eyesfly.core.BaseUser
 import com.eyesfly.dictionary.News
 import com.eyesfly.dictionary.NewsContent
 import grails.converters.JSON
+import groovy.sql.Sql
 import org.springframework.messaging.handler.annotation.MessageMapping
 import org.springframework.messaging.handler.annotation.SendTo
 
@@ -33,17 +34,45 @@ class WebController{
             map.value << entry.id;
             rows << map;
         }
-        return [list:(rows as JSON).toString()]
+        def dataSource = grailsAttributes.getApplicationContext().getBean('dataSource');
+        def sql = new Sql(dataSource);
+        def cityCount = sql.rows("select count(DISTINCT area_id) num from  monitoring_place")[0];
+        return [list:(rows as JSON).toString(),cityCount:cityCount.num]
     }
 
     def index2(){
-
+        def obj = MonitoringPlace.get(params.id?:-1l);
+        def list = [];
+        if(obj){
+            list = MeasuringPoint.findAllByMonitoringPlace(obj);
+        }
+        return [obj:obj,list:list]
+    }
+    def dayData(){
+        def obj = MonitoringPlace.get(params.id?:-1l);
+        def point = MeasuringPoint.findByMonitoringPlace(obj);
+        def list = Passageway.findAllByMeasuringPoint(point);
+        def data = []
+        def dateStr = new Date().format("yyyy-MM-dd");
+        list.each {
+            def v = ChannelData.findAllByDevidAndChanCodeAndCreateDateBetween(point.devid,it.chanCode,Date.parse('yyyy-MM-dd HH:mm:ss',"${dateStr} 00:00:00"),Date.parse('yyyy-MM-dd HH:mm:ss',"${dateStr} 23:59:59"),[order: 'createDate']);
+            def map = [:];
+            map.x = v.collect{it.createDate.format("HH:mm")}
+            map.y = v.collect {it.value}
+            data << map;
+        }
+        render data as JSON
     }
     def index3(){
 
     }
     def index5(){
-
+        def list = [];
+        def obj = MeasuringPoint.get(params.id?:-1l);
+        if(obj){
+            list = Passageway.findAllByMeasuringPoint(obj);
+        }
+        return [list:list]
     }
     def demo(){
 
@@ -84,16 +113,34 @@ class WebController{
 
     def realTimeDataJson(){
         def dateStr = params.date;
-        println params;
+        def obj = null;
         if(!dateStr){
-            dateStr = "2019-04-01 20:27:42.000183731"
+//            dateStr = "2019-04-01 20:27:42.000183731"
+            obj = SamplingData.findByChanCodeAndDevid(params.chanCode,params.devid);
+        }else{
+            obj = SamplingData.findBySamplingTimeGreaterThanAndChanCodeAndDevid(Timestamp.valueOf(dateStr.replace(".000",".")),params.chanCode,params.devid);
         }
-        println Timestamp.valueOf(dateStr.replace(".000","."))
-        def obj = SamplingData.findBySamplingTimeGreaterThan(Timestamp.valueOf(dateStr.replace(".000",".")));
         def map = [:];
-        map.time = obj.samplingTime.toString();
-        map.data = JSON.parse(obj.data)
-        println map as JSON;
+        if(obj){
+            map.time = obj?.samplingTime?.toString();
+            map.data = JSON.parse(obj?.data)
+        }
        render map as JSON;
+    }
+
+    def spectrumDataJson(){
+        def dateStr = params.date;
+        def obj = null;
+        if(!dateStr){
+            obj = ChannelSpectrumData.findByChanCodeAndDevid(params.chanCode,params.devid);
+        }else{
+            obj = ChannelSpectrumData.findByCreateDateGreaterThanAndChanCodeAndDevid(Date.parse("yyyy-MM-dd HH:mm:ss",dateStr),params.chanCode,params.devid);
+        }
+        def map = [:];
+        if(obj){
+            map.time = obj?.createDate.format("yyyy-MM-dd HH:mm:ss");
+            map.data = JSON.parse(obj?.data)
+        }
+        render map as JSON;
     }
 }

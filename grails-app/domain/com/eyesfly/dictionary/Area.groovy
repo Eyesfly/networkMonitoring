@@ -15,4 +15,8 @@ class Area {
     static belongsTo =[parent:Area]
     static constraints = {
     }
+    static mapping = {
+        table('sys_area');
+        version(false)
+    }
 }

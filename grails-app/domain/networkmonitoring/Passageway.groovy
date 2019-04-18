@@ -25,4 +25,9 @@ class Passageway {
     Date lastUpdated
     static constraints = {
     }
+    String getUnitText(){
+       def map =  ["1":'加速度',"2":'位移',"3":'速度'];
+        return map[type]
+    }
+
 }

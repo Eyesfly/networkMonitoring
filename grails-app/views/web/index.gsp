@@ -72,14 +72,14 @@
             var mapChart = echarts.init(document.getElementById('map-wrap'));
             mapChart.on('click', function(params){
                 if(params.componentType== "series"){
-                    console.log(params.data);
+                    /*console.log(params.data);
                     console.log(params.data.value[0]);
                     console.log(params.data.value[1]);
                     console.log(params.data.value[2]);
                     console.log(params.data.value[3]);
                     $("#myModalLabel").html(params.data.name);
                     $("#content").html(params.data.name);
-                    $("#myModal").modal("show");
+                    $("#myModal").modal("show");*/
                     window.open("${request.contextPath}/web/index2/"+params.data.value[3])
                 }
 
@@ -202,7 +202,7 @@
         </div>
         <div><span style="font-size: 16px;color:#91e9f8;font-weight: bold;padding:10px 0px;">监测点数</span></div>
         <div style="line-height: 50px;">
-            <span style="font-size: 28px;color:#fff749;font-weight: 800;padding:10px 0px;">323</span>
+            <span style="font-size: 28px;color:#fff749;font-weight: 800;padding:10px 0px;">${cityCount}</span>
         </div>
         <div><span  style="font-size: 16px;color:#91e9f8;font-weight: bold;padding:10px 0px;">涉及城市数</span></div>
         <div id="marquee4" style="margin-top: 100px;max-height: 200px;">
@@ -338,11 +338,14 @@
                 <div style="color: #fff;font-weight: bolder;font-size: 16px;">各监控测点接入数据量</div>
             <div id="marquee5" style="margin-top: 20px;max-height: 130px;">
                 <ul>
-                    <li class="col-sm-12">
-                        <div  class="col-xs-6 col-sm-8">监控测点1</div>
-                        <div  class="col-xs-6 col-sm-4">1223</div>
-                    </li>
-                    <li class="col-sm-12">
+                    <g:each in="${networkmonitoring.MonitoringPlace.list()}" var="obj">
+                        <li class="col-sm-12">
+                            <div  class="col-xs-6 col-sm-8">${obj.name}</div>
+                            <div  class="col-xs-6 col-sm-4">${networkmonitoring.MeasuringPoint.countByMonitoringPlace(obj)}</div>
+                        </li>
+                    </g:each>
+
+                   %{-- <li class="col-sm-12">
                         <div  class="col-xs-6 col-sm-8">监控测点2</div>
                         <div  class="col-xs-6 col-sm-4">1223</div>
                     </li>
@@ -361,7 +364,7 @@
                     <li class="col-sm-12">
                         <div  class="col-xs-6 col-sm-8">监控测点6</div>
                         <div  class="col-xs-6 col-sm-4">1223</div>
-                    </li>
+                    </li>--}%
                 </ul>
             </div>
         </div>

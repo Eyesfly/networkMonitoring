@@ -1,5 +1,6 @@
 package networkmonitoring
 
+import com.eyesfly.dictionary.Area
 import grails.converters.JSON
 
 class MonitoringPlaceController {
@@ -57,5 +58,25 @@ class MonitoringPlaceController {
         } catch (Exception e) {
             return
         }
+    }
+    def orgTree(){
+
+    }
+    def orgJson(){
+        def list = []
+        def orgs = params?.id?.equals("#")?Area.findAllByParent(Area.get('1'),[order:'sort']):Area?.findAllByParent(Area.read(params?.id),[order:'sort']);
+        orgs.each { org1 ->
+            def map = [:];
+            map.id = org1.id;
+            map.text = org1.name;
+            map.state = [:];
+            if(params.areaId == org1.id){
+                map.state.selected = true
+            }
+            map.children = true;
+            map.type = "org";
+            list << map;
+        }
+        render list as JSON;
     }
 }

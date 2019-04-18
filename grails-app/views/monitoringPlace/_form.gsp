@@ -40,18 +40,19 @@
     <div class="row1">
         <div class="col-2 text-right"><span class="text-red">*</span> 图片：</div>
         <div class="col-8">
-            <input id="picture" name="picture" type="file" class="form-control" />
+            <input id="picture" name="picture" type="file" class="form-control" style="display: inline;width: 90%;" />
             <g:if test="${obj.picture}">
-                <img src="${request.contextPath}/monitoringPlace/picture/${obj?.id}">
+                 <a href="${request.contextPath}/monitoringPlace/picture/${obj?.id}" target="_blank">预览</a>
             </g:if>
         </div>
     </div>
-    %{--<div class="row1">
+    <div class="row1">
         <div class="col-2 text-right"><span class="text-red">*</span> 所在地区：</div>
         <div class="col-8">
-            <input id="area" name="area.id" class="form-control"  value="${obj?.area?.id}"/>
+            <input id="area" type="hidden" name="area.id" value="${obj?.area?.id}">
+            <input id="areaTxt" readonly onclick="showOrgModal();"  class="form-control"  value="${obj?.area?.name}"/>
         </div>
-    </div>--}%
+    </div>
     <div class="row1">
         <div class="col-2 text-right"><span class="text-red">*</span> 详细地址：</div>
         <div class="col-8">
@@ -59,3 +60,28 @@
         </div>
     </div>
 </form>
+
+<div class="modal" id="orgUserModal" tabindex="-1" role="dialog" aria-labelledby="orgUserModalHead" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content" >
+            <div class="modal-header">
+                <button type="button" class="close" onclick="$('#orgUserModal').modal('hide')"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">选择地区</h4>
+            </div>
+            <div class="modal-body" id="orgUserModalBody">
+
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-blue margin" type="button" onclick="$('#orgUserModal').modal('hide')" >确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function showOrgModal(){
+        $.post("${request.contextPath}/monitoringPlace/orgTree",{},function(data){
+            $("#orgUserModalBody").html(data);
+            $("#orgUserModal").modal('show');
+        },"html");
+    }
+</script>

@@ -10,6 +10,7 @@
 <head>
     <title></title>
     <link rel="stylesheet" href="${request.contextPath}/js/bootstrap-3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${request.contextPath}/js/Font-Awesome-3.2.1/css/font-awesome.min.css">
     <script src="${request.contextPath}/js/bootstrap-3.3.7/js/jquery.min.js"></script>
     <script src="${request.contextPath}/js/bootstrap-3.3.7/js/bootstrap.min.js"></script>
     <script src="${request.contextPath}/js/echarts/echarts3.min.js"></script>
@@ -57,147 +58,141 @@
 
             </div>
             <script type="text/javascript">
-                var data = [
-                    ["0",116],["1",129],["2",135],["3",86],["4",73],["5",85],["6",73],["7",68],["8",92],["9",130],["10",245],["11",139],["12",115],["13",111],["14",209],["15",206],["16",137],["17",128],["18",85],["19",94],["20",71],["21",106],["22",84],["23",93],["24",85],["25",73],["26",83],["27",125],["28",107],["29",82],["30",44],["31",72],["32",106],["33",107],["34",66],["35",91],["36",92],["37",113],["38",107],["39",131],["40",111],["41",64],["42",69],["43",88],["44",77],["45",83],["46",111],["47",57],["48",55],["49",60]];
+                $.post('${request.contextPath}/web/dayData',{id:'${obj.id}'},function(data,status){
 
-                var dateList = data.map(function (item) {
-                    return item[0];
-                });
-                var valueList = data.map(function (item) {
-                    return item[1];
-                });
-                $("#firstChart").css("height",(0.30*height)+"px");
-                var myChart1 = echarts.init(document.getElementById('firstChart'));
-                myChart1.setOption({
-                    // Make gradient line here
-                    color:['#fec178','#72f1da','#4cd1fd','#3faefc','#8b76f9'],
-                    title: [{
-                        left: 'center',
-                        text: ''
-                    }, {
-                        top: '35%',
-                        left: 'center',
-                        text: ''
-                    }, {
-                        top: '72%',
-                        left: 'center',
-                        text: ''
-                    }],
-                    tooltip: {
-                        trigger: 'axis'
-                    },
-                    xAxis: [{
-                        type: 'category',
-                        boundaryGap: false,
-                        axisLine:{
-                            lineStyle:{
-                                color:'#91e9f8'
-                            }
+                    $("#firstChart").css("height",(0.30*height)+"px");
+                    var myChart1 = echarts.init(document.getElementById('firstChart'));
+                    myChart1.setOption({
+                        // Make gradient line here
+                        color:['#fec178','#72f1da','#4cd1fd','#3faefc','#8b76f9'],
+                        title: [{
+                            left: 'center',
+                            text: ''
+                        }, {
+                            top: '35%',
+                            left: 'center',
+                            text: ''
+                        }, {
+                            top: '72%',
+                            left: 'center',
+                            text: ''
+                        }],
+                        tooltip: {
+                            trigger: 'axis'
                         },
-                        axisLabel:{
-                            color:'#fff'
-                        },
-                        data: dateList
-                    }, {
-                        type: 'category',
-                        boundaryGap: false,
-                        axisLine:{
-                            lineStyle:{
-                                color:'#91e9f8'
-                            }
-                        },
-                        axisLabel:{
-                            color:'#fff'
-                        },
-                        data: dateList,
-                        gridIndex: 1
-                    }, {
-                        type: 'category',
-                        boundaryGap: false,
-                        axisLine:{
-                            lineStyle:{
-                                color:'#91e9f8'
-                            }
-                        },
-                        axisLabel:{
-                            color:'#fff'
-                        },
-                        data: dateList,
-                        gridIndex: 2
-                    }],
-                    yAxis: [{
-                        type: 'value',
-                        axisLine:{
-                            lineStyle:{
-                                color:'#91e9f8'
-                            }
-                        },
-                        axisLabel:{
-                            color:'#fff'
-                        },
-                        splitLine: {show: false}
-                    }, {
-                        type: 'value',
-                        axisLine:{
-                            lineStyle:{
-                                color:'#91e9f8'
-                            }
-                        },
-                        axisLabel:{
-                            color:'#fff'
-                        },
-                        splitLine: {show: false},
-                        gridIndex: 1
-                    }, {
-                        type: 'value',
-                        axisLine:{
-                            lineStyle:{
-                                color:'#91e9f8'
-                            }
-                        },
-                        axisLabel:{
-                            color:'#fff'
-                        },
-                        splitLine: {show: false},
-                        gridIndex: 2
-                    }],
-                    grid: [{
-                        top: '3%',
-                        left:'8%',
-                        right:'0%',
-                        bottom: '78%'
-                    }, {
-                        left:'8%',
-                        right:'0%',
-                        top: '29%',
-                        bottom: '45%'
-                    }, {
-                        left:'8%',
-                        right:'0%',
-                        top: '59%',
-                        bottom: '14%'
-                    }],
-                    series: [{
-                        type: 'line',
-                        showSymbol: false,
-                        areaStyle: {normal: {}},
-                        data: valueList
-                    }, {
-                        type: 'line',
-                        showSymbol: false,
-                        areaStyle: {normal: {}},
-                        data: valueList,
-                        xAxisIndex: 1,
-                        yAxisIndex: 1
-                    }, {
-                        type: 'line',
-                        showSymbol: false,
-                        areaStyle: {normal: {}},
-                        data: valueList,
-                        xAxisIndex: 2,
-                        yAxisIndex: 2
-                    }]
-                });
+                        xAxis: [{
+                            type: 'category',
+                            boundaryGap: false,
+                            axisLine:{
+                                lineStyle:{
+                                    color:'#91e9f8'
+                                }
+                            },
+                            axisLabel:{
+                                color:'#fff'
+                            },
+                            data: data[0].x
+                        }, {
+                            type: 'category',
+                            boundaryGap: false,
+                            axisLine:{
+                                lineStyle:{
+                                    color:'#91e9f8'
+                                }
+                            },
+                            axisLabel:{
+                                color:'#fff'
+                            },
+                            data: data[1].x,
+                            gridIndex: 1
+                        }, {
+                            type: 'category',
+                            boundaryGap: false,
+                            axisLine:{
+                                lineStyle:{
+                                    color:'#91e9f8'
+                                }
+                            },
+                            axisLabel:{
+                                color:'#fff'
+                            },
+                            data: data[2].x,
+                            gridIndex: 2
+                        }],
+                        yAxis: [{
+                            type: 'value',
+                            axisLine:{
+                                lineStyle:{
+                                    color:'#91e9f8'
+                                }
+                            },
+                            axisLabel:{
+                                color:'#fff'
+                            },
+                            splitLine: {show: false}
+                        }, {
+                            type: 'value',
+                            axisLine:{
+                                lineStyle:{
+                                    color:'#91e9f8'
+                                }
+                            },
+                            axisLabel:{
+                                color:'#fff'
+                            },
+                            splitLine: {show: false},
+                            gridIndex: 1
+                        }, {
+                            type: 'value',
+                            axisLine:{
+                                lineStyle:{
+                                    color:'#91e9f8'
+                                }
+                            },
+                            axisLabel:{
+                                color:'#fff'
+                            },
+                            splitLine: {show: false},
+                            gridIndex: 2
+                        }],
+                        grid: [{
+                            top: '3%',
+                            left:'8%',
+                            right:'0%',
+                            bottom: '78%'
+                        }, {
+                            left:'8%',
+                            right:'0%',
+                            top: '29%',
+                            bottom: '45%'
+                        }, {
+                            left:'8%',
+                            right:'0%',
+                            top: '59%',
+                            bottom: '14%'
+                        }],
+                        series: [{
+                            type: 'line',
+                            showSymbol: false,
+                            areaStyle: {normal: {}},
+                            data: data[0].y
+                        }, {
+                            type: 'line',
+                            showSymbol: false,
+                            areaStyle: {normal: {}},
+                            data: data[1].y,
+                            xAxisIndex: 1,
+                            yAxisIndex: 1
+                        }, {
+                            type: 'line',
+                            showSymbol: false,
+                            areaStyle: {normal: {}},
+                            data: data[2].y,
+                            xAxisIndex: 2,
+                            yAxisIndex: 2
+                        }]
+                    });
+                },'json');
             </script>
         </div>
         <div class="col-xs-6 col-sm-12 boxBorder" style="height: 27%;margin-top: 15px;">
@@ -300,7 +295,7 @@
                 var barDataTwo = [];
                 var coordData2 = [];
                 var coordData = [];
-                for (let i = 0; i < barData.length; i++) {
+                for (var i = 0; i < barData.length; i++) {
                     barDataTwo.push(Math.max.apply(Math, barData) + 5000);
                     coordData.push({
                         "coord": [Number(barData[i]) - 1, i]
@@ -593,7 +588,16 @@
     </div>
     <div class="col-xs-6 col-sm-4">
         <div class="col-xs-6 col-sm-12" style="height: 48%;margin-top: 10px;">
-           <img src="${request.contextPath}/images/tl.jpg" style="width: 100%;height: 100%;">
+            <g:if test="${obj.picture}">
+                <img src="${request.contextPath}/monitoringPlace/picture/${obj?.id}" style="width: 100%;height: 98%;" >
+            </g:if>
+            <div style="line-height: 30px;">
+                <g:each in="${list}" var="point">
+                    <div class="col-xs-3 col-sm-3">
+                        <a href="${request.contextPath}/web/index5/${point.id}" target="_blank" style="text-decoration: none"><i class="icon-circle"></i>&nbsp;${point.name}</a>
+                    </div>
+                </g:each>
+            </div>
         </div>
         <div class="col-xs-6 col-sm-12" style="height: 24%;margin-top: 15px;">
             <div class="col-xs-6 col-sm-12">
@@ -750,7 +754,7 @@
                     },
                     legend: {
                         show:false,
-                        data:['蒸发量','降水量','平均温度','平均温度2']
+                        data:['蒸发量']
                     },
                     xAxis: [
                         {
@@ -792,22 +796,6 @@
                             name:'蒸发量',
                             type:'bar',
                             data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
-                        },
-                        {
-                            name:'降水量',
-                            type:'bar',
-                            data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
-                        },
-                        {
-                            name:'平均温度',
-                            type:'line',
-                            data:[2.0, 2.2, 3.3, 4.5, 6.3, 40.2, 90.3, 143.4, 23.0, 16.5, 12.0, 6.2]
-                        }
-                        ,
-                        {
-                            name:'平均温度2',
-                            type:'line',
-                            data:[1.0, 2.2, 4.3, 2.5, 4.3, 33.2, 110.3, 123.4, 13.0, 13.5, 2.0, 4.2]
                         }
                     ]
                 };
