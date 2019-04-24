@@ -8,7 +8,7 @@ class ChannelSpectrumData {
     String devid
     @Title(zh_CN = "通道号")
     String chanCode
-    Date createDate
+    Date analysisTime
     String data
     static constraints = {
     }

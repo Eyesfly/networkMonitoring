@@ -114,16 +114,24 @@ class WebController{
     def realTimeDataJson(){
         def dateStr = params.date;
         def obj = null;
+        def list=[];
+        def map = [:];
         if(!dateStr){
 //            dateStr = "2019-04-01 20:27:42.000183731"
-            obj = SamplingData.findByChanCodeAndDevid(params.chanCode,params.devid);
-        }else{
-            obj = SamplingData.findBySamplingTimeGreaterThanAndChanCodeAndDevid(Timestamp.valueOf(dateStr.replace(".000",".")),params.chanCode,params.devid);
-        }
-        def map = [:];
-        if(obj){
+//            obj = SamplingData.findByChanCodeAndDevid(params.chanCode,params.devid);
+            obj = SamplingData.findByChanCodeAndDevid(params.chanCode,params.devid,[sort: 'id',order: 'desc']);
             map.time = obj?.samplingTime?.toString();
             map.data = JSON.parse(obj?.data)
+        }else{
+            list = SamplingData.findAllBySamplingTimeGreaterThanAndChanCodeAndDevid(Timestamp.valueOf(dateStr.replace(".000",".")),params.chanCode,params.devid,[sort: 'id',order: 'asc']);
+            def tem=[];
+            list.each {
+                tem += JSON.parse(it?.data);
+            }
+            if(!list.isEmpty()){
+                map.time = list?.last()?.samplingTime.toString();
+                map.data =tem;
+            }
         }
        render map as JSON;
     }
@@ -131,14 +139,16 @@ class WebController{
     def spectrumDataJson(){
         def dateStr = params.date;
         def obj = null;
-        if(!dateStr){
-            obj = ChannelSpectrumData.findByChanCodeAndDevid(params.chanCode,params.devid);
+/*        if(!dateStr){
+//            obj = ChannelSpectrumData.findByChanCodeAndDevid(params.chanCode,params.devid);
+            obj = ChannelSpectrumData.findByAnalysisTimeGreaterThanAndChanCodeAndDevid(new Date(),params.chanCode,params.devid);
         }else{
-            obj = ChannelSpectrumData.findByCreateDateGreaterThanAndChanCodeAndDevid(Date.parse("yyyy-MM-dd HH:mm:ss",dateStr),params.chanCode,params.devid);
-        }
+            obj = ChannelSpectrumData.findByAnalysisTimeGreaterThanAndChanCodeAndDevid(Date.parse("yyyy-MM-dd HH:mm:ss",dateStr),params.chanCode,params.devid);
+        }*/
+        obj = ChannelSpectrumData.findByChanCodeAndDevid(params.chanCode,params.devid);
         def map = [:];
         if(obj){
-            map.time = obj?.createDate.format("yyyy-MM-dd HH:mm:ss");
+            map.time = obj?.analysisTime.format("yyyy-MM-dd HH:mm:ss");
             map.data = JSON.parse(obj?.data)
         }
         render map as JSON;

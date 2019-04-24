@@ -49,8 +49,8 @@
         var height = $(window).height();
     </script>
 </head>
-
-<body style="background: rgb(0, 10, 21)">
+<!--background: rgb(0, 10, 21)-->
+<body style="background: url('${request.contextPath}/images/bg.jpg')">
 <div class="child">
     <div class="col-xs-6 col-sm-4">
         <div class="col-xs-6 col-sm-12  boxBorder" style="height: 30%;margin-top: 10px;padding: 0px 10px;">

@@ -241,7 +241,7 @@
                             ]
                         });
                     },"json");
-                }, 2000);
+                }, 1000);
             </script>
     </g:each>
     </div>
@@ -326,7 +326,7 @@
                         });
                     },"json");
                 }
-                rinterval${obj.chanCode} = setInterval(rintFun${obj.chanCode}, 1000);
+                rinterval${obj.chanCode} = setInterval(rintFun${obj.chanCode}, 5000);
             </script>
         </g:each>
     </div>
