@@ -41,7 +41,7 @@
         <div class="col-2 text-right"><span class="text-red">*</span> 图片：</div>
         <div class="col-8">
             <input id="picture" name="picture" type="file" class="form-control" style="display: inline;width: 90%;" />
-            <g:if test="${obj.picture}">
+            <g:if test="${obj?.picture}">
                  <a href="${request.contextPath}/monitoringPlace/picture/${obj?.id}" target="_blank">预览</a>
             </g:if>
         </div>

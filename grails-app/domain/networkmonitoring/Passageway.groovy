@@ -23,7 +23,12 @@ class Passageway {
     boolean flag = true;
     Date dateCreated
     Date lastUpdated
+    @Title(zh_CN = "阈值")
+    Float threshold
+    Float sensitivity
     static constraints = {
+        threshold nullable: true
+        sensitivity nullable: true
     }
     String getUnitText(){
        def map =  ["1":'加速度',"2":'位移',"3":'速度'];

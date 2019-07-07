@@ -4,7 +4,10 @@ import com.eyesfly.core.BaseUser
 import com.eyesfly.dictionary.News
 import com.eyesfly.dictionary.NewsContent
 import grails.converters.JSON
+import grails.transaction.Transactional
 import groovy.sql.Sql
+import org.apache.log4j.Logger
+import org.hibernate.Transaction
 import org.springframework.messaging.handler.annotation.MessageMapping
 import org.springframework.messaging.handler.annotation.SendTo
 
@@ -12,8 +15,24 @@ import java.sql.Timestamp
 
 
 class WebController{
+    Logger logger = Logger.getLogger(WebController.class)
     def springSecurityService;
-    def chat(){}
+    def index3(){
+        def list = [];
+        def obj = MonitoringPlace.get(params.id?:-1l);
+        if(obj){
+            list = MeasuringPoint.findAllByMonitoringPlace(obj);
+        }
+        return [list:list]
+    }
+    def index6(){
+        def list = [];
+        def obj = MonitoringPlace.get(params.id?:-1l);
+        if(obj){
+            list = MeasuringPoint.findAllByMonitoringPlace(obj);
+        }
+        return [list:list]
+    }
     @MessageMapping("/hello")
     @SendTo("/topic/hello")
     protected String hello(String world) {
@@ -62,9 +81,6 @@ class WebController{
             data << map;
         }
         render data as JSON
-    }
-    def index3(){
-
     }
     def index5(){
         def list = [];
@@ -116,24 +132,31 @@ class WebController{
         def obj = null;
         def list=[];
         def map = [:];
+        long time = System.currentTimeMillis();
+
         if(!dateStr){
 //            dateStr = "2019-04-01 20:27:42.000183731"
 //            obj = SamplingData.findByChanCodeAndDevid(params.chanCode,params.devid);
             obj = SamplingData.findByChanCodeAndDevid(params.chanCode,params.devid,[sort: 'id',order: 'desc']);
             map.time = obj?.samplingTime?.toString();
-            map.data = JSON.parse(obj?.data)
+            map.data = JSON.parse(obj?.data?:"{}")
         }else{
             list = SamplingData.findAllBySamplingTimeGreaterThanAndChanCodeAndDevid(Timestamp.valueOf(dateStr.replace(".000",".")),params.chanCode,params.devid,[sort: 'id',order: 'asc']);
             def tem=[];
-            list.each {
+            for (int i = 0; i < list.size(); i++) {
+                def it = list[i];
                 tem += JSON.parse(it?.data);
             }
+            /*list.each {
+                tem += JSON.parse(it?.data);
+            }*/
             if(!list.isEmpty()){
                 map.time = list?.last()?.samplingTime.toString();
                 map.data =tem;
             }
         }
-       render map as JSON;
+        logger.error("查询消耗：${System.currentTimeMillis()-time}");
+        render map as JSON;
     }
 
     def spectrumDataJson(){
@@ -152,5 +175,115 @@ class WebController{
             map.data = JSON.parse(obj?.data)
         }
         render map as JSON;
+    }
+    @MessageMapping("/data1")
+    @SendTo("/topic/data1")
+    @Transactional(readOnly = true)
+    protected String  data1(String content){
+        def params =  JSON.parse(content)
+        def dateStr = params.date;
+        def obj = null;
+        def list=[];
+        def map = [:];
+        map.key = "${params.devid}_${params.chanCode}"
+        long time = System.currentTimeMillis();
+        if(!dateStr){
+//            dateStr = "2019-04-01 20:27:42.000183731"
+//            obj = SamplingData.findByChanCodeAndDevid(params.chanCode,params.devid);
+//            obj = SamplingData.findByChanCodeAndDevid(params.chanCode,params.devid,[sort: 'id',order: 'desc']);
+            obj = SamplingData.findByChanCodeAndDevid(params.chanCode,params.devid,[sort: 'id',order: 'desc']);
+            map.time = obj?.samplingTime?.toString();
+            map.beginTime = obj?.samplingTime?.toString()?.replace(".000",".");
+            map.data = JSON.parse(obj?.data?:"{}")
+        }else{
+            list = SamplingData.findAllBySamplingTimeGreaterThanAndChanCodeAndDevid(Timestamp.valueOf(dateStr.replace(".000",".")),params.chanCode,params.devid,[sort: 'id',order: 'asc']);
+            def tem=[];
+            for (int i = 0; i < list.size(); i++) {
+                def it = list[i];
+                tem += JSON.parse(it?.data);
+            }
+            if(!list.isEmpty()){
+                map.time = list?.last()?.samplingTime.toString();
+                map.beginTime = list?.first()?.samplingTime.toString()?.replace(".000",".");
+                map.data =tem;
+            }
+        }
+//        render map as JSON;
+        return "${map as JSON}"
+    }
+    @MessageMapping("/data2")
+    @SendTo("/topic/data2")
+    @Transactional(readOnly = true)
+    protected String  data2(String content){
+        def params = JSON.parse(content)
+        def dateStr = params.date;
+        def obj = null;
+
+        obj = ChannelSpectrumData.findByChanCodeAndDevid(params.chanCode,params.devid);
+        def map = [:];
+        map.key = "${params.devid}_${params.chanCode}"
+        if(obj){
+            map.time = obj?.analysisTime.format("yyyy-MM-dd HH:mm:ss");
+            map.data = JSON.parse(obj?.data)
+        }
+//        render map as JSON;
+        return  "${map as JSON}"
+    }
+
+    @MessageMapping("/data11")
+    @SendTo("/topic/data11")
+    @Transactional(readOnly = true)
+    protected String  data11(String content){
+        def params =  JSON.parse(content)
+        def  devid = params.devid.split(",");
+        def  chanCode = params.chanCode.split(",");
+        def dateStr = params.date;
+        def obj = null;
+        def list=[];
+        def list2=[];
+        def map = [:];
+//        map.key = "${params.devid}_${params.chanCode}"
+        long time = System.currentTimeMillis();
+        if(!dateStr){
+//            dateStr = "2019-04-01 20:27:42.000183731"
+//            obj = SamplingData.findByChanCodeAndDevid(params.chanCode,params.devid);
+//            obj = SamplingData.findByChanCodeAndDevid(params.chanCode,params.devid,[sort: 'id',order: 'desc']);
+            def firstList = SamplingData.executeQuery("from SamplingData where (chanCode = :chanCode1 and devid = :devid1) or (chanCode = :chanCode2 and devid = :devid2) order by id desc ",[chanCode1:chanCode[0],chanCode2:chanCode[1],devid1:devid[0],devid2:devid[1],max:2])
+//            obj = SamplingData.findByChanCodeAndDevid('0',params.devid,[sort: 'id',order: 'desc']);
+//            def obj2 = SamplingData.findByChanCodeAndDevid('1',params.devid,[sort: 'id',order: 'asc']);
+            map.time = firstList?.last()?.samplingTime.toString();;
+            map.beginTime = firstList?.first()?.samplingTime.toString()?.replace(".000",".");
+            firstList = firstList.groupBy {it.devid+"_"+it.chanCode};
+            def temList = [];
+            firstList.each { o->
+               def tem = []
+                for (int i = 0; i < o.value.size(); i++) {
+                    def it = o.value[i];
+                    tem += JSON.parse(it?.data);
+                }
+                temList<<tem;
+            }
+            map.data = temList
+        }else{
+            list = SamplingData.executeQuery("from SamplingData where samplingTime >= :samplingTime and ((chanCode = :chanCode1 and devid = :devid1) or (chanCode = :chanCode2 and devid = :devid2))  order by id asc",[samplingTime:Timestamp.valueOf(dateStr.replace(".000",".")),chanCode1:chanCode[0],chanCode2:chanCode[1],devid1:devid[0],devid2:devid[1]]);
+/*            list = SamplingData.findAllBySamplingTimeGreaterThanAndChanCodeAndDevid(Timestamp.valueOf(dateStr.replace(".000",".")),0,params.devid,[sort: 'id',order: 'asc']);
+            list2 = SamplingData.findAllBySamplingTimeGreaterThanAndChanCodeAndDevid(Timestamp.valueOf(dateStr.replace(".000",".")),1,params.devid,[sort: 'id',order: 'asc']);*/
+            if(!list.isEmpty()){
+                map.time = list?.last()?.samplingTime.toString();;
+                map.beginTime = list?.first()?.samplingTime.toString()?.replace(".000",".");
+            }
+            list = list.groupBy {it.devid+"_"+it.chanCode};
+            def temList = [];
+            list.each { o->
+                def tem = []
+                for (int i = 0; i < o.value.size(); i++) {
+                    def it = o.value[i];
+                    tem += JSON.parse(it?.data);
+                }
+                temList<<tem;
+            }
+            map.data = temList
+        }
+        return "${map as JSON}"
     }
 }

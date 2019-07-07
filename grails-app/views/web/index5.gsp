@@ -20,24 +20,48 @@
         margin:0px;
     }
     </style>
+    <script type="text/javascript">
+        function getDate(stringTime,flag) {
+            var timestamp2 = Date.parse(new Date(stringTime));
+            // timestamp2 = timestamp2 / 1000;
+            //2014-07-10 10:21:12的时间戳为：1404958872
+            var res = timestamp2*1000+Number(stringTime.substr(stringTime.lastIndexOf(".")+1));
+            // console.log(stringTime + "的时间戳为：" + res);
+            return res;
+        }
+    </script>
 </head>
 
 <body >
 <div class="child">
     <div class="col-xs-12 col-sm-6">
-    <g:each in="${list}" var="obj">
-            <div id="rightChart${obj.chanCode}" style="height: 500px;width: 100%;"></div>
+        <g:each in="${list}" var="obj">
+            <div id="rightChart${obj.chanCode}" style="height: 300px;width: 100%;"></div>
             <script type="text/javascript">
                 var rightChart${obj.chanCode} = echarts.init(document.getElementById('rightChart${obj.chanCode}'));
+                var rOption${obj.chanCode}=null;
+                var xx${obj.chanCode} = new Array();
+                var yy${obj.chanCode} = new Array();
+                var ydata_${obj.chanCode} = new Array();
                 $.post("${request.contextPath}/web/realTimeDataJson",{chanCode:'${obj.chanCode}',devid:'${obj?.measuringPoint?.devid}'},function(data){
                     var data_ = data.data;
-                    var xx = new Array();
-                    var yy = new Array();
+                    var xx${obj.chanCode} = new Array();
+                    var yy${obj.chanCode} = new Array();
+                    var ydata_${obj.chanCode} = new Array();
                     $.each(data_,function(k,v){
-                        xx.push(v.time);
-                        yy.push([v.time,v.data]);
+                        xx${obj.chanCode}.push(v.time);
+                        ydata_${obj.chanCode}.push(v.data);
+                        yy${obj.chanCode}.push([v.time,v.data]);
                     });
-                    var option =
+                    var max = Math.max.apply(null,ydata_${obj.chanCode});
+                    var min = Math.min.apply(null,ydata_${obj.chanCode});
+
+                    if(Math.abs(max) < Math.abs(min)){
+                        max =   Math.abs(min);
+                    }
+                    max = Math.ceil(max);
+                    min = -max;
+                    rOption${obj.chanCode} =
                         {
                             "yAxis": [
                                 {
@@ -57,7 +81,7 @@
                                         "formatter": "{value} "
                                     },
                                     "splitLine": {
-                                        "show": true
+                                        "show": false
                                     },
                                     "boundaryGap": true,
                                     "nameTextStyle": {
@@ -72,13 +96,16 @@
                                     },
                                     "inverse": false,
                                     "splitArea": {
-                                        "show": true
+                                        "show": false
                                     },
+                                    min:min,
+                                    max:max,
                                     "type": "value"
                                 }
                             ],
                             "color": [
-                                "#c23531"
+                                "#006400"
+                                // "#c23531"
                             ],
                             "series": [
                                 {
@@ -86,9 +113,11 @@
                                     "markLine": {
                                         "data": []
                                     },
-                                    "name": "\u7b14",
-                                    "data": yy,
-                                    "symbol": "emptyCircle",
+                                    "name": "",
+                                    // "name": "\u7b14",
+                                    %{--"data": yy${obj.chanCode},--}%
+                                    "data": [],
+                                    "symbol": "none",
                                     "smooth": false,
                                     "label": {
                                         "emphasis": {
@@ -129,7 +158,7 @@
                             ],
                             "title": [
                                 {
-                                    subtext:'${obj.chanName}${obj.unitText}频域曲线',
+                                    subtext:'${obj.chanName}${obj.unitText}实时波形曲线',
                                     subtextStyle:{
                                         color:'#000000',
                                         fontSize:16,
@@ -165,6 +194,9 @@
                                         "textStyle": {
                                             "fontSize": 12
                                         },
+                                        formatter: function (value, index) {
+                                            return value.substring(11);
+                                        },
                                         "interval": "auto",
                                         "margin": 8,
                                         "rotate": 0
@@ -172,27 +204,28 @@
                                     "splitLine": {
                                         "show": false
                                     },
-                                    "boundaryGap": true,
+                                    "boundaryGap": false,
                                     "nameTextStyle": {
                                         "fontSize": 14
                                     },
                                     "nameGap": 80,
                                     "inverse": false,
-                                    "data": xx
+                                    "data":[]
+                                    %{--"data": xx${obj.chanCode}--}%
                                 }
                             ],
                             "dataZoom": [
                                 {
                                     "start": 0,
-                                    "end": 100,
+                                    "end": 3000,
                                     "type": "slider",
                                     "orient": "horizontal",
-                                    "show": true
+                                    "show": false
                                 },
                                 {
                                     "start": 0,
-                                    "show": true,
-                                    "end": 100,
+                                    "show": false,
+                                    "end": 3000,
                                     "orient": "horizontal",
                                     "type": "inside"
                                 }
@@ -213,42 +246,87 @@
                                 }
                             ]
                         };
-                    rightChart${obj.chanCode}.setOption(option);
+                    rightChart${obj.chanCode}.setOption(rOption${obj.chanCode});
                 },"json");
                 var interval${obj.chanCode};
                 if(interval${obj.chanCode}) clearInterval(interval${obj.chanCode});
                 var date${obj.chanCode} = null;
+
                 interval${obj.chanCode} = setInterval(function() {
                     $.post("${request.contextPath}/web/realTimeDataJson",{date:date${obj.chanCode},chanCode:'${obj.chanCode}',devid:'${obj?.measuringPoint?.devid}'},function(data){
                         var data_ = data.data;
                         if(typeof(data_)=="undefined"){
                             return;
                         }
-                        var xx = new Array();
-                        var yy = new Array();
+                        if(data_.length==0){
+                            return;
+                        }
                         date${obj.chanCode} = data.time;
-                        $.each(data_,function(k,v){
-                            xx.push(v.time);
-                            yy.push([v.time,v.data]);
+                        for (var i = 0; i <data_.length ; i++) {
+                            var v = data_[i];
+                            xx${obj.chanCode}.push(v.time);
+                            ydata_${obj.chanCode}.push(v.data);
+                            yy${obj.chanCode}.push([v.time,v.data]);
+                        }
+                        %{--$.each(data_,function(k,v){--}%
+                            %{--//2019/05/20 22:58:25.982114--}%
+                            %{--xx${obj.chanCode}.push(v.time);--}%
+                            %{--ydata_${obj.chanCode}.push(v.data);--}%
+                            %{--yy${obj.chanCode}.push([v.time,v.data]);--}%
+                        %{--});--}%
+
+                        xx${obj.chanCode}.sort(function(a,b){
+                            return getDate(a)-getDate(b);
                         });
+                        yy${obj.chanCode}.sort(function(a,b){
+                            return getDate(a[0])-getDate(b[0]);
+                        });
+                        var len = xx${obj.chanCode}.length - 2000;
+                        if(xx${obj.chanCode}.length>2000){
+                            xx${obj.chanCode}.splice(0,len)
+                        }
+                        if(yy${obj.chanCode}.length>2000){
+                            yy${obj.chanCode}.splice(0,len)
+                        }
+                        if(ydata_${obj.chanCode}.length>2000){
+                            ydata_${obj.chanCode}.splice(0,len)
+                        }
+
+                        var max = Math.max.apply(null,ydata_${obj.chanCode});
+                        var min = Math.min.apply(null,ydata_${obj.chanCode});
+
+                        if(Math.abs(max) < Math.abs(min)){
+                            max =   Math.abs(min);
+                        }
+                        max = Math.ceil(max);
+                        min = -max;
+                        %{--rightChart${obj.chanCode}.setOption(rOption${obj.chanCode});--}%
                         rightChart${obj.chanCode}.setOption({
                             series: [{
-                                data: yy
+                                name:'AQI',
+                                data: yy${obj.chanCode}
+                            }],
+                            yAxis:[{
+                                min:min,
+                                max:max
                             }],
                             xAxis:[{
-                                data:xx
+                                data:xx${obj.chanCode}
                             }
                             ]
                         });
                     },"json");
-                }, 1000);
+                }, 2000);
             </script>
-    </g:each>
+        </g:each>
+
+
+
     </div>
 
     <div class="col-xs-12 col-sm-6">
         <g:each in="${list}" var="obj">
-            <div id="right${obj.chanCode}" style="height: 500px;width: 100%;"></div>
+            <div id="right${obj.chanCode}" style="height: 300px;width: 100%;"></div>
             <script type="text/javascript">
                 var rinterval${obj.chanCode};
                 if(rinterval${obj.chanCode}) clearInterval(rinterval${obj.chanCode});
@@ -264,9 +342,9 @@
                     });
                     var option${obj.chanCode} = {
                         backgroundColor: "#fff",
-                        color: ["#c23531"],
+                        color: ["#006400"],
                         title:{
-                            subtext:'${obj.chanName}${obj.unitText}频域曲线',
+                            subtext:'${obj.chanName}${obj.unitText}频谱曲线',
                             subtextStyle:{
                                 color:'#000000',
                                 fontSize:16,
@@ -281,7 +359,12 @@
                         xAxis: {
                             type: 'category',
                             boundaryGap: false,
-                            data: xx
+                            data: xx,
+                            axisLabel:{
+                                formatter: function (value, index) {
+                                    return Math.ceil(Number(value));
+                                }
+                            }
                         },
                         yAxis: {
                             // x: 'center',
@@ -289,14 +372,16 @@
                             name:'${obj.unitText}(${obj.unit})',
                             nameLocation:'middle',
                             nameGap:30,
+                            splitLine: {show: false},
                             nameTextStyle:{
                                 fontSize:16,
                                 fontWeight:'bolder'
                             }
                         },
                         series: [{
-                            name: '销量',
+                            name: '',
                             type: 'line',
+                            symbol: "none",
                             data: yy
                         }]
                     };

@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title></title>
+    <title>区域工业环境大数据在线监测系统</title>
     <link rel="stylesheet" href="${request.contextPath}/js/bootstrap-3.3.7/css/bootstrap.min.css">
     <script src="${request.contextPath}/js/bootstrap-3.3.7/js/jquery.min.js"></script>
     <script src="${request.contextPath}/js/bootstrap-3.3.7/js/bootstrap.min.js"></script>
@@ -83,7 +83,21 @@
                     window.open("${request.contextPath}/web/index2/"+params.data.value[3])
                 }
 
-            });//点击事件，此事件还可以用到柱状图等其他地图
+            });
+            var zoom = 1;
+            //点击事件，此事件还可以用到柱状图等其他地图
+     /*       mapChart.on('dblclick', function (params) {
+                zoom++;
+                console.log(zoom);
+                mapChart.setOption({
+                    geo: [{
+                        zoom: zoom,
+                        roam: 'move',
+                        center: [105.97, 29.71]
+                    }]
+                });
+            });*/
+
             var option = {
                 title: {
                     text: '区域工业环境大数据在线监测系统',
@@ -104,6 +118,7 @@
                 geo: {
                     map: 'china',
                     zoom: 1,
+                    roam:true,
                     label: {
                         normal: {
                             show: false,
@@ -260,11 +275,7 @@
                     axisLabel:{
                         color:'#fff'
                     },
-                    splitLine: {
-                        lineStyle: {
-                            color:'#91e9f838'
-                        }
-                    }
+                    splitLine: {show: false},
                 },
                 series: [{
                     data: [120, 932, 901,56, 1290, 1330, 1320],
@@ -305,11 +316,7 @@
                     axisLabel:{
                         color:'#fff'
                     },
-                    splitLine: {
-                        lineStyle: {
-                            color:'#91e9f838'
-                        }
-                    }
+                    splitLine: {show: false},
                 },
                 series: [{
                     data: [120, 23, 901,456, 290, 1330, 320],
@@ -391,7 +398,7 @@
                     },
                     series : [
                         {
-                            name:'访问来源',
+                            name:'数据',
                             type:'pie',
                             radius : '70%',
                             center: ['50%', '50%'],

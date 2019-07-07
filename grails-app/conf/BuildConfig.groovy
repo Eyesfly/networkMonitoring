@@ -70,6 +70,7 @@ grails.project.dependency.resolution = {
         runtime ":jquery:1.11.1"
         compile "org.grails.plugins:ckeditor:4.5.4.0"
         compile "org.grails.plugins:spring-websocket:1.3.1"
+        compile "org.grails.plugins:mail:1.0.7"
         // Uncomment these to enable additional asset-pipeline capabilities
         //compile ":sass-asset-pipeline:1.9.0"
         //compile ":less-asset-pipeline:1.10.0"

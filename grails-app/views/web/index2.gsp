@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title></title>
+    <title>区域工业环境大数据在线监测系统</title>
     <link rel="stylesheet" href="${request.contextPath}/js/bootstrap-3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="${request.contextPath}/js/Font-Awesome-3.2.1/css/font-awesome.min.css">
     <script src="${request.contextPath}/js/bootstrap-3.3.7/js/jquery.min.js"></script>
@@ -59,7 +59,6 @@
             </div>
             <script type="text/javascript">
                 $.post('${request.contextPath}/web/dayData',{id:'${obj.id}'},function(data,status){
-
                     $("#firstChart").css("height",(0.30*height)+"px");
                     var myChart1 = echarts.init(document.getElementById('firstChart'));
                     myChart1.setOption({
@@ -221,11 +220,11 @@
                             orient: 'horizontal',
                             x: 'center',
                             y:'bottom',
-                            data:['访问','邮件','联盟','视频','搜索']
+                            data:['','','','','']
                         },
                         series: [
                             {
-                                name:'访问来源',
+                                name:'预警',
                                 type:'pie',
                                 radius: ['20%', '50%'],
                                 avoidLabelOverlap: false,
@@ -252,11 +251,11 @@
                                     }
                                 },
                                 data:[
-                                    {value:335, name:'访问'},
-                                    {value:310, name:'邮件'},
-                                    {value:234, name:'联盟'},
-                                    {value:135, name:'视频'},
-                                    {value:548, name:'搜索'}
+                                    {value:335, name:''},
+                                    {value:310, name:''},
+                                    {value:234, name:''},
+                                    {value:135, name:''},
+                                    {value:548, name:''}
                                 ]
                             }
                         ]
@@ -316,7 +315,7 @@
                             type: 'none'
                         },
                         formatter: function(params) {
-                            return params[0].name + "<br/>" + '参训人次: ' + params[0].value;
+                            return params[0].name + "<br/>" + '数据: ' + params[0].value;
                         }
                     },
                     grid: {
@@ -589,12 +588,14 @@
     <div class="col-xs-6 col-sm-4">
         <div class="col-xs-6 col-sm-12" style="height: 48%;margin-top: 10px;">
             <g:if test="${obj.picture}">
-                <img src="${request.contextPath}/monitoringPlace/picture/${obj?.id}" style="width: 100%;height: 98%;" >
+                <a href="${request.contextPath}/web/index3/${params.id}" target="_blank" title="点击查看实时波形数据">
+                    <img src="${request.contextPath}/monitoringPlace/picture/${obj?.id}" style="width: 100%;height: 98%;" >
+                </a>
             </g:if>
             <div style="line-height: 30px;">
                 <g:each in="${list}" var="point">
-                    <div class="col-xs-3 col-sm-3">
-                        <a href="${request.contextPath}/web/index5/${point.id}" target="_blank" style="text-decoration: none"><i class="icon-circle"></i>&nbsp;${point.name}</a>
+                    <div class="col-xs-3 col-sm-3" style="color: #ffffff;">
+                       <i class="icon-circle"></i>&nbsp;${point.name}
                     </div>
                 </g:each>
             </div>
@@ -754,7 +755,7 @@
                     },
                     legend: {
                         show:false,
-                        data:['蒸发量']
+                        data:['']
                     },
                     xAxis: [
                         {
@@ -783,17 +784,13 @@
                             axisLabel:{
                                 color:'#fff'
                             },
-                            splitLine: {
-                                lineStyle: {
-                                    color:'#91e9f838'
-                                }
-                            },
+                            splitLine: {show: false},
                             type: 'value'
                         }
                     ],
                     series: [
                         {
-                            name:'蒸发量',
+                            name:'',
                             type:'bar',
                             data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
                         }
@@ -832,7 +829,7 @@
                         }
                     },
                     formatter: function(prams) {
-                        return "办理数：" + prams[0].data
+                        return "预警数：" + prams[0].data
                     }
                 },
                 grid: {
