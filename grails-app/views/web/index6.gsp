@@ -9,98 +9,84 @@
     <asset:javascript src="application" />
     <asset:javascript src="spring-websocket" />
     <style type="text/css">
-    .checkbox-custom {
-        position: relative;
-        padding: 0 15px 0 25px;
-        margin-bottom: 7px;
-        margin-top: 0;
-        display: inline-block;
-    }
-    /*
-    将初始的checkbox的样式改变
-    */
-    .checkbox-custom input[type="checkbox"] {
-        opacity: 0;/*将初始的checkbox隐藏起来*/
-        position: absolute;
-        cursor: pointer;
-        z-index: 2;
-        margin: -6px 0 0 0;
-        top: 50%;
-        left: 3px;
-    }
-    /*
-    设计新的checkbox，位置
-    */
-    .checkbox-custom label:before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 0;
-        margin-top: -9px;
-        width: 19px;
-        height: 18px;
-        display: inline-block;
-        border-radius: 2px;
-        border: 1px solid #bbb;
-        background: #fff;
-    }
-    /*
-    点击初始的checkbox，将新的checkbox关联起来
-    */
-    .checkbox-custom input[type="checkbox"]:checked +label:after {
-        position: absolute;
-        display: inline-block;
-        font-family: 'Glyphicons Halflings';
-        content: "\e013";
-        top: 42%;
-        left: 3px;
-        margin-top: -5px;
-        font-size: 11px;
-        line-height: 1;
-        width: 16px;
-        height: 16px;
-        color: #333;
-    }
-    .checkbox-custom label {
-        cursor: pointer;
-        line-height: 1.2;
-        font-weight: normal;/*改变了rememberme的字体*/
-        margin-bottom: 0;
-        text-align: left;
-    }
+        .checkbox-custom {
+            position: relative;
+            padding: 0 15px 0 25px;
+            margin-bottom: 7px;
+            margin-top: 0;
+            display: inline-block;
+        }
+        /*
+        将初始的checkbox的样式改变
+        */
+        .checkbox-custom input[type="checkbox"] {
+            opacity: 0;/*将初始的checkbox隐藏起来*/
+            position: absolute;
+            cursor: pointer;
+            z-index: 2;
+            margin: -6px 0 0 0;
+            top: 50%;
+            left: 3px;
+        }
+        /*
+        设计新的checkbox，位置
+        */
+        .checkbox-custom label:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            margin-top: -9px;
+            width: 19px;
+            height: 18px;
+            display: inline-block;
+            border-radius: 2px;
+            border: 1px solid #bbb;
+            background: #fff;
+        }
+        /*
+        点击初始的checkbox，将新的checkbox关联起来
+        */
+        .checkbox-custom input[type="checkbox"]:checked +label:after {
+            position: absolute;
+            display: inline-block;
+            font-family: 'Glyphicons Halflings';
+            content: "\e013";
+            top: 42%;
+            left: 3px;
+            margin-top: -5px;
+            font-size: 11px;
+            line-height: 1;
+            width: 16px;
+            height: 16px;
+            color: #333;
+        }
+        .checkbox-custom label {
+            cursor: pointer;
+            line-height: 1.2;
+            font-weight: normal;/*改变了rememberme的字体*/
+            margin-bottom: 0;
+            text-align: left;
+        }
     </style>
     <script type="text/javascript">
-        var time1 = {};
-        var time2 = {};
-        var xx1 = {};
-        var xx2 = {};
-        var yy1 = {};
-        var yy2 = {};
-        var ydata_ = {};
-        var leftChart={};
-        var rightChart={};
-        var leftOption={};
-        var rightOption={};
+        var time = {};
+        var xx1 = new Array();
+        var yy1 = new Array();
+        var yy2 = new Array();
+        var leftChart;
+        var leftOption;
         var data1Interval=0;
-        var data2Interval=null;
+        var showText = '波形对比';
         $(function() {
-
-
             var socket = new SockJS("${createLink(uri: '/stomp')}");
             var client = Stomp.over(socket);
             client.connect({}, function() {
-                client.subscribe("/topic/data1", function(message) {
+                client.subscribe("/topic/data11", function(message) {
                     var data = JSON.parse(message.body);
                     if(typeof(data.data)!=='undefined'){
-                        time1[data.key]= data.time;
-                        setData1(data.key,data.data,data.beginTime);
-                    }
-                });
-                client.subscribe("/topic/data2", function(message) {
-                    var data = JSON.parse(message.body);
-                    if(typeof(data.data)!=='undefined'){
-                        time2[data.key]= data.time;
-                        setData2(data.key,data.data);
+                        time= data.time;
+                        setData1(data.data,data.beginTime);
                     }
                 });
             });
@@ -112,56 +98,38 @@
         function startTask(client) {
             var checks = $("input[name='chan']:checked");
             var data1Dom = $("#data1");
-            var data2Dom = $("#data2");
             data1Dom.html("");
-            data2Dom.html("");
             time1 = {};
             time2 = {};
+            data1Dom.append('<div id="leftChart" style="height: 300px;width: 100%;"></div>');
+            leftChart= echarts.init(document.getElementById('leftChart'));
+            var obj = new Object();
+            var devidArr = new Array();
+            var chanCodeArr = new Array();
+            var chanNames =  new Array();
             $.each(checks,function (k,v) {
                 var devid = $(v).attr("data-dev");
                 var chanCode = $(v).val();
-                var obj = {};
-                var key = devid+"_"+chanCode;
-                obj.chanName = $(v).attr("data-chanName");
-                obj.unit = $(v).attr("data-unit");
-                obj.unitText = $(v).attr("data-unitText");
-                data1Dom.append('<div id="leftChart'+key+'" style="height: 300px;width: 100%;"></div>');
-                data2Dom.append('<div id="rightChart'+key+'" style="height: 300px;width: 100%;"></div>');
-                xx1[key] = new Array();
-                xx2[key] = new Array();
-                yy1[key] = new Array();
-                yy2[key] = new Array();
-                ydata_[key] = new Array();
-                leftChart[key] = echarts.init(document.getElementById('leftChart'+key));
-                rightChart[key] = echarts.init(document.getElementById('rightChart'+key));
-                initData1(key,obj);
-                initData2(key,obj);
+                devidArr.push(devid);
+                chanCodeArr.push(chanCode);
+                chanNames.push($(v).attr("data-chanName"));
             });
+            obj.devid = devidArr.join(",");
+            obj.chanCode = chanCodeArr.join(",");
+            showText=chanNames.join(",")+"波形对边";
+            initData1();
             if(data1Interval) clearInterval(data1Interval);
             data1Interval = setInterval(function() {
-                $.each(checks,function (k,v) {
-                    var devid = $(v).attr("data-dev");
-                    var chanCode = $(v).val();
-                    var key = devid+"_"+chanCode;
-                    client.send("/app/data1",{}, JSON.stringify({devid:devid,chanCode:chanCode,date:time1[key]}));
-                });
-            },'1000');
-            //
-            data2Interval =  setInterval(function() {
-                $.each(checks,function (k,v) {
-                    var devid = $(v).attr("data-dev");
-                    var chanCode = $(v).val();
-                    var key = devid+"_"+chanCode;
-                    client.send("/app/data2",{}, JSON.stringify({devid:devid,chanCode:chanCode,date:time1[key]}));
-                });
-                // client.send("/app/data2",{}, JSON.stringify(obj));
-            },'5000');
+                obj.date = time;
+                client.send("/app/data11",{}, JSON.stringify(obj));
+            },'2000');
         }
-        function initData1(key,obj) {
-            leftOption[key] =
+        function initData1() {
+            leftOption=
                 {
                     "yAxis":
                         {
+                            "nameLocation": "middle",
                             "axisTick": {
                                 "alignWithLabel": false
                             },
@@ -183,7 +151,7 @@
                             "nameTextStyle": {
                                 "fontSize": 14
                             },
-                            name:obj.unitText+'('+obj.unit+')',
+                            name:showText,
                             nameLocation:'middle',
                             nameGap:35,
                             nameTextStyle:{
@@ -200,11 +168,12 @@
                         }
                     ,
                     "color": [
-                        "#006400"
-                        // "#c23531"
+                        "#006400",
+                        "#c23531"
                     ],
-                    "series":
-                        [{
+                    "series": [
+                        {
+                            "seriesId": 4247545,
                             "markLine": {
                                 "data": []
                             },
@@ -250,11 +219,58 @@
                             "xAxisIndex": 0,
                             "type": "line",
                             "showSymbol": true
-                        }]
-                    ,
-                    "title":
+                        },{
+                            "seriesId": 4247546,
+                            "markLine": {
+                                "data": []
+                            },
+                            "name": "",
+                            // "name": "\u7b14",
+                            %{--"data": yy${obj.chanCode},--}%
+                            "data": [],
+                            animation:false,
+                            "symbol": "none",
+                            "smooth": false,
+                            "label": {
+                                "emphasis": {
+                                    "textStyle": {
+                                        "fontSize": 12
+                                    },
+                                    "show": true
+                                },
+                                "normal": {
+                                    "position": "top",
+                                    "textStyle": {
+                                        "fontSize": 12
+                                    },
+                                    "show": false
+                                }
+                            },
+                            "step": false,
+                            "yAxisIndex": 0,
+                            "symbolSize": 4,
+                            "markPoint": {
+                                "data": []
+                            },
+                            "areaStyle": {
+                                "opacity": 0
+                            },
+                            "lineStyle": {
+                                "normal": {
+                                    "opacity": 1,
+                                    "width": 1,
+                                    "type": "solid",
+                                    "curveness": 0
+                                }
+                            },
+                            "xAxisIndex": 0,
+                            "type": "line",
+                            "showSymbol": true
+                        }
+                    ],
+                    "title": [
                         {
-                            subtext:obj.chanName+obj.unitText+'实时波形曲线',
+                            subtext:'实时波形曲线',
                             subtextStyle:{
                                 color:'#000000',
                                 fontSize:16,
@@ -262,7 +278,7 @@
                             },
                             x: 'center'
                         }
-                    ,
+                    ],
                     "tooltip": {
                         "borderColor": "#333",
                         "axisPointer": {
@@ -276,10 +292,10 @@
                         "backgroundColor": "rgba(50,50,50,0.7)",
                         "triggerOn": "mousemove|click"
                     },
-                    "xAxis":
+                    "series_id": 4247545,
+                    "xAxis": [
                         {
                             name:'时间(时/分/秒/毫秒)',
-                            "nameLocation": "middle",
                             "axisTick": {
                                 "alignWithLabel": false
                             },
@@ -302,26 +318,35 @@
                             },
                             "boundaryGap": false,
                             "nameTextStyle": {
+                                "fontSize": 14
+                            },
+                            "nameTextStyle": {
                                 "fontSize": 14,
                                 fontWeight:'bolder'
                             },
-                            // nameRotate:90,
-                            "nameGap": 30,
-                            "inverse": false,
-                            "data":[]
+                            "nameGap": 10,
+                            "inverse": false
+                            //"data":["2019/04/01 20:31:39.783731","2019/04/01 20:31:39.788731","2019/04/01 20:31:39.793731","2019/04/01 20:31:39.798731","2019/04/01 20:31:39.803731","2019/04/01 20:31:39.808731","2019/04/01 20:31:39.813731","2019/04/01 20:31:39.818731","2019/04/01 20:31:39.823731","2019/04/01 20:31:39.828731","2019/04/01 20:31:39.833731","2019/04/01 20:31:39.838731","2019/04/01 20:31:39.843731","2019/04/01 20:31:39.848731","2019/04/01 20:31:39.853731","2019/04/01 20:31:39.858731","2019/04/01 20:31:39.863731","2019/04/01 20:31:39.868731","2019/04/01 20:31:39.873731","2019/04/01 20:31:39.878731","2019/04/01 20:31:39.883731","2019/04/01 20:31:39.887731","2019/04/01 20:31:39.892731","2019/04/01 20:31:39.897731","2019/04/01 20:31:39.902731","2019/04/01 20:31:39.907731","2019/04/01 20:31:39.912731","2019/04/01 20:31:39.917731","2019/04/01 20:31:39.922731","2019/04/01 20:31:39.927731","2019/04/01 20:31:39.932731","2019/04/01 20:31:39.937731","2019/04/01 20:31:39.942731","2019/04/01 20:31:39.947731","2019/04/01 20:31:39.952731","2019/04/01 20:31:39.957731","2019/04/01 20:31:39.962731","2019/04/01 20:31:39.967731","2019/04/01 20:31:39.972731","2019/04/01 20:31:39.977731","2019/04/01 20:31:39.982731","2019/04/01 20:31:39.987731","2019/04/01 20:31:39.992731","2019/04/01 20:31:39.997731","2019/04/01 20:31:40.002731","2019/04/01 20:31:40.007731","2019/04/01 20:31:40.012731","2019/04/01 20:31:40.017731","2019/04/01 20:31:40.022731","2019/04/01 20:31:40.027731","2019/04/01 20:31:40.032731","2019/04/01 20:31:40.037731","2019/04/01 20:31:40.042731","2019/04/01 20:31:40.047731","2019/04/01 20:31:40.052731","2019/04/01 20:31:40.057731","2019/04/01 20:31:40.062731","2019/04/01 20:31:40.067731","2019/04/01 20:31:40.072731","2019/04/01 20:31:40.077731","2019/04/01 20:31:40.082731","2019/04/01 20:31:40.086731","2019/04/01 20:31:40.091731","2019/04/01 20:31:40.096731","2019/04/01 20:31:40.101731","2019/04/01 20:31:40.106731","2019/04/01 20:31:40.111731","2019/04/01 20:31:40.116731","2019/04/01 20:31:40.121731","2019/04/01 20:31:40.126731","2019/04/01 20:31:40.131731","2019/04/01 20:31:40.136731","2019/04/01 20:31:40.141731","2019/04/01 20:31:40.146731","2019/04/01 20:31:40.151731","2019/04/01 20:31:40.156731","2019/04/01 20:31:40.161731","2019/04/01 20:31:40.166731","2019/04/01 20:31:40.171731","2019/04/01 20:31:40.176731"]
                             %{--"data": xx${obj.chanCode}--}%
                         }
-                    ,
-                    "dataZoom":
+                    ],
+                    "dataZoom": [
                         {
                             "start": 0,
                             "end": 3000,
                             "type": "slider",
                             "orient": "horizontal",
                             "show": false
+                        },
+                        {
+                            "start": 0,
+                            "show": false,
+                            "end": 3000,
+                            "orient": "horizontal",
+                            "type": "inside"
                         }
-                    ,
-                    "legend":
+                    ],
+                    "legend": [
                         {
                             "textStyle": {
                                 "fontSize": 12
@@ -329,63 +354,16 @@
                             "show": false,
                             "top": "top",
                             "selectedMode": "multiple",
-                            "data": [
-                                "\u7b14"
-                            ],
+                            // "data": [
+                            //     "\u7b14"
+                            // ],
+                            data:['AQ1','AQ2'],
                             "orient": "horizontal",
                             "left": "center"
                         }
+                    ]
                 };
-            leftChart[key].setOption(leftOption[key]);
-        }
-        function initData2(key,obj) {
-            rightOption[key]={
-                backgroundColor: "#fff",
-                color: ["#006400"],
-                title:{
-                    subtext:obj.chanName+obj.unitText+'频谱曲线',
-                    subtextStyle:{
-                        color:'#000000',
-                        fontSize:16,
-                        fontWeight:'bolder'
-                    },
-                    x: 'center'
-
-                },
-                tooltip: {
-                    trigger: 'axis'
-                },
-                xAxis: {
-                    name:'频率（Hz）',
-                    type: 'value',
-                    boundaryGap: false,
-                    "nameTextStyle": {
-                        "fontSize": 14,
-                        fontWeight:'bolder'
-                    },
-                    nameGap:5,
-                    splitLine: {show: false}
-                },
-                yAxis: {
-                    // x: 'center',
-                    type: 'value',
-                    name:obj.unitText+'('+obj.unit+')',
-                    nameLocation:'middle',
-                    nameGap:40,
-                    splitLine: {show: false},
-                    nameTextStyle:{
-                        fontSize:16,
-                        fontWeight:'bolder'
-                    }
-                },
-                series: [{
-                    name: '',
-                    type: 'line',
-                    symbol: "none",
-                    data: []
-                }]
-            };
-            rightChart[key].setOption(rightOption[key]);
+            leftChart.setOption(leftOption);
         }
         Date.prototype.format = function(format) {
             var date = {
@@ -408,66 +386,53 @@
             }
             return format;
         };
-        function setData1(key,data_,beginTime){
+        function setData1(data_,beginTime){
             if(data_.length==0){
                 return;
             }
-            for (var i = 0; i <data_.length ; i++) {
-                var v = data_[i];
-                xx1[key].push(new Date(Date.parse(beginTime)+(i+1)*5).format('yyyy-MM-dd h:m:s.S'));
-                ydata_[key].push(v);
-                yy1[key].push(v);
+            var data = data_;
+            for (var i = 0; i <data[0].length ; i++) {
+                xx1.push(new Date(Date.parse(beginTime)+(i+1)*5).format('yyyy-MM-dd h:m:s.S'));
             }
-
-            var len = xx1[key].length - 2000;
-            if(xx1[key].length>2000){
-                xx1[key].splice(0,len)
+            var len = xx1.length - 2000;
+            if(xx1.length>2000){
+                xx1.splice(0,len)
             }
-            if(yy1[key].length>2000){
-                yy1[key].splice(0,len)
+            yy1 = yy1.concat(data[0]);
+            yy2 = yy2.concat(data[1]);
+            if(yy1.length>2000){
+                yy1.splice(0,len)
             }
-            if(ydata_[key].length>2000){
-                ydata_[key].splice(0,len)
+            if(yy2.length>2000){
+                yy2.splice(0,len)
             }
-            var max = Math.max.apply(null,ydata_[key]);
-            var min = Math.min.apply(null,ydata_[key]);
+            var max = Math.max.apply(null,yy1.concat(yy2));
+            var min = Math.min.apply(null,yy1.concat(yy2));
             if(Math.abs(max) < Math.abs(min)){
                 max =   Math.abs(min);
             }
             max = Math.ceil(max);
             min = -max;
-            leftChart[key].setOption({
+            leftChart.setOption({
                 series: [{
-                    name:'AQI',
-                    data: yy1[key]
+                    name: 'AQ1',
+                    data: yy1
+                },{
+                    name: 'AQ2',
+                    data: yy2
                 }],
                 yAxis:[{
                     min:min,
                     max:max
                 }],
                 xAxis:[{
-                    data:xx1[key]
+                    data:xx1
                 }
                 ]
             });
         }
-        function setData2(key,data_){
-            if(typeof(data_)=="undefined"){
-                return;
-            }
-            var data = new Array();
-            $.each(data_,function(k,v){
-                data.push([v.x,v.y]);
-            });
-            rightChart[key].setOption({
-                series: [{
-                    data: data
-                }]
-            });
-        }
         function stopTask(){
             if(data1Interval) clearInterval(data1Interval);
-            if(data2Interval) clearInterval(data2Interval);
         }
     </script>
 </head>
@@ -495,12 +460,12 @@
             <button id="start"  class="btn btn-success">开始</button>
             <button id="stop" onclick="stopTask();" class="btn btn-danger">停止</button>
             &nbsp;&nbsp;&nbsp;&nbsp;
-            <div class="checkbox-custom checkbox-default" >
-                <input type="checkbox" id="showType1" disabled checked>
+            <div class="checkbox-custom checkbox-default"  onclick="location.href='${request.contextPath}/web/index3/${params.id}'">
+                <input type="checkbox" id="showType1">
                 <label for="showType1">双显</label>
             </div>
-            <div class="checkbox-custom checkbox-default" onclick="location.href='${request.contextPath}/web/index6/${params.id}'">
-                <input type="checkbox" id="showType2">
+            <div class="checkbox-custom checkbox-default">
+                <input type="checkbox" id="showType2" disabled checked>
                 <label for="showType2">重叠</label>
             </div>
         </div>
@@ -508,8 +473,7 @@
 </div>
 
 <div class="child">
-    <div class="col-xs-12 col-sm-6" id="data1"></div>
-    <div class="col-xs-12 col-sm-6" id="data2"></div>
+    <div class="col-xs-12 col-sm-12" id="data1"></div>
 </div>
 </body>
 </html>

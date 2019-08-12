@@ -8,18 +8,29 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0" />
     <title>区域工业环境大数据在线监测系统</title>
     <link rel="stylesheet" href="${request.contextPath}/js/bootstrap-3.3.7/css/bootstrap.min.css">
     <script src="${request.contextPath}/js/bootstrap-3.3.7/js/jquery.min.js"></script>
     <script src="${request.contextPath}/js/bootstrap-3.3.7/js/bootstrap.min.js"></script>
     <script src="${request.contextPath}/js/echarts/echarts.js"></script>
     <style type="text/css">
+    @media (min-width: 1200px){
+        .container {
+            width: 100%;
+        }
+    }
+
     .child{
         z-index: 99;
         position: fixed;
         bottom: 0;
         width: 100%;
         height: 220px;
+        padding:15px 0px;
+        background: rgba(78, 136, 181, 0.66);
+    }
+    .bg{
         padding:15px 0px;
         background: rgba(78, 136, 181, 0.66);
     }
@@ -43,13 +54,17 @@
         padding:15px 0px;
         /*background: rgba(78, 136, 181, 0.66);*/
     }
+
+    .lr{
+        padding:15px 10px;
+    }
     ul{list-style:none;padding: 0px;}
     #marquee4{overflow:hidden;}
-    #marquee4 ul li{float:left;color: #91e9f8;line-height: 30px;font-size: 16px;}
+    #marquee4 ul li{color: #91e9f8;line-height: 30px;font-size: 16px;}
     #marquee5{overflow:hidden;}
-    #marquee5 ul li{float:left;color: #91e9f8;line-height: 25px;font-size: 14px;}
+    #marquee5 ul li{color: #91e9f8;line-height: 25px;font-size: 14px;}
     #marquee6{overflow:hidden;}
-    #marquee6 ul li{float:left;color: #91e9f8;line-height: 25px;font-size: 14px;}
+    #marquee6 ul li{color: #91e9f8;line-height: 25px;font-size: 14px;}
     </style>
     <script type="text/javascript">
         $.get('${request.contextPath}/js/echarts/china.json', function (chinaJson) {
@@ -59,30 +74,12 @@
                 '2': 'rgba(255, 235, 59, .7)',
                 '3': 'rgba(147, 235, 248, 1)'
             };
-            /*var myData = [
-
-                {name: '海门', value: [121.15, 31.89, 1]},
-                {name: '北京', value: [116.3, 39.9, 1]},
-                {name: '鄂尔多斯', value: [109.781327, 39.608266, 2]},
-                {name: '招远', value: [120.38, 37.35, 3]},
-                {name: '新乡', value: [113.54, 35.18, 3]},
-                {name: '舟山', value: [122.207216, 29.985295, 2]}
-            ];*/
             var myData = ${raw(list)};
             var mapChart = echarts.init(document.getElementById('map-wrap'));
             mapChart.on('click', function(params){
                 if(params.componentType== "series"){
-                    /*console.log(params.data);
-                    console.log(params.data.value[0]);
-                    console.log(params.data.value[1]);
-                    console.log(params.data.value[2]);
-                    console.log(params.data.value[3]);
-                    $("#myModalLabel").html(params.data.name);
-                    $("#content").html(params.data.name);
-                    $("#myModal").modal("show");*/
                     window.open("${request.contextPath}/web/index2/"+params.data.value[3])
                 }
-
             });
             var zoom = 1;
             //点击事件，此事件还可以用到柱状图等其他地图
@@ -97,19 +94,18 @@
                     }]
                 });
             });*/
-
             var option = {
                 title: {
                     text: '区域工业环境大数据在线监测系统',
                     x: 'center',
                     textStyle:{
-                        fontSize:24,
+                        // fontSize:24,
                         color:'#eee'
                     },
-                    padding:[15, 0],
-                    borderWidth: [15, 0],
+                    // padding:[0, 0],
+                    // borderWidth: [0, 0],
                     borderColor:'#fff',
-                    top:50
+                    // top:0
                 },
                 tooltip: {
                     trigger: 'item',
@@ -117,7 +113,7 @@
                 },
                 geo: {
                     map: 'china',
-                    zoom: 1,
+                    zoom: 1.2,
                     roam:true,
                     label: {
                         normal: {
@@ -138,9 +134,9 @@
                             borderWidth: 1,
                             areaColor: {
                                 type: 'radial',
-                                x: 0.5,
-                                y: 0.5,
-                                r: 0.8,
+                                // x: 0.5,
+                                // y: 0.5,
+                                // r: 0.8,
                                 colorStops: [{
                                     offset: 0,
                                     color: 'rgba(147, 235, 248, 0)' // 0% 处的颜色
@@ -193,193 +189,175 @@
                     },
                     data: myData
                 }]
-            }
+            };
             mapChart.setOption(option);
         });
 
     </script>
 
-
 </head>
+<body style="background: rgb(21, 78, 144);margin: 0px;padding: 0px;overflow-x: hidden;">
+<div class="container">
+    <div class="row">
+        <div class="col-md-2 lr">
+            <div style="line-height: 50px;">
+                <span style="font-size: 28px;color:#fff749;font-weight: 800;padding:10px 0px;">${networkmonitoring.Passageway.count()}</span>
+            </div>
+            <div><span style="font-size: 16px;color:#91e9f8;font-weight: bold;padding:10px 0px;">监测通道数</span></div>
+            <div style="line-height: 50px;">
+                <span style="font-size: 28px;color:#fff749;font-weight: 800;padding:10px 0px;">${networkmonitoring.MonitoringPlace.count()}</span>
+            </div>
+            <div><span style="font-size: 16px;color:#91e9f8;font-weight: bold;padding:10px 0px;">监测点数</span></div>
+            <div style="line-height: 50px;">
+                <span style="font-size: 28px;color:#fff749;font-weight: 800;padding:10px 0px;">${cityCount}</span>
+            </div>
+            <div><span  style="font-size: 16px;color:#91e9f8;font-weight: bold;padding:10px 0px;">涉及城市数</span></div>
+            <div id="marquee4" style="margin-top: 100px;max-height: 200px;">
+                <ul>
+                    <li>****1监测报告已发送</li>
+                    <li>****2监测报告已发送</li>
+                    <li>****3监测报告已发送</li>
+                    <li>****4监测报告已发送</li>
+                    <li>****5监测报告已发送</li>
+                    <li>****6监测报告已发送</li>
+                    <li>****7监测报告已发送</li>
+                    <li>****8监测报告已发送</li>
+                    <li>****9监测报告已发送</li>
+                    <li>****10监测报告已发送</li>
+                </ul>
+            </div>
+        </div>
+        <div  class="col-md-8 " id="map-wrap" style="height: 600px;">
+            <!-- 这里以后是地图 -->
+        </div>
+        <div  class="col-md-2 lr">
+            <div class="row">
+                <div id="firstChart" style="height: 300px;">
 
-<body style="background: rgb(21, 78, 144);">
-<div>
-    <div id="map-wrap" style="height: 800px;">
-        <!-- 这里以后是地图 -->
-    </div>
-    <div class="left">
-        <div style="line-height: 50px;">
-            <span style="font-size: 28px;color:#fff749;font-weight: 800;padding:10px 0px;">${networkmonitoring.Passageway.count()}</span>
-        </div>
-        <div><span style="font-size: 16px;color:#91e9f8;font-weight: bold;padding:10px 0px;">监测通道数</span></div>
-        <div style="line-height: 50px;">
-            <span style="font-size: 28px;color:#fff749;font-weight: 800;padding:10px 0px;">${networkmonitoring.MonitoringPlace.count()}</span>
-        </div>
-        <div><span style="font-size: 16px;color:#91e9f8;font-weight: bold;padding:10px 0px;">监测点数</span></div>
-        <div style="line-height: 50px;">
-            <span style="font-size: 28px;color:#fff749;font-weight: 800;padding:10px 0px;">${cityCount}</span>
-        </div>
-        <div><span  style="font-size: 16px;color:#91e9f8;font-weight: bold;padding:10px 0px;">涉及城市数</span></div>
-        <div id="marquee4" style="margin-top: 100px;max-height: 200px;">
-            <ul>
-                <li>****1监测报告已发送</li>
-                <li>****2监测报告已发送</li>
-                <li>****3监测报告已发送</li>
-                <li>****4监测报告已发送</li>
-                <li>****5监测报告已发送</li>
-                <li>****6监测报告已发送</li>
-                <li>****7监测报告已发送</li>
-                <li>****8监测报告已发送</li>
-                <li>****9监测报告已发送</li>
-                <li>****10监测报告已发送</li>
-            </ul>
-        </div>
-    </div>
-    <div class="right">
-        <div id="firstChart" style="height: 300px;">
-
-        </div>
-        <div id="twoChart" style="height: 300px;">
-
-        </div>
-        <script type="text/javascript">
-            var myChart1 = echarts.init(document.getElementById('firstChart'));
-            var myChart2 = echarts.init(document.getElementById('twoChart'));
-            myChart1.setOption( {
-                title: {
-                    text: '在线客户数',
-                    textStyle:{
-                        color:'#91e9f8'
-                    },
-                    top:20
-                },
-                xAxis: {
-                    type: 'category',
-                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                    axisLine:{
-                        lineStyle:{
-                            color:'#91e9f8'
-                        }
-                    },
-                    axisLabel:{
-                        color:'#fff'
-                    }
-                },
-                yAxis: {
-                    type: 'value',
-                    axisLine:{
-                        lineStyle:{
-                            color:'#91e9f8'
-                        }
-                    },
-                    axisLabel:{
-                        color:'#fff'
-                    },
-                    splitLine: {show: false},
-                },
-                series: [{
-                    data: [120, 932, 901,56, 1290, 1330, 1320],
-                    type: 'line',
-                    smooth: true,
-                    lineStyle:{
-                        color:'#91e9f8'
-                    }
-                }]
-            });
-            myChart2.setOption( {
-                title: {
-                    text: '服务器内存使用情况',
-                    textStyle:{
-                        color:'#91e9f8'
-                    },
-                    top:20
-                },
-                xAxis: {
-                    type: 'category',
-                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                    axisLine:{
-                        lineStyle:{
-                            color:'#91e9f8'
-                        }
-                    },
-                    axisLabel:{
-                        color:'#fff'
-                    }
-                },
-                yAxis: {
-                    type: 'value',
-                    axisLine:{
-                        lineStyle:{
-                            color:'#91e9f8'
-                        }
-                    },
-                    axisLabel:{
-                        color:'#fff'
-                    },
-                    splitLine: {show: false},
-                },
-                series: [{
-                    data: [120, 23, 901,456, 290, 1330, 320],
-                    type: 'line',
-                    smooth: true,
-                    lineStyle:{
-                        color:'#91e9f8'
-                    }
-
-                }]
-            });
-        </script>
-    </div>
-    <div class="child">
-        <div class="col-xs-6 col-sm-3"
-             style="border-right: 1px solid #93ebf84f;height:100%;">
-                <div>
-                    <img src="${request.contextPath}/images/logo.jpg" width="80px" height="80px">&nbsp;<span style="font-size: 24px;color: #fff;font-weight: 800;">IPPR&EVCC</span>
                 </div>
-                <div style="line-height: 80px;">
+                <div id="twoChart" style="height: 300px;">
+
+                </div>
+            </div>
+            <script type="text/javascript">
+                var myChart1 = echarts.init(document.getElementById('firstChart'));
+                var myChart2 = echarts.init(document.getElementById('twoChart'));
+                myChart1.setOption( {
+                    title: {
+                        text: '在线客户数',
+                        textStyle:{
+                            color:'#91e9f8'
+                        },
+                        top:20,
+                        left:10
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        axisLine:{
+                            lineStyle:{
+                                color:'#91e9f8'
+                            }
+                        },
+                        axisLabel:{
+                            color:'#fff'
+                        }
+                    },
+                    yAxis: {
+                        type: 'value',
+                        axisLine:{
+                            lineStyle:{
+                                color:'#91e9f8'
+                            }
+                        },
+                        axisLabel:{
+                            color:'#fff'
+                        },
+                        splitLine: {show: false},
+                    },
+                    series: [{
+                        data: [120, 932, 901,56, 1290, 1330, 1320],
+                        type: 'line',
+                        smooth: true,
+                        lineStyle:{
+                            color:'#91e9f8'
+                        }
+                    }]
+                });
+                myChart2.setOption( {
+                    title: {
+                        text: '服务器内存使用情况',
+                        textStyle:{
+                            color:'#91e9f8'
+                        },
+                        top:20,
+                        left:10
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                        axisLine:{
+                            lineStyle:{
+                                color:'#91e9f8'
+                            }
+                        },
+                        axisLabel:{
+                            color:'#fff'
+                        }
+                    },
+                    yAxis: {
+                        type: 'value',
+                        axisLine:{
+                            lineStyle:{
+                                color:'#91e9f8'
+                            }
+                        },
+                        axisLabel:{
+                            color:'#fff'
+                        },
+                        splitLine: {show: false},
+                    },
+                    series: [{
+                        data: [120, 23, 901,456, 290, 1330, 320],
+                        type: 'line',
+                        smooth: true,
+                        lineStyle:{
+                            color:'#91e9f8'
+                        }
+
+                    }]
+                });
+            </script>
+        </div>
+    </div>
+    <div class="row bg">
+        <div class="col-md-3"
+             style="border-right: 1px solid #93ebf84f;">
+                <div>
+                    <img src="${request.contextPath}/images/logo.jpg" height="80px">&nbsp;<span style="font-size: 24px;color: #fff;font-weight: 800;">IPPR&EVCC</span>
+                </div>
+                <div>
                     <span style="font-size: 18px;color:#fff749;font-weight: 800;padding:0px 0px;">区域工业环境大数据在线监测系统</span>
                 </div>
         </div>
-        <div class="col-xs-6 col-sm-3"
-             style="border-right: 1px solid #93ebf896;height:100%;">
+        <div class="col-md-3"
+             style="border-right: 1px solid #93ebf896;">
                 <div style="color: #fff;font-weight: bolder;font-size: 16px;">各监控测点接入数据量</div>
             <div id="marquee5" style="margin-top: 20px;max-height: 130px;">
                 <ul>
                     <g:each in="${networkmonitoring.MonitoringPlace.list()}" var="obj">
-                        <li class="col-sm-12">
-                            <div  class="col-xs-6 col-sm-8">${obj.name}</div>
-                            <div  class="col-xs-6 col-sm-4">${networkmonitoring.MeasuringPoint.countByMonitoringPlace(obj)}</div>
+                        <li class="col-xs-12">
+                            <div  class=" col-xs-8">${obj.name}</div>
+                            <div  class=" col-xs-4">${networkmonitoring.MeasuringPoint.countByMonitoringPlace(obj)}</div>
                         </li>
                     </g:each>
-
-                   %{-- <li class="col-sm-12">
-                        <div  class="col-xs-6 col-sm-8">监控测点2</div>
-                        <div  class="col-xs-6 col-sm-4">1223</div>
-                    </li>
-                    <li class="col-sm-12">
-                        <div  class="col-xs-6 col-sm-8">监控测点3</div>
-                        <div  class="col-xs-6 col-sm-4">1223</div>
-                    </li>
-                    <li class="col-sm-12">
-                        <div  class="col-xs-6 col-sm-8">监控测点4</div>
-                        <div  class="col-xs-6 col-sm-4">1223</div>
-                    </li>
-                    <li class="col-sm-12">
-                        <div  class="col-xs-6 col-sm-8">监控测点5</div>
-                        <div  class="col-xs-6 col-sm-4">1223</div>
-                    </li>
-                    <li class="col-sm-12">
-                        <div  class="col-xs-6 col-sm-8">监控测点6</div>
-                        <div  class="col-xs-6 col-sm-4">1223</div>
-                    </li>--}%
                 </ul>
             </div>
         </div>
-        <div class="col-xs-6 col-sm-3"
-             style="border-right: 1px solid #93ebf84f;height:100%;">
+        <div class="col-md-3"
+             style="border-right: 1px solid #93ebf84f;">
             <div style="color: #fff;font-weight: bolder;font-size: 16px;">各监控点报警情况</div>
             <div id="pieChart" style="height: 200px;">
-
             </div>
             <script type="text/javascript">
                 var pieChart = echarts.init(document.getElementById('pieChart'));
@@ -442,15 +420,14 @@
                 });
             </script>
         </div>
-        <div class="col-xs-6 col-sm-3"
-             style="">
+        <div class="col-md-3">
             <div style="color: #fff;font-weight: bolder;font-size: 16px;">设备分布情况</div>
             <div id="marquee6" style="margin-top: 20px;max-height: 130px;">
                 <ul>
                     <g:each in="${networkmonitoring.MonitoringPlace.list()}" var="obj">
-                        <li class="col-sm-12">
-                            <div  class="col-xs-6 col-sm-8">${obj.lng}    ${obj.lat}</div>
-                            <div  class="col-xs-6 col-sm-4">${obj.name}</div>
+                        <li class="col-xs-12">
+                            <div  class=" col-xs-8">${obj.lng}    ${obj.lat}</div>
+                            <div  class=" col-xs-4">${obj.name}</div>
                         </li>
                     </g:each>
                 </ul>

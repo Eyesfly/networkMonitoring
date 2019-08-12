@@ -53,7 +53,7 @@
 <body style="background: url('${request.contextPath}/images/bg.jpg')">
 <div class="child">
     <div class="col-xs-6 col-sm-4">
-        <div class="col-xs-6 col-sm-12  boxBorder" style="height: 30%;margin-top: 10px;padding: 0px 10px;">
+        <div class="col-xs-6 col-sm-12  boxBorder" style="height: 30%;margin-top: 10px;padding: 0px 10px;overflow: auto;">
             <div id="firstChart">
 
             </div>
@@ -61,21 +61,11 @@
                 $.post('${request.contextPath}/web/dayData',{id:'${obj.id}'},function(data,status){
                     $("#firstChart").css("height",(0.30*height)+"px");
                     var myChart1 = echarts.init(document.getElementById('firstChart'));
+                    myChart1.resize();
                     myChart1.setOption({
                         // Make gradient line here
                         color:['#fec178','#72f1da','#4cd1fd','#3faefc','#8b76f9'],
-                        title: [{
-                            left: 'center',
-                            text: ''
-                        }, {
-                            top: '35%',
-                            left: 'center',
-                            text: ''
-                        }, {
-                            top: '72%',
-                            left: 'center',
-                            text: ''
-                        }],
+
                         tooltip: {
                             trigger: 'axis'
                         },
@@ -155,20 +145,20 @@
                             gridIndex: 2
                         }],
                         grid: [{
-                            top: '3%',
+                            top: '1%',
                             left:'8%',
                             right:'0%',
                             bottom: '78%'
                         }, {
                             left:'8%',
                             right:'0%',
-                            top: '29%',
+                            top: '32%',
                             bottom: '45%'
                         }, {
                             left:'8%',
                             right:'0%',
-                            top: '59%',
-                            bottom: '14%'
+                            top: '65%',
+                            bottom: '8%'
                         }],
                         series: [{
                             type: 'line',
@@ -594,7 +584,9 @@
             </g:if>
             <div style="line-height: 30px;">
                 <g:each in="${list}" var="point">
-                    <div class="col-xs-3 col-sm-3" style="color: #ffffff;">
+                    <div class="col-xs-4 col-sm-4" style="color: #ffffff;overflow: hidden;
+                    text-overflow:ellipsis;
+                    white-space: nowrap;">
                        <i class="icon-circle"></i>&nbsp;${point.name}
                     </div>
                 </g:each>
@@ -744,7 +736,7 @@
                         left: '8%',
                         right: '0%',
                         top: '10%',
-                        bottom:'20%'
+                        bottom:'25%'
                     },
                     toolbox: {
                         feature: {
