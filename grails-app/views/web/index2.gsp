@@ -54,13 +54,64 @@
 <div class="child">
     <div class="col-xs-6 col-sm-4">
         <div class="col-xs-6 col-sm-12  boxBorder" style="height: 30%;margin-top: 10px;padding: 0px 10px;overflow: auto;">
-            <div id="firstChart">
-
-            </div>
+            <div id="firstChart" style="height: 200px;"></div>
             <script type="text/javascript">
-                $.post('${request.contextPath}/web/dayData',{id:'${obj.id}'},function(data,status){
+                var color=['#fec178','#72f1da','#3faefc','#8b76f9'];
+               $.post('${request.contextPath}/web/dayData',{id:'${obj.id}'},function(data,status){
                     $("#firstChart").css("height",(0.30*height)+"px");
-                    var myChart1 = echarts.init(document.getElementById('firstChart'));
+                    var width =$("#firstChart").width();
+                    var firstChart={};
+                    $.each(data,function(k,v){
+                        $("#firstChart").append("<div id=\"firstChart"+k+"\" style='height: 80px;width:"+0.95*width+"px;'></div>");
+                        firstChart[k] = echarts.init(document.getElementById('firstChart'+k));
+                        firstChart[k].resize();
+                        firstChart[k].setOption( {
+                            tooltip: {
+                                trigger: 'axis',
+                                axisPointer: {
+                                    type: 'cross'
+                                }
+                            },
+                            grid: {
+                                left: '15%',
+                                right: '5%',
+                                top: '8%',
+                                bottom:'25%'
+                            },
+                            xAxis: {
+                                type: 'category',
+                                boundaryGap: false,
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#91e9f8'
+                                    }
+                                },
+                                axisLabel:{
+                                    color:'#fff'
+                                },
+                                data: v.x
+                            },
+                            yAxis: {
+                                type: 'value',
+                                axisLine:{
+                                    lineStyle:{
+                                        color:'#91e9f8'
+                                    }
+                                },
+                                axisLabel:{
+                                    color:'#fff'
+                                },
+                                splitLine: {show: false}
+                            },
+                            series: [{
+                                data: v.y,
+                                type: 'line',
+                                lineStyle: {normal: {color:color[k]}},
+                                areaStyle: {normal: {color:color[k]}}
+                            }]
+                        })
+                    });
+                   /* var myChart1 = echarts.init(document.getElementById('firstChart'));
                     myChart1.resize();
                     myChart1.setOption({
                         // Make gradient line here
@@ -180,7 +231,7 @@
                             xAxisIndex: 2,
                             yAxisIndex: 2
                         }]
-                    });
+                    });*/
                 },'json');
             </script>
         </div>
