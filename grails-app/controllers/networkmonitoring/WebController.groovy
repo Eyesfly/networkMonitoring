@@ -12,6 +12,8 @@ import org.springframework.messaging.handler.annotation.MessageMapping
 import org.springframework.messaging.handler.annotation.SendTo
 
 import java.sql.Timestamp
+import java.time.LocalDate
+import java.time.Month
 
 
 class WebController{
@@ -79,6 +81,58 @@ class WebController{
             map.x = v.collect{it.createDate.format("HH:mm")}
             map.y = v.collect {it.value}
             data << map;
+        }
+        render data as JSON
+    }
+    def monthData(){
+        def obj = MonitoringPlace.get(params.id?:-1l);
+        def point = MeasuringPoint.findByMonitoringPlace(obj);
+        def list = Passageway.findAllByMeasuringPoint(point);
+        def data = []
+        def dataSource = grailsAttributes.getApplicationContext().getBean('dataSource');
+        def sql = new Sql(dataSource);
+        def rowData = sql.rows("select chan_code, date_format(create_date,'%e日') time ,count(1)  value from analysis_warning_data where devid='${point?.devid}' and  create_date >= '${new Date().format("yyyy-MM")}-01 00:00:00' group by date_format(create_date,'%e'), chan_code ORDER BY create_date , chan_code;".toString())
+
+        Calendar cal = Calendar.getInstance();
+        int m = cal.get(Calendar.MONTH )+1;
+        def now =  LocalDate.now()
+                .withMonth(m)
+                .lengthOfMonth();
+        list.each { o->
+            def li = rowData.findAll{it.chan_code == o.chanCode};
+            def month = []
+            def value = []
+            for (int i = 1; i <= now.toInteger(); i++) {
+                month << i;
+                value << (li.find {it.time=="${i}日"}?.value?:0);
+            }
+//            data << [month:li.collect {it.time},value:li.collect {it.value}];
+            data << [month:month,value:value];
+        }
+        render data as JSON
+    }
+
+    def monthWarningData(){
+        def obj = MonitoringPlace.get(params.id?:-1l);
+        def point = MeasuringPoint.findByMonitoringPlace(obj);
+        def list = Passageway.findAllByMeasuringPoint(point);
+        def data = []
+        def dataSource = grailsAttributes.getApplicationContext().getBean('dataSource');
+        def sql = new Sql(dataSource);
+//        def rowData = sql.rows("select chan_code, date_format(create_date,'%c月') time ,CAST(AVG(`value`) AS DECIMAL(10,4)) value from analysis_warning_data where devid='${point.devid}' and  create_date >= '${new Date().format("yyyy")}-01-01 00:00:00' group by date_format(create_date,'%Y-%m') , chan_code;".toString())
+        def rowData = sql.rows("select chan_code, date_format(create_date,'%c月') time ,count(1) value from analysis_warning_data where devid='${point?.devid}' and  create_date >= '${new Date().format("yyyy")}-01-01 00:00:00' group by date_format(create_date,'%Y-%m') , chan_code;".toString())
+
+        list.each { o->
+            def li = rowData.findAll{it.chan_code == o.chanCode};
+//            data << [month:li.collect {it.time},value:li.collect {it.value}];
+            def month = []
+            def value = []
+            for (int i = 1; i <= 12; i++) {
+                month << i;
+                value << (li.find {it.time=="${i}月"}?.value?:0);
+            }
+//            data << [month:li.collect {it.time},value:li.collect {it.value}];
+            data << [month:month,value:value];
         }
         render data as JSON
     }
@@ -254,14 +308,15 @@ class WebController{
             map.time = firstList?.last()?.samplingTime.toString();;
             map.beginTime = firstList?.first()?.samplingTime.toString()?.replace(".000",".");
             firstList = firstList.groupBy {it.devid+"_"+it.chanCode};
-            def temList = [];
+            def temList = [:];
             firstList.each { o->
                def tem = []
                 for (int i = 0; i < o.value.size(); i++) {
                     def it = o.value[i];
                     tem += JSON.parse(it?.data);
                 }
-                temList<<tem;
+                temList[o.key]=tem;
+//                temList<<tem;
             }
             map.data = temList
         }else{
@@ -273,14 +328,15 @@ class WebController{
                 map.beginTime = list?.first()?.samplingTime.toString()?.replace(".000",".");
             }
             list = list.groupBy {it.devid+"_"+it.chanCode};
-            def temList = [];
+            def temList = [:];
             list.each { o->
                 def tem = []
                 for (int i = 0; i < o.value.size(); i++) {
                     def it = o.value[i];
                     tem += JSON.parse(it?.data);
                 }
-                temList<<tem;
+//                temList<<tem;
+                temList[o.key] = temList;
             }
             map.data = temList
         }

@@ -5,7 +5,7 @@ import grails.plugin.springsecurity.SpringSecurityUtils
 class WorkspaceController {
 def mailService;
     def index() {
-        println grailsApplication.config.grails.mail.username;
+//        println grailsApplication.config.grails.mail.username;
        /* mailService.sendMail({
             to '286967506@qq.com';
             from grailsApplication.config.grails.mail.username//,grailsApplication.config.grails.mail.nickName

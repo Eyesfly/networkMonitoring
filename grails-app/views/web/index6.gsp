@@ -77,6 +77,8 @@
         var leftChart;
         var leftOption;
         var data1Interval=0;
+        var dataKey = new Array();
+        var chanNames =  new Array();
         var showText = '波形对比';
         $(function() {
             var socket = new SockJS("${createLink(uri: '/stomp')}");
@@ -106,13 +108,14 @@
             var obj = new Object();
             var devidArr = new Array();
             var chanCodeArr = new Array();
-            var chanNames =  new Array();
+
             $.each(checks,function (k,v) {
                 var devid = $(v).attr("data-dev");
                 var chanCode = $(v).val();
                 devidArr.push(devid);
                 chanCodeArr.push(chanCode);
                 chanNames.push($(v).attr("data-chanName"));
+                dataKey.push(devid+"_"+chanCode);
             });
             obj.devid = devidArr.join(",");
             obj.chanCode = chanCodeArr.join(",");
@@ -357,7 +360,7 @@
                             // "data": [
                             //     "\u7b14"
                             // ],
-                            data:['AQ1','AQ2'],
+                            data:chanNames,
                             "orient": "horizontal",
                             "left": "center"
                         }
@@ -391,15 +394,17 @@
                 return;
             }
             var data = data_;
-            for (var i = 0; i <data[0].length ; i++) {
+            for (var i = 0; i <data[dataKey[0]].length ; i++) {
                 xx1.push(new Date(Date.parse(beginTime)+(i+1)*5).format('yyyy-MM-dd h:m:s.S'));
             }
             var len = xx1.length - 2000;
             if(xx1.length>2000){
                 xx1.splice(0,len)
             }
-            yy1 = yy1.concat(data[0]);
-            yy2 = yy2.concat(data[1]);
+/*            yy1 = yy1.concat(data[0]);
+            yy2 = yy2.concat(data[1]);    */
+            yy1 = yy1.concat(data[dataKey[0]]);
+            yy2 = yy2.concat(data[dataKey[1]]);
             if(yy1.length>2000){
                 yy1.splice(0,len)
             }

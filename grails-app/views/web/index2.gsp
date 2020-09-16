@@ -50,7 +50,7 @@
     </script>
 </head>
 <!--background: rgb(0, 10, 21)-->
-<body style="background: url('${request.contextPath}/images/bg.jpg')">
+<body style="background: url('${request.contextPath}/images/bg.jpg');overflow-y: hidden;">
 <div class="child">
     <div class="col-xs-6 col-sm-4">
         <div class="col-xs-6 col-sm-12  boxBorder" style="height: 30%;margin-top: 10px;padding: 0px 10px;overflow: auto;">
@@ -62,7 +62,7 @@
                     var width =$("#firstChart").width();
                     var firstChart={};
                     $.each(data,function(k,v){
-                        $("#firstChart").append("<div id=\"firstChart"+k+"\" style='height: 80px;width:"+0.95*width+"px;'></div>");
+                        $("#firstChart").append("<div id=\"firstChart"+k+"\" style='height: 90px;width:"+0.95*width+"px;'></div>");
                         firstChart[k] = echarts.init(document.getElementById('firstChart'+k));
                         firstChart[k].resize();
                         firstChart[k].setOption( {
@@ -553,7 +553,7 @@
                                 symbol: 'path://M 300 100 L 100 100 L 100 300 z',
 
                             }
-                        },
+                        }
                     ]
                 };
                 rightChart.setOption(rightOption);
@@ -765,12 +765,103 @@
         </script>
     </div>
     <div class="col-xs-6 col-sm-4">
-        <div class="col-xs-6 col-sm-12 boxBorder" style="height: 39%;margin-top: 15px;">
-            <div id="rightChart1" style="height: 80px;"></div>
+        <div class="col-xs-6 col-sm-12 boxBorder" id="rightChart1" style="height: 39%;margin-top: 15px;overflow-y: auto;overflow-x: hidden;">
+            %{--<div id="rightChart1" style="height: 80px;"></div>
             <div id="rightChart2" style="height: 80px;"></div>
-            <div id="rightChart3" style="height: 80px;"></div>
+            <div id="rightChart3" style="height: 80px;"></div>--}%
             <script type="text/javascript">
-                var rightChart1 = echarts.init(document.getElementById('rightChart1'));
+                var colors = ['#5793f3', '#d14a61', '#675bba'];
+                var option111 ={
+                    color: colors,
+
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'cross'
+                        },
+                        formatter: function(prams) {
+                            return "预警数：" + prams[0].data
+                        }
+                    },
+                    grid: {
+                        left: '8%',
+                        right: '0%',
+                        top: '10%',
+                        bottom:'25%'
+                    },
+                    toolbox: {
+                        feature: {
+                            dataView: {show: false, readOnly: false},
+                            restore: {show: false},
+                            saveAsImage: {show: false}
+                        }
+                    },
+                    legend: {
+                        show:false,
+                        data:['']
+                    },
+                    xAxis: [
+                        {
+                            type: 'category',
+                            axisTick: {
+                                alignWithLabel: true
+                            },
+                            axisLine:{
+                                lineStyle:{
+                                    color:'#91e9f8'
+                                }
+                            },
+                            axisLabel:{
+                                color:'#fff'
+                            },
+                            data: []
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            axisLine:{
+                                lineStyle:{
+                                    color:'#91e9f8'
+                                }
+                            },
+                            axisLabel:{
+                                color:'#fff'
+                            },
+                            splitLine: {show: false},
+                            type: 'value'
+                        }
+                    ],
+                    series: [
+                        {
+                            name:'',
+                            type:'bar',
+                            data:[]
+                        }
+                    ]
+                };
+                $.post('${request.contextPath}/web/monthData',{id:'${obj.id}'},function(data,status){
+                        var rightChart1 = {};
+                        $.each(data,function(k,v){
+                            $("#rightChart1").append('<div id="rightChart1-'+k+'" style="height: 90px;"></div>');
+                            rightChart1[k] = echarts.init(document.getElementById('rightChart1-'+k));
+
+                            rightChart1[k].setOption(option111);
+                        });
+                        $.each(data,function(k,v){
+                            rightChart1[k].setOption({
+                                xAxis: [{data:v.month}],
+                                series: [
+                                    {
+                                        data:v.value
+                                    }
+                                ]
+                            });
+                        });
+
+                    },'json');
+
+
+             /*   var rightChart1 = echarts.init(document.getElementById('rightChart1'));
                 var rightChart2 = echarts.init(document.getElementById('rightChart2'));
                 var rightChart3 = echarts.init(document.getElementById('rightChart3'));
                 var colors = ['#5793f3', '#d14a61', '#675bba'];
@@ -841,21 +932,179 @@
                 };
                 rightChart1.setOption(option);
                 rightChart2.setOption(option);
-                rightChart3.setOption(option);
+                rightChart3.setOption(option);*/
             </script>
         </div>
-        <div class="col-xs-6 col-sm-12 boxBorder" style="height: 18%;margin-top: 10px;">
-            <div id="rightChart4" style="height: 110px;"></div>
-        </div>
-        <div class="col-xs-6 col-sm-12 boxBorder" style="height: 18%;margin-top: 15px;">
-            <div id="rightChart5" style="height: 110px;"></div>
-        </div>
-        <div class="col-xs-6 col-sm-12 boxBorder" style="height: 18%;margin-top: 15px;margin-bottom: 10px;">
-            <div id="rightChart6" style="height: 110px;"></div>
+        <div class="col-xs-6 col-sm-12 boxBorder" id="rightChart2" style="height: 55%;margin-top: 20px;overflow-y: auto;overflow-x: hidden;">
+            %{--<div id="rightChart4" style="height: 120px;margin-top: 20px;"></div>
+
+            <div id="rightChart5" style="height: 120px;margin-top: 20px;"></div>
+            <div id="rightChart6" style="height: 120px;margin-top: 20px;"></div>--}%
         </div>
 
         <script type="text/javascript">
-            var rightChart4 = echarts.init(document.getElementById('rightChart4'));
+            var option222 = {
+//                backgroundColor: "#111c4e",
+                color: ['#3398DB'],
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'line',
+                        lineStyle: {
+                            opacity: 0
+                        }
+                    },
+                    formatter: function(prams) {
+                        return "预警数：" + prams[0].data
+                    }
+                },
+                grid: {
+                    left: '5%',
+                    right: '0%',
+                    bottom: '10%',
+                    top: '15%',
+                    height: '85%',
+                    containLabel: true,
+                    z: 22
+                },
+                xAxis: [{
+                    type: 'category',
+                    gridIndex: 0,
+                    data: [],
+                    axisTick: {
+                        alignWithLabel: true
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: '#91e9f8'
+                        }
+                    },
+                    axisLabel: {
+                        show: true,
+                        color: '#fff',
+                        fontSize: 16
+                    }
+                }],
+                yAxis: [{
+                    type: 'value',
+                    gridIndex: 0,
+                    splitLine: {
+                        show: false
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    axisLine: {
+                        lineStyle: {
+                            color: '#91e9f8'
+                        }
+                    },
+                    axisLabel: {
+                        color: '#fff',
+                        formatter: '{value}'
+                    }
+                },
+                    {
+                        type: 'value',
+                        gridIndex: 0,
+                        splitNumber: 12,
+                        splitLine: {
+                            show: false
+                        },
+                        axisLine: {
+                            show: false
+                        },
+                        axisTick: {
+                            show: false
+                        },
+                        axisLabel: {
+                            show: false
+                        },
+                        splitArea: {
+                            show: true,
+                            areaStyle: {
+                                color: ['rgba(250,250,250,0.0)', 'rgba(250,250,250,0.05)']
+                            }
+                        }
+                    }
+                ],
+                series: [{
+                    name: '预警数',
+                    type: 'bar',
+                    barWidth: '30%',
+                    xAxisIndex: 0,
+                    yAxisIndex: 0,
+                    label: {
+                        normal: {
+                            // show: true,
+                          //  position: "top",
+                            textStyle: {
+                                color: "#ffc72b",
+                                fontSize: 20
+                            }
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(
+                                0, 0, 0, 1, [{
+                                    offset: 0,
+                                    color: '#00feff'
+                                },
+                                    {
+                                        offset: 0.5,
+                                        color: '#027eff'
+                                    },
+                                    {
+                                        offset: 1,
+                                        color: '#0286ff'
+                                    }
+                                ]
+                            )
+                        }
+                    },
+                    data: [],
+                    zlevel: 11
+
+                },
+                    {
+                        name: '背景',
+                        type: 'bar',
+                        barWidth: '50%',
+                        xAxisIndex: 0,
+                        yAxisIndex: 1,
+                        barGap: '-135%',
+                        data: [],
+                        itemStyle: {
+                            normal: {
+                                color: 'rgba(255,255,255,0.1)'
+                            }
+                        },
+                        zlevel: 9
+                    },
+
+                ]
+            };
+            $.post('${request.contextPath}/web/monthWarningData',{id:'${obj.id}'},function(data,status){
+                var rightChart2 = {};
+                $.each(data,function(k,v){
+                    $("#rightChart2").append('<div id="rightChart2-'+k+'" style="height: 120px;"></div>');
+                    rightChart2[k] = echarts.init(document.getElementById('rightChart2-'+k));
+                    rightChart2[k].setOption(option222);
+                });
+                $.each(data,function(k,v){
+                    rightChart2[k].setOption({
+                        xAxis: [{data:v.month}],
+                        series: [
+                            {
+                                data:v.value
+                            }
+                        ]
+                    });
+                });
+
+            },'json');
+           /* var rightChart4 = echarts.init(document.getElementById('rightChart4'));
             var rightChart5 = echarts.init(document.getElementById('rightChart5'));
             var rightChart6 = echarts.init(document.getElementById('rightChart6'));
             var xData = ['1月','2月','3月','4月','5月'];
@@ -1004,7 +1253,7 @@
             };
             rightChart4.setOption(option);
             rightChart5.setOption(option);
-            rightChart6.setOption(option);
+            rightChart6.setOption(option);*/
         </script>
     </div>
 </div>
